@@ -34,8 +34,20 @@ import java_cup.runtime.*;
 white = \r|\n|\t|" "
 id = ("_"|[a-z]|[A-Z])([0-9]|"_"|[a-z]|[A-Z])*
 //notice int number has to come latter
-intNumber = [+-]? ([0-9]+ | 0x[0-9]+)
-RealNumber = [+-]? ( [0-9]+.[0-9]* |  .[0-9]+ |  [0-9]e([+-]?[0-9]+) )
+
+PositiveDecimalInteger = 0 | [1-9][0-9]*
+intNumber = [+-]?{PositiveDecimalInteger}
+
+
+FloatLiteral1    = [0-9]+ \. [0-9]*
+FloatLiteral2    = \. [0-9]+
+FloatLiteral3    = [0-9]+
+Exponent = [eE] [+-]? [0-9]+
+
+RealNumber = [+-]?({FloatLiteral1}|{FloatLiteral2}|{FloatLiteral3}) {Exponent}?
+
+
+
 begin = "Begin"
 bool = "bool"
 break = "break"
@@ -66,7 +78,7 @@ string = "string"
 switch = "switch"
 true = "true"
 semi = ";"
-
+eq = "="
 
 
 
@@ -82,6 +94,7 @@ semi = ";"
 
 
 <YYINITIAL>{
+{eq}        {return symbol(sym.EQUAL,yytext());}
 {semi}      {return symbol(sym.SEMI,yytext());}
 { begin }  { return symbol(sym.BEGIN, yytext() ) ; }
  { bool }  { return symbol(sym.BOOL, yytext() ) ; }
@@ -113,8 +126,8 @@ semi = ";"
  { switch }  { return symbol(sym.SWITCH, yytext() ) ; }
  { true }  { return symbol(sym.TRUE, yytext() ) ; }
 {id}		{return symbol(sym.ID, yytext() );}
-{RealNumber} {return symbol(sym.INT_CONST, yytext() );}
 {intNumber} {return symbol(sym.REAL_CONST, yytext() );}
+{RealNumber} {return symbol(sym.INT_CONST, yytext() );}
 
 }
 

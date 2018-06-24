@@ -1,1 +1,1 @@
-int a ;
+ double a = 2 ;

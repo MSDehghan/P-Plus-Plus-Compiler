@@ -1,8 +1,9 @@
 
 import java_cup.runtime.*;
+import java.util.ArrayList;
 
 parser code {:
-
+	boolean DEBUGS = true;
     /* Change the method report_error so it will display the line and
        column of where the error occurred in the input as well as the
        reason for the error which is passed into the method in the
@@ -171,9 +172,9 @@ precedence left UMINUS;
 
 
 /* first */
-program 	::=		var_dcl program 		
-			|		func_extern	program		
-			|		struct_dec	program		
+program 	::=		var_dcl program 	{: if( DEBUGS ){ System.out.println("program found"); } :}
+			|		func_extern	program		{: if( DEBUGS ){ System.out.println("program found"); } :}
+			|		struct_dec	program		{: if( DEBUGS ){ System.out.println("program found"); } :}
 			|						
 			; 
 
@@ -181,128 +182,128 @@ program 	::=		var_dcl program
 
 /* second */
 
-func_extern 	::=		func_dcl 
-				|		extern_dcl 
+func_extern 	::=		func_dcl 	{: if( DEBUGS ){ System.out.println("func extern found"); } :}
+				|		extern_dcl 	{: if( DEBUGS ){ System.out.println("func extern found"); } :}
 				;
 
 
 /* third */
 
-func_dcl		::=		type ID OPENPRANTHES arguments CLOSEDPRANTHES SEMI 	
-				|		type ID OPENPRANTHES arguments CLOSEDPRANTHES block 
-				|		type ID OPENPRANTHES CLOSEDPRANTHES SEMI 			
-				|		type ID OPENPRANTHES CLOSEDPRANTHES block 			
+func_dcl		::=		type ID OPENPRANTHES arguments CLOSEDPRANTHES SEMI 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
+				|		type ID OPENPRANTHES arguments CLOSEDPRANTHES block {: if( DEBUGS ){ System.out.println("func dcl found"); } :}
+				|		type ID OPENPRANTHES CLOSEDPRANTHES SEMI 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
+				|		type ID OPENPRANTHES CLOSEDPRANTHES block 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
 				;
 
 /* forth */
 
-extern_dcl		::=		EXTERN type ID SEMI		
+extern_dcl		::=		EXTERN type ID SEMI	{: if( DEBUGS ){ System.out.println("extern dcl found"); } :}
 				;
 
 
 /* fifth */
-arguments 		::=		type ID exp6 COMMA arguments	
-				|		type ID exp6		
+arguments 		::=		type ID exp6 COMMA arguments	{: if( DEBUGS ){ System.out.println("arguments found"); } :}
+				|		type ID exp6		{: if( DEBUGS ){ System.out.println("arguments found"); } :}
 				;
 
 
 
-exp6 			::=		OPENBRAK CLOSEDBRAK 	exp6	
-				|		 				
+exp6 			::=		OPENBRAK CLOSEDBRAK exp6	{: if( DEBUGS ){ System.out.println("exp6 found"); } :}
+				|	{: if( DEBUGS ){ System.out.println("exp6 found"); } :}
 				;
 
 /* sixth */
-type	::=	INT 		{: System.out.println(" INT found ");:}
-		|	BOOL 		
-		|	FLOAT		
-		|	LONG 		
-		|	CHAR 		
-		|	DOUBLE 		
-		|	ID			
-		|	STRING 		
-		|	VOID		
-		|	AUTO 		
+type	::=	INT 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	BOOL 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	FLOAT		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	LONG 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	CHAR 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	DOUBLE 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	ID			{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	STRING 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	VOID		{: if( DEBUGS ){ System.out.println("type found"); } :}
+		|	AUTO 		{: if( DEBUGS ){ System.out.println("type found"); } :}
 		;
 
 
 /* seventh */
-struct_dec	::=	RECORD ID BEGIN var_dcl exp10 END RECORD SEMI
+struct_dec	::=	RECORD ID BEGIN var_dcl exp10 END RECORD SEMI  {: if( DEBUGS ){ System.out.println("struct dec found"); } :}
 			;
-exp10		::=	var_dcl exp10		
-			|				
+exp10		::=	var_dcl exp10		{: if( DEBUGS ){ System.out.println("exp10 found"); } :}
+			|				{: if( DEBUGS ){ System.out.println("exp10 found"); } :}
 			;
 
 /* eightth */
-var_dcl 	::=	CONST type var_dcl_cnt exp13 SEMI
-			|	type var_dcl_cnt exp13 	SEMI
+var_dcl 	::=	CONST type var_dcl_cnt exp13 SEMI	{: if( DEBUGS ){ System.out.println("var_dcl found"); } :}
+			|	type var_dcl_cnt exp13 	SEMI		{: if( DEBUGS ){ System.out.println("var_dcl found"); } :}
 			;
 			
-exp13		::=	COMMA var_dcl_cnt exp13		 
-			|				
+exp13		::=	COMMA var_dcl_cnt exp13		 {: if( DEBUGS ){ System.out.println("exp13 found"); } :}
+			|				{: if( DEBUGS ){ System.out.println("exp13 found"); } :}
 			;
 
 /* nineth */
-var_dcl_cnt		::=		variablePayande EQUAL expr	
-				|		variablePayande			
+var_dcl_cnt		::=		variablePayande EQUAL expr	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+				|		variablePayande				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
 				;
-variablePayande ::=		ID exp23		
+variablePayande ::=		ID exp23		{: if( DEBUGS ){ System.out.println("var payande found"); } :}
 				;
 
 /* tenth */
-block		::=		BEGIN exp15 END
+block		::=		BEGIN exp15 END	{: if( DEBUGS ){ System.out.println("block found"); } :}
 			;
-exp15		::=		var_dcl exp15		
-			|		statement exp15		
-			|  		
+exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
+			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
+			|  		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
 			;
 
 /* eleventh */
-statement		::=		assignment			
-				|		method_call	SEMI	
-				|		cond_stmt			
-				|		loop_stmt			
-				|		RETURN expr SEMI	
-				|		RETURN SEMI			
-				|		BREAK SEMI			
-				|		CONTINUE SEMI		
-				|		SIZEOF OPENPRANTHES type CLOSEDPRANTHES		
+statement		::=		assignment			{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		method_call	SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		cond_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		loop_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		RETURN expr SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		BREAK SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		CONTINUE SEMI		{: if( DEBUGS ){ System.out.println("statement found"); } :}
+				|		SIZEOF OPENPRANTHES type CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				;
 
 /* twelveth */
-assignment		::=		variable EQUAL expr		
+assignment		::=		variable EQUAL expr		{: if( DEBUGS ){ System.out.println("assignment found"); } :}
 				;
 
 /* thirteenth */
-method_call		::=		ID OPENPRANTHES parameters CLOSEDPRANTHES		
-				|		ID OPENPRANTHES  CLOSEDPRANTHES	
+method_call		::=		ID OPENPRANTHES parameters CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found"); } :}
+				|		ID OPENPRANTHES  CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found"); } :}
 				;
 
 /* fourteenth */
-parameters		::=		expr	
-				|		expr COMMA parameters	
+parameters		::=		expr	{: if( DEBUGS ){ System.out.println("parameters found"); } :}
+				|		expr COMMA parameters	{: if( DEBUGS ){ System.out.println("parameters found"); } :}
 				;
 
 
 /* fifteenth */
-cond_stmt		::=		IF OPENPRANTHES expr CLOSEDPRANTHES block ELSE block	
-				|		IF OPENPRANTHES expr CLOSEDPRANTHES block 				
-				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT OPENCURLBRAK exp20  DEFAULT DOUBLEDOT block CLOSEDCURLBRAK	
+cond_stmt		::=		IF OPENPRANTHES expr CLOSEDPRANTHES block ELSE block	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
+				|		IF OPENPRANTHES expr CLOSEDPRANTHES block 				{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
+				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT OPENCURLBRAK exp20  DEFAULT DOUBLEDOT block CLOSEDCURLBRAK	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
 				;
-exp20			::=		CASE INT_CONST DOUBLEDOT block exp20	
-				|			
+exp20			::=		CASE INT_CONST DOUBLEDOT block exp20	{: if( DEBUGS ){ System.out.println("exp20 found"); } :}
+				|			{: if( DEBUGS ){ System.out.println("exp20 found"); } :}
 				;
 
 
 
 /* sixteenth */
-loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTHES block		
-				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI expr CLOSEDPRANTHES block			
-				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI CLOSEDPRANTHES block				
-				|		FOR OPENPRANTHES SEMI expr SEMI assignment CLOSEDPRANTHES block				
-				|		FOR OPENPRANTHES SEMI expr SEMI expr CLOSEDPRANTHES block					
-				|		FOR OPENPRANTHES SEMI expr SEMI CLOSEDPRANTHES block								
-				|		REPEAT block UNITL OPENPRANTHES expr CLOSEDPRANTHES SEMI					
-				|		FOREACH OPENPRANTHES ID IN ID CLOSEDPRANTHES block							
+loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTHES block		{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI expr CLOSEDPRANTHES block			{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI CLOSEDPRANTHES block				{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOR OPENPRANTHES SEMI expr SEMI assignment CLOSEDPRANTHES block				{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOR OPENPRANTHES SEMI expr SEMI expr CLOSEDPRANTHES block					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOR OPENPRANTHES SEMI expr SEMI CLOSEDPRANTHES block						{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		REPEAT block UNITL OPENPRANTHES expr CLOSEDPRANTHES SEMI					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+				|		FOREACH OPENPRANTHES ID IN ID CLOSEDPRANTHES block							{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
 				;
 
 
@@ -313,69 +314,69 @@ loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTH
 
 
 /* eighteenth */
-expr		::=		expr  binary_op  expr					
-			|		OPENPRANTHES expr CLOSEDPRANTHES		
-			|		method_call								
-			|		variable								
-			|		const_val								
-			|		MINUS expr	%prec  UMINUS				
-			|		EXCLEM expr								
+expr		::=		expr  binary_op  expr			{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		OPENPRANTHES expr CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		method_call	{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		variable		{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		const_val		{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		MINUS expr {: if( DEBUGS ){ System.out.println("expr found"); } :}	%prec  UMINUS
+			|		EXCLEM expr	{: if( DEBUGS ){ System.out.println("expr found"); } :}
 			;
 
 
 
 /* tweenth */
-variable		::=		ID exp23	{: System.out.println(" ID found ");:}
-				|		TILDA variable		
-				|		MM variable			
-				|		PP variable			
-				|		variable MM			
-				|		variable PP			
+variable		::=		ID exp23	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+				|		TILDA variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+				|		MM variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+				|		PP variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+				|		variable MM	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+				|		variable PP	{: if( DEBUGS ){ System.out.println("variable found"); } :}
 				;
 
-exp23			::=		OPENBRAK expr CLOSEDBRAK exp23				
-				|							
+exp23			::=		OPENBRAK expr CLOSEDBRAK exp23	{: if( DEBUGS ){ System.out.println("exp32 found"); } :}
+				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } :}
 				;
 
 
 
 /* tweny first */
-binary_op		::=		arithmatic		
-				|		conditional		
+binary_op		::=		arithmatic	{: if( DEBUGS ){ System.out.println("binary op found"); } :}
+				|		conditional	{: if( DEBUGS ){ System.out.println("binary op found"); } :}
 				;
 
 /* twenty second */
-arithmatic		::=		PLUS		
-				|		MINUS		
-				|		MULT		
-				|		DIVIDE		
-				|		MOD			
-				|		AND			
-				|		OR 			
-				|		CAROT		
+arithmatic		::=		PLUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		MINUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		MULT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		DIVIDE	{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		MOD		{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		AND		{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		OR		{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
+				|		CAROT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } :}
 				;
 
 
 /* twenty third */
-conditional		::=		EQEQUAL			
-				|		NOTEQUAL		
-				|		BIGEQUAL		
-				|		SMALLEQUAL		
-				|		SMALLER			
-				|		BIGGER			
-				|		ANDC			
-				|		ORC 			
-				|		NOTC			
+conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		NOTEQUAL	{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		BIGEQUAL	{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		SMALLEQUAL	{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		SMALLER		{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		BIGGER		{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		ANDC		{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		ORC			{: if( DEBUGS ){ System.out.println("conditional found"); } :}
+				|		NOTC		{: if( DEBUGS ){ System.out.println("conditional found"); } :}
 				;
 
 
 /* twenty fourth */
-const_val		::=		INT_CONST		
-				|		REAL_CONST		
-				|		CHAR_CONST 		
-				|		BOOL_CONST		
-				|		STRING_CONST 	
-				|		LONG_CONST		
+const_val		::=		INT_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
+				|		REAL_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
+				|		CHAR_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
+				|		BOOL_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
+				|		STRING_CONST	{: if( DEBUGS ){ System.out.println("const val found"); } :}
+				|		LONG_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
 				;
 
 
