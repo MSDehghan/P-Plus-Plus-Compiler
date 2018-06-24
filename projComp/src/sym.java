@@ -21,6 +21,7 @@ public class sym {
   public static final int DOUBLE = 12;
   public static final int STRING_CONST = 68;
   public static final int CLOSEDBRAK = 6;
+  public static final int PLUSEQUAL = 79;
   public static final int FALSE = 72;
   public static final int OPENCURLBRAK = 33;
   public static final int TILDA = 49;
@@ -46,6 +47,7 @@ public class sym {
   public static final int MULT = 50;
   public static final int NOTC = 64;
   public static final int INT_CONST = 37;
+  public static final int MINUSEQUAL = 80;
   public static final int ELSE = 29;
   public static final int BREAK = 25;
   public static final int PP = 48;
@@ -67,6 +69,7 @@ public class sym {
   public static final int ID = 2;
   public static final int OF = 35;
   public static final int END = 18;
+  public static final int MULTEQUAL = 81;
   public static final int OPENBRAK = 5;
   public static final int FOREACH = 42;
   public static final int EQEQUAL = 56;
@@ -83,6 +86,7 @@ public class sym {
   public static final int AND = 54;
   public static final int STATIC = 77;
   public static final int UMINUS = 71;
+  public static final int DIVIDEEQUAL = 82;
   public static final int AUTO = 15;
   public static final int OPENPRANTHES = 31;
   public static final String[] terminalNames = new String[] {
@@ -164,7 +168,11 @@ public class sym {
   "FUNCTION",
   "OUTPUT",
   "STATIC",
-  "TRUE"
+  "TRUE",
+  "PLUSEQUAL",
+  "MINUSEQUAL",
+  "MULTEQUAL",
+  "DIVIDEEQUAL"
   };
 }
 

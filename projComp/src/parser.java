@@ -1704,7 +1704,7 @@ class CUP$parser$actions {
           case 101: // const_val ::= INT_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1713,7 +1713,7 @@ class CUP$parser$actions {
           case 102: // const_val ::= REAL_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1722,7 +1722,7 @@ class CUP$parser$actions {
           case 103: // const_val ::= CHAR_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1731,7 +1731,7 @@ class CUP$parser$actions {
           case 104: // const_val ::= BOOL_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1740,7 +1740,7 @@ class CUP$parser$actions {
           case 105: // const_val ::= STRING_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1749,7 +1749,7 @@ class CUP$parser$actions {
           case 106: // const_val ::= LONG_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found"); } 
+		 if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

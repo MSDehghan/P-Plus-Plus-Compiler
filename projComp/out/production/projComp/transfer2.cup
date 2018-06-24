@@ -110,7 +110,10 @@ terminal FUNCTION ;
 terminal OUTPUT ;
 terminal STATIC ;
 terminal TRUE ;
-
+terminal PLUSEQUAL;
+terminal MINUSEQUAL;
+terminal MULTEQUAL;
+terminal DIVIDEEQUAL;
 
 
 
@@ -254,7 +257,7 @@ block		::=		BEGIN exp15 END	{: if( DEBUGS ){ System.out.println("block found"); 
 			;
 exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
 			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
-			|  		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
+			|  							{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
 			;
 
 /* eleventh */
@@ -371,12 +374,12 @@ conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional foun
 
 
 /* twenty fourth */
-const_val		::=		INT_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
-				|		REAL_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
-				|		CHAR_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
-				|		BOOL_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
-				|		STRING_CONST	{: if( DEBUGS ){ System.out.println("const val found"); } :}
-				|		LONG_CONST		{: if( DEBUGS ){ System.out.println("const val found"); } :}
+const_val		::=		INT_CONST		{: if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } :}
+				|		REAL_CONST		{: if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } :}
+				|		CHAR_CONST		{: if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } :}
+				|		BOOL_CONST		{: if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } :}
+				|		STRING_CONST	{: if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } :}
+				|		LONG_CONST		{: if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } :}
 				;
 
 

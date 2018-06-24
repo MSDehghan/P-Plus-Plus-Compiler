@@ -79,6 +79,7 @@ eq = "="
 <YYINITIAL>{
 {eq}        {return yytext()+" eq ";}
 {semi}      {return yytext() +" semi ";}
+
 { begin }  { return yytext() + " begin " ; }
  { bool }  { return yytext() + " bool "; }
  { break }  { return yytext() + " break " ; }

@@ -1,1 +1,38 @@
- double a = 2 ;
+
+
+
+
+int pooria ()
+begin
+int a =1 , b, d ;
+foreach (i in j )
+begin
+end
+for(;a * b;)
+begin
+repeat
+begin
+int d = 40 ;
+end
+until(a*c);
+end
+end
+
+
+
+int withArg(int a[][], int b)
+begin
+end
+
+
+
+int g = 40, d = 60;
+string a = "chetori pooria ? ";
+
+char d = 'm';
+
+
+
+
+
+
