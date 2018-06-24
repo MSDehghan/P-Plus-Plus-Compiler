@@ -1,0 +1,391 @@
+
+import java_cup.runtime.*;
+
+parser code {:
+
+    /* Change the method report_error so it will display the line and
+       column of where the error occurred in the input as well as the
+       reason for the error which is passed into the method in the
+       String 'message'. */
+    public void report_error(String message, Object info) {
+
+        /* Create a StringBuilder called 'm' with the string 'Error' in it. */
+        StringBuilder m = new StringBuilder("Error");
+
+
+        System.err.println(m);
+    }
+
+    /* Change the method report_fatal_error so when it reports a fatal
+       error it will display the line and column number of where the
+       fatal error occurred in the input as well as the reason for the
+       fatal error which is passed into the method in the object
+       'message' and then exit.*/
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+
+
+
+terminal ID ; 
+terminal SEMI ; 
+terminal EXTERN ; 
+terminal OPENBRAK ; 
+terminal CLOSEDBRAK ; 
+terminal INT ; 
+terminal BOOL ; 
+terminal FLOAT ; 
+terminal LONG ; 
+terminal CHAR ; 
+terminal DOUBLE ; 
+terminal STRING ; 
+terminal VOID ; 
+terminal AUTO ; 
+terminal RECORD ; 
+terminal BEGIN ; 
+terminal END ; 
+terminal CONST ; 
+terminal COMMA ; 
+terminal EQUAL ; 
+terminal BEINGQ ; 
+terminal ENDQ ; 
+terminal RETURN ; 
+terminal BREAK ; 
+terminal CONTINUE ; 
+terminal SIZEOF ; 
+terminal IF ; 
+terminal ELSE ; 
+terminal SWITCH ; 
+terminal OPENPRANTHES ; 
+terminal CLOSEDPRANTHES ; 
+terminal OPENCURLBRAK ; 
+terminal CLOSEDCURLBRAK ; 
+terminal OF ; 
+terminal CASE ; 
+terminal INT_CONST ; 
+terminal DOUBLEDOT ; 
+terminal FOR ; 
+terminal REPEAT ; 
+terminal UNITL ; 
+terminal FOREACH ; 
+terminal IN ; 
+terminal MINUS ; 
+terminal PLUS ; 
+terminal EXCLEM ; 
+terminal MM ; 
+terminal PP ; 
+terminal TILDA ; 
+terminal MULT ; 
+terminal DIVIDE ; 
+terminal MOD ; 
+terminal OR ; 
+terminal AND ; 
+terminal CAROT ; 
+terminal EQEQUAL ; 
+terminal NOTEQUAL ; 
+terminal BIGEQUAL ; 
+terminal SMALLEQUAL ; 
+terminal SMALLER ; 
+terminal BIGGER ; 
+terminal ANDC ; 
+terminal ORC ; 
+terminal NOTC ; 
+terminal REAL_CONST ; 
+terminal CHAR_CONST ; 
+terminal BOOL_CONST ; 
+terminal STRING_CONST ; 
+terminal LONG_CONST ; 
+terminal DEFAULT ; 
+terminal UMINUS;
+
+
+
+terminal FALSE;
+terminal GOTO;
+terminal INPUT;
+terminal FUNCTION ;
+terminal OUTPUT ;
+terminal STATIC ;
+terminal TRUE ;
+
+
+
+
+
+nonterminal program ; 
+nonterminal var_dcl ; 
+nonterminal func_extern ; 
+nonterminal struct_dec ; 
+nonterminal func_dcl ; 
+nonterminal extern_dcl ; 
+nonterminal type ; 
+nonterminal arguments ; 
+nonterminal block ; 
+nonterminal var_dcl_cnt ; 
+nonterminal variable ; 
+nonterminal expr ; 
+nonterminal statement ; 
+nonterminal assignment ; 
+nonterminal method_call ; 
+nonterminal cond_stmt ; 
+nonterminal loop_stmt ; 
+nonterminal parameters ; 
+nonterminal binary_op ; 
+nonterminal const_val ; 
+nonterminal arithmatic ; 
+nonterminal conditional ; 
+nonterminal exp6 ; 
+nonterminal exp10 ; 
+nonterminal exp13 ; 
+nonterminal exp15 ; 
+nonterminal exp20 ; 
+nonterminal exp23 ; 
+nonterminal variablePayande;
+
+
+
+
+
+/* Precedences */
+precedence right EQUAL;
+precedence left OR;
+precedence left CAROT;
+precedence left AND;
+precedence left EQEQUAL, NOTEQUAL;
+precedence left ANDC, ORC;
+precedence left SMALLEQUAL,SMALLER, BIGEQUAL, BIGGER;
+precedence left PLUS, MINUS;
+precedence left MULT, DIVIDE, MOD;
+precedence right EXCLEM;
+precedence left  OPENBRAK, CLOSEDBRAK, OPENPRANTHES, CLOSEDPRANTHES;
+precedence right PP, MM, NOTC;
+precedence left UMINUS;
+
+
+
+
+
+
+
+
+/* first */
+program 	::=		var_dcl program 		
+			|		func_extern	program		
+			|		struct_dec	program		
+			|						
+			; 
+
+
+
+/* second */
+
+func_extern 	::=		func_dcl 
+				|		extern_dcl 
+				;
+
+
+/* third */
+
+func_dcl		::=		type ID OPENPRANTHES arguments CLOSEDPRANTHES SEMI 	
+				|		type ID OPENPRANTHES arguments CLOSEDPRANTHES block 
+				|		type ID OPENPRANTHES CLOSEDPRANTHES SEMI 			
+				|		type ID OPENPRANTHES CLOSEDPRANTHES block 			
+				;
+
+/* forth */
+
+extern_dcl		::=		EXTERN type ID SEMI		
+				;
+
+
+/* fifth */
+arguments 		::=		type ID exp6 COMMA arguments	
+				|		type ID exp6		
+				;
+
+
+
+exp6 			::=		OPENBRAK CLOSEDBRAK 	exp6	
+				|		 				
+				;
+
+/* sixth */
+type	::=	INT 		{: System.out.println(" INT found ");:}
+		|	BOOL 		
+		|	FLOAT		
+		|	LONG 		
+		|	CHAR 		
+		|	DOUBLE 		
+		|	ID			
+		|	STRING 		
+		|	VOID		
+		|	AUTO 		
+		;
+
+
+/* seventh */
+struct_dec	::=	RECORD ID BEGIN var_dcl exp10 END RECORD SEMI
+			;
+exp10		::=	var_dcl exp10		
+			|				
+			;
+
+/* eightth */
+var_dcl 	::=	CONST type var_dcl_cnt exp13 SEMI
+			|	type var_dcl_cnt exp13 	SEMI
+			;
+			
+exp13		::=	COMMA var_dcl_cnt exp13		 
+			|				
+			;
+
+/* nineth */
+var_dcl_cnt		::=		variablePayande EQUAL expr	
+				|		variablePayande			
+				;
+variablePayande ::=		ID exp23		
+				;
+
+/* tenth */
+block		::=		BEGIN exp15 END
+			;
+exp15		::=		var_dcl exp15		
+			|		statement exp15		
+			|  		
+			;
+
+/* eleventh */
+statement		::=		assignment			
+				|		method_call	SEMI	
+				|		cond_stmt			
+				|		loop_stmt			
+				|		RETURN expr SEMI	
+				|		RETURN SEMI			
+				|		BREAK SEMI			
+				|		CONTINUE SEMI		
+				|		SIZEOF OPENPRANTHES type CLOSEDPRANTHES		
+				;
+
+/* twelveth */
+assignment		::=		variable EQUAL expr		
+				;
+
+/* thirteenth */
+method_call		::=		ID OPENPRANTHES parameters CLOSEDPRANTHES		
+				|		ID OPENPRANTHES  CLOSEDPRANTHES	
+				;
+
+/* fourteenth */
+parameters		::=		expr	
+				|		expr COMMA parameters	
+				;
+
+
+/* fifteenth */
+cond_stmt		::=		IF OPENPRANTHES expr CLOSEDPRANTHES block ELSE block	
+				|		IF OPENPRANTHES expr CLOSEDPRANTHES block 				
+				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT OPENCURLBRAK exp20  DEFAULT DOUBLEDOT block CLOSEDCURLBRAK	
+				;
+exp20			::=		CASE INT_CONST DOUBLEDOT block exp20	
+				|			
+				;
+
+
+
+/* sixteenth */
+loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTHES block		
+				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI expr CLOSEDPRANTHES block			
+				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI CLOSEDPRANTHES block				
+				|		FOR OPENPRANTHES SEMI expr SEMI assignment CLOSEDPRANTHES block				
+				|		FOR OPENPRANTHES SEMI expr SEMI expr CLOSEDPRANTHES block					
+				|		FOR OPENPRANTHES SEMI expr SEMI CLOSEDPRANTHES block								
+				|		REPEAT block UNITL OPENPRANTHES expr CLOSEDPRANTHES SEMI					
+				|		FOREACH OPENPRANTHES ID IN ID CLOSEDPRANTHES block							
+				;
+
+
+
+
+
+
+
+
+/* eighteenth */
+expr		::=		expr  binary_op  expr					
+			|		OPENPRANTHES expr CLOSEDPRANTHES		
+			|		method_call								
+			|		variable								
+			|		const_val								
+			|		MINUS expr	%prec  UMINUS				
+			|		EXCLEM expr								
+			;
+
+
+
+/* tweenth */
+variable		::=		ID exp23	{: System.out.println(" ID found ");:}
+				|		TILDA variable		
+				|		MM variable			
+				|		PP variable			
+				|		variable MM			
+				|		variable PP			
+				;
+
+exp23			::=		OPENBRAK expr CLOSEDBRAK exp23				
+				|							
+				;
+
+
+
+/* tweny first */
+binary_op		::=		arithmatic		
+				|		conditional		
+				;
+
+/* twenty second */
+arithmatic		::=		PLUS		
+				|		MINUS		
+				|		MULT		
+				|		DIVIDE		
+				|		MOD			
+				|		AND			
+				|		OR 			
+				|		CAROT		
+				;
+
+
+/* twenty third */
+conditional		::=		EQEQUAL			
+				|		NOTEQUAL		
+				|		BIGEQUAL		
+				|		SMALLEQUAL		
+				|		SMALLER			
+				|		BIGGER			
+				|		ANDC			
+				|		ORC 			
+				|		NOTC			
+				;
+
+
+/* twenty fourth */
+const_val		::=		INT_CONST		
+				|		REAL_CONST		
+				|		CHAR_CONST 		
+				|		BOOL_CONST		
+				|		STRING_CONST 	
+				|		LONG_CONST		
+				;
+
+
+
+
+
+
+
+
+
+
+
+
