@@ -255,9 +255,10 @@ variablePayande ::=		ID exp23		{: if( DEBUGS ){ System.out.println("var payande 
 /* tenth */
 block		::=		BEGIN exp15 END	{: if( DEBUGS ){ System.out.println("block found"); } :}
 			;
-exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
-			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
-			|  							{: if( DEBUGS ){ System.out.println("exp15 found"); } :}
+exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found var"); } :}
+			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found state"); } :}
+			|  		variable SEMI		{: if( DEBUGS ){ System.out.println("exp15 found empty"); } :}
+			|  							{: if( DEBUGS ){ System.out.println("exp15 found empty"); } :}
 			;
 
 /* eleventh */

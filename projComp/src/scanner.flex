@@ -43,7 +43,7 @@ intNumber = [+-]?{PositiveDecimalInteger}
 
 FloatLiteral1    = [0-9]+ \. [0-9]*
 FloatLiteral2    = \. [0-9]+
-FloatLiteral3    = [0-9]+
+FloatLiteral3    = [0-9]+ \.
 Exponent = [eE] [+-]? [0-9]+
 
 RealNumber = [+-]?({FloatLiteral1}|{FloatLiteral2}|{FloatLiteral3}) {Exponent}?
@@ -115,6 +115,12 @@ foreach = "foreach"
 repeat = "repeat"
 in = "in"
 until = "until"
+of = "of"
+exclem = "!"
+mm = "--"
+pp = "++"
+void = "void"
+auto = "auto"
 
 LineTerminator = \r\n|\r\n
 InputCharacter = [^\r\n]
@@ -142,6 +148,11 @@ SingleCharacter = [^\r\n\'\\]
  \" { yybegin(STRING); string.setLength(0); string.append("\""); }
  \' { yybegin(CHAR);  }
 
+{auto}               {return symbol(sym.AUTO,yytext());}
+{void}               {return symbol(sym.VOID,yytext());}
+{pp}               {return symbol(sym.PP,yytext());}
+{mm}               {return symbol(sym.MM,yytext());}
+{of}               {return symbol(sym.OF,yytext());}
 {until}           {return symbol(sym.UNITL,yytext());}
 {in}           {return symbol(sym.IN,yytext());}
 {foreach}           {return symbol(sym.FOREACH,yytext());}
@@ -194,8 +205,8 @@ SingleCharacter = [^\r\n\'\\]
  {true}  { return symbol(sym.BOOL_CONST, yytext() ) ; }
 
 {id}		{return symbol(sym.ID, yytext() );}
-{RealNumber} {return symbol(sym.INT_CONST, yytext() );}
-{intNumber} {return symbol(sym.REAL_CONST, yytext() );}
+{RealNumber} {return symbol(sym.REAL_CONST, yytext() );}
+{intNumber} {return symbol(sym.INT_CONST, yytext() );}
 
 
 
@@ -209,12 +220,14 @@ SingleCharacter = [^\r\n\'\\]
 {divide}           {return symbol(sym.DIVIDE,yytext());}
 {mode}           {return symbol(sym.MOD,yytext());}
 {openCurlBrak}           {return symbol(sym.OPENCURLBRAK,yytext());}
-{closedCurlBrak}           {return symbol(sym.CLOSEDBRAK,yytext());}
+{closedCurlBrak}           {return symbol(sym.CLOSEDCURLBRAK,yytext());}
 {openPran}           {return symbol(sym.OPENPRANTHES,yytext());}
 {closedPran}           {return symbol(sym.CLOSEDPRANTHES,yytext());}
 {openBrak}           {return symbol(sym.OPENBRAK,yytext());}
 {closedBrak}           {return symbol(sym.CLOSEDBRAK,yytext());}
 {doubleDot}           {return symbol(sym.DOUBLEDOT,yytext());}
+{exclem}               {return symbol(sym.EXCLEM,yytext());}
+
 
 
 

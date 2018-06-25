@@ -22,6 +22,19 @@ end
 
 int withArg(int a[][], int b)
 begin
+
+if(p*d)
+begin
+switch(a) of : {
+case 4 : begin end
+default:begin end
+}
+end
+for(;a * b;a++)
+begin
+end
+a--;
+
 end
 
 
