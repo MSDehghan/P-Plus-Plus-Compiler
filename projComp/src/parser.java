@@ -1714,7 +1714,10 @@ class CUP$parser$actions {
           case 102: // const_val ::= INT_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } RESULT = new Node(new Integer((String)e)) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

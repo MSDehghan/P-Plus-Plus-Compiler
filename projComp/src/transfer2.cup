@@ -1,7 +1,6 @@
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
-
 parser code {:
 	boolean DEBUGS = true;
     /* Change the method report_error so it will display the line and
@@ -375,7 +374,7 @@ conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional foun
 
 
 /* twenty fourth */
-const_val		::=		INT_CONST		{: if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } :}
+const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } RESULT = new Node(new Integer((String)e)) ; :}
 				|		REAL_CONST		{: if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } :}
 				|		CHAR_CONST		{: if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } :}
 				|		BOOL_CONST		{: if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } :}

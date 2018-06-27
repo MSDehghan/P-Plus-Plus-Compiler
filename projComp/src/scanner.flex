@@ -37,7 +37,7 @@ white = \r|\n|\t|" "
 id = ("_"|[a-z]|[A-Z])([0-9]|"_"|[a-z]|[A-Z])*
 //notice int number has to come latter
 
-PositiveDecimalInteger = 0 | [1-9][0-9]*
+PositiveDecimalInteger = 0 | [1-9][0-9]* | "0x"[0-9]+
 intNumber = [+-]?{PositiveDecimalInteger}
 
 

@@ -7,6 +7,19 @@ import java.io.FileReader;
  * Created by pooria on 6/24/2018.
  */
 public class main {
+    static int parseInt(String in){
+        if(in.length()>=3   ){
+            if(in.charAt(1)=='x'){
+                return Integer.parseInt(in.substring(2),16);
+            }else if(in.charAt(2)=='x') {
+                return Integer.parseInt(in.substring(0,1)+in.substring(3),16);
+            }else {
+                return Integer.parseInt(in,10);
+            }
+        }else{
+            return Integer.parseInt(in,10);
+        }
+    }
     public static void main(String[] args) throws Exception {
 //        Yylex y = new Yylex(new FileReader("input.txt"));
 //        Symbol s = y.next_token();
@@ -23,7 +36,11 @@ public class main {
 //        }
 
 
-        parser p = new parser(new Yylex(new FileReader("input.txt")));
-        Object result = p.parse().value;
+        System.out.println(parseInt("-0x1f"));
+
+
+//        parser p = new parser(new Yylex(new FileReader("input.txt")));
+//        Object result = p.parse().value;
+//        System.out.println(result);
     }
 }
