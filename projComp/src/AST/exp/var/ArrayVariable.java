@@ -1,4 +1,4 @@
-package AST.exp;
+package AST.exp.var;
 
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
