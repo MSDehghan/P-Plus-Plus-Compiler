@@ -314,14 +314,14 @@ exp20			::=		CASE INT_CONST DOUBLEDOT block exp20	{: if( DEBUGS ){ System.out.pr
 
 
 /* sixteenth */
-loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTHES block		{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI expr CLOSEDPRANTHES block			{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOR OPENPRANTHES var_dcl SEMI expr SEMI CLOSEDPRANTHES block				{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOR OPENPRANTHES SEMI expr SEMI assignment CLOSEDPRANTHES block				{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOR OPENPRANTHES SEMI expr SEMI expr CLOSEDPRANTHES block					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOR OPENPRANTHES SEMI expr SEMI CLOSEDPRANTHES block						{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		REPEAT block UNITL OPENPRANTHES expr CLOSEDPRANTHES SEMI					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
-				|		FOREACH OPENPRANTHES ID IN ID CLOSEDPRANTHES block							{: if( DEBUGS ){ System.out.println("loop_stmt found"); } :}
+loop_stmt 		::=		FOR OPENPRANTHES assignment:e1 SEMI expr:e2  SEMI assignment:e3 CLOSEDPRANTHES block:e4		{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,(Assignment)e1,(Exp)e2,(Exp)e3); :}
+				|		FOR OPENPRANTHES assignment:e1 SEMI expr:e2 SEMI expr:e3 CLOSEDPRANTHES block:e4			{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,(Assignment)e1,(Exp)e2,(Exp)e3); :}
+				|		FOR OPENPRANTHES assignment:e1 SEMI expr:e2 SEMI CLOSEDPRANTHES block:e4					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,(Assignment)e1,(Exp)e2, null); :}
+				|		FOR OPENPRANTHES SEMI expr:e2 SEMI assignment:e3 CLOSEDPRANTHES block:e4					{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,null,(Exp)e2,(Exp)e3); :}
+				|		FOR OPENPRANTHES SEMI expr:e2 SEMI expr:e3 CLOSEDPRANTHES block:e4							{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,null,(Exp)e2,(Exp)e3); :}
+				|		FOR OPENPRANTHES SEMI expr:e2 SEMI CLOSEDPRANTHES block:e4									{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new For((Block)e4,null,(Exp)e2,null); :}
+				|		REPEAT block:e1 UNITL OPENPRANTHES expr:e2 CLOSEDPRANTHES SEMI								{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new Repeat((Block)e1,(Exp)e2);:}
+				|		FOREACH OPENPRANTHES ID:e1 IN ID:e2 CLOSEDPRANTHES block:e3									{: if( DEBUGS ){ System.out.println("loop_stmt found"); } RESULT = new ForEach((Block)e3, (String)e1, (String)e2); :}
 				;
 
 
