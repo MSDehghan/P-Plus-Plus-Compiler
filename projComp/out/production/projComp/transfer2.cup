@@ -11,7 +11,6 @@ import AST.exp.binaryExp.conditional.* ;
 import AST.exp.consts.* ;
 import AST.exp.unaryExpression.* ;
 import AST.exp.var.* ;
-import AST.mehtodCall.* ;
 import AST.statement.* ;
 import AST.statement.loop.* ;
 import AST.SymbolTable.* ;
@@ -164,8 +163,7 @@ nonterminal exp10 ;
 nonterminal exp13 ; 
 nonterminal exp15 ; 
 nonterminal exp20 ; 
-nonterminal exp23 ; 
-nonterminal variablePayande;
+nonterminal exp23 ;
 
 
 
@@ -266,10 +264,8 @@ exp13		::=	COMMA var_dcl_cnt exp13		 {: if( DEBUGS ){ System.out.println("exp13 
 			;
 
 /* nineth */
-var_dcl_cnt		::=		variablePayande:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
-				|		variablePayande				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
-				;
-variablePayande ::=		ID exp23		{: if( DEBUGS ){ System.out.println("var payande found"); } :}
+var_dcl_cnt		::=		variable:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+				|		variable				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
 				;
 
 /* tenth */
@@ -292,7 +288,7 @@ statement		::=		expr SEMI			{: if( DEBUGS ){ System.out.println("statement found
 				;
 
 /* twelveth */
-assignment		::=		variablePayande:v EQUAL expr:e		{: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new AST.exp.Assignment((Variable)v,(Exp)e); :}
+assignment		::=		variable:v EQUAL expr:e		{: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new AST.exp.Assignment((Variable)v,(Exp)e); :}
 				;
 
 /* thirteenth */
@@ -339,26 +335,25 @@ loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTH
 expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((Exp)e1,(Exp)e3);  :}
 			|		OPENPRANTHES expr:e  CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; :}
 			|		method_call	{: if( DEBUGS ){ System.out.println("expr found"); }  :}
-			|		variable		{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		variable:e		{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e ; :}
 			|		const_val:e		{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; :}
 			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
-			|		EXCLEM expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
+			|		TILDA expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
 			|		assignment:e 	{:if( DEBUGS ){ System.out.println("expr found"); }RESULT = e;:}
+			|		MM variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } MMPrefix a = new MMPrefix() ; a.setUnary((Exp)e) ;RESULT = a; :}
+			|		PP variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } PPPrefix a = new PPPrefix() ; a.setUnary((Exp)e) ;RESULT = a;:}
+			|		variable:e MM	{: if( DEBUGS ){ System.out.println("variable found"); } MMPostfix a = new MMPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
+			|		variable:e PP	{: if( DEBUGS ){ System.out.println("variable found"); } PPPostfix a = new PPPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
 			;
 
 
 
 /* tweenth */
-variable		::=		ID exp23	{: if( DEBUGS ){ System.out.println("variable found"); }  :}
-				|		TILDA variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
-				|		MM variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
-				|		PP variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
-				|		variable MM	{: if( DEBUGS ){ System.out.println("variable found"); } :}
-				|		variable PP	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+variable		::=		ID:e1 exp23:e2	{: if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,(ArrayList <Exp>)e2);}:}
 				;
 
-exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ((ArrayList <Object>)e1).add(e2); :}
-				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Object>() ; :}
+exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ((ArrayList <Exp>)e1).add((Exp)e2); :}
+				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Exp>() ; :}
 				;
 
 

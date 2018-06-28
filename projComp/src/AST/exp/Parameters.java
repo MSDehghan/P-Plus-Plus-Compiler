@@ -1,4 +1,4 @@
-package AST.mehtodCall;
+package AST.exp;
 
 import AST.Node;
 import AST.exp.Exp;

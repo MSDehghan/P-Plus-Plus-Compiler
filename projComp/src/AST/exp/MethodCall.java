@@ -1,4 +1,4 @@
-package AST.mehtodCall;
+package AST.exp;
 
 import AST.Node;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
