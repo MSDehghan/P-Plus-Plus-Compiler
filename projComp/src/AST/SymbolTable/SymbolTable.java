@@ -2,6 +2,8 @@ package AST.SymbolTable;
 
 import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
+import AST.declaration.InvalidDeclaration;
+import jdk.internal.org.objectweb.asm.Type;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,37 @@ public class SymbolTable {
     private ArrayList<HashMapOurs<String, DSCP>> stackScopes = new ArrayList<HashMapOurs<String, DSCP>>();
     private SymbolTable() {
         stackScopes.add(new HashMapOurs<String, DSCP>());
+    }
+
+    public static Type getTypeFromName(String varType) {
+        Type type;
+        switch (varType) {
+            case "int":
+                type = Type.INT_TYPE;
+                break;
+            case "long":
+                type = Type.LONG_TYPE;
+                break;
+            case "char":
+                type = Type.CHAR_TYPE;
+                break;
+            case "bool":
+                type = Type.BOOLEAN_TYPE;
+                break;
+            case "double":
+                type = Type.DOUBLE_TYPE;
+                break;
+            case "float":
+                type = Type.FLOAT_TYPE;
+                break;
+            case "string":
+                type = Type.getType(String.class);
+                break;
+            default:
+                throw new InvalidDeclaration("Type is not Valid");
+
+        }
+        return type;
     }
 
     public String getNewLabel() {

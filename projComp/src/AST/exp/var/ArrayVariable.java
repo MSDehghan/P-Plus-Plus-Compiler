@@ -1,14 +1,15 @@
 package AST.exp.var;
 
+import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayVariable extends Variable {
-    private List<Integer> arguments = new ArrayList<>();
+    private List<Exp> arguments;
 
-    public ArrayVariable(String varName, List<Integer> arguments) {
+    public ArrayVariable(String varName, List<Exp> arguments) {
         name = varName;
         this.arguments = arguments;
     }

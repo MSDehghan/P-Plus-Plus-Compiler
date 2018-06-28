@@ -1,4 +1,4 @@
-package AST.exp.var;
+package AST.declaration;
 
 public class InvalidDeclaration extends RuntimeException {
     public InvalidDeclaration(String message) {
