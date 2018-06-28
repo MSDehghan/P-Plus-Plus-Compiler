@@ -8,10 +8,10 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
  */
 public class Return extends Statement{
     Exp exp1;
-    Return(){
+    public Return(){
         exp1=null;
     }
-    Return(Exp exp1){
+    public Return(Exp exp1){
         this.exp1 = exp1;
     }
 

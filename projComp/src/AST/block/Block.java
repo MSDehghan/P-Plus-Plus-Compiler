@@ -11,10 +11,8 @@ import java.util.ArrayList;
  */
 public class Block extends Node{
     ArrayList <OperationCode> operationCodes = new ArrayList<>();
-    Block(OperationCode ... codes){
-        for (OperationCode code : codes){
-            this.operationCodes.add(code);
-        }
+    public Block(ArrayList <OperationCode> operationCodes){
+        this.operationCodes = operationCodes;
     }
     @Override
     public void compile(MethodVisitor mv) {

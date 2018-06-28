@@ -270,21 +270,21 @@ var_dcl_cnt		::=		variable:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("v
 				;
 
 /* tenth */
-block		::=		BEGIN exp15 END	{: if( DEBUGS ){ System.out.println("block found"); } :}
+block		::=		BEGIN exp15:e END			{: if( DEBUGS ){ System.out.println("block found"); } RESULT = new Block((ArrayList <OperationCode>)e) ; :}
 			;
-exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found var"); } :}
-			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found state"); } :}
-			|  							{: if( DEBUGS ){ System.out.println("exp15 found empty"); } :}
+exp15		::=		var_dcl:e1 exp15:e2			{: if( DEBUGS ){ System.out.println("exp15 found var"); }   ArrayList <OperationCode> a = (ArrayList <OperationCode>) e2 ; a.add((OperationCode)e1); RESULT = a; :}
+			|		statement:e1 exp15:e2		{: if( DEBUGS ){ System.out.println("exp15 found state"); } ArrayList <OperationCode> a = (ArrayList <OperationCode>) e2 ; a.add((OperationCode)e1); RESULT = a; :}
+			|  									{: if( DEBUGS ){ System.out.println("exp15 found empty"); } RESULT = new ArrayList <OperationCode>(); :}
 			;
 
 /* eleventh */
-statement		::=		expr SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		cond_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		loop_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		RETURN expr SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		BREAK SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		CONTINUE SEMI		{: if( DEBUGS ){ System.out.println("statement found"); } :}
+statement		::=		expr:e SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new ExpressionStatement((Exp)e); :}
+				|		cond_stmt:e			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = e ;:}
+				|		loop_stmt:e			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = e ;:}
+				|		RETURN expr:e SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return((Exp)e) ;:}
+				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return() ;:}
+				|		BREAK SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Break()  ;:}
+				|		CONTINUE SEMI		{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Continue();:}
 				;
 
 /* twelveth */
@@ -305,7 +305,7 @@ parameters		::=		expr:e	{: if( DEBUGS ){ System.out.println("parameters found");
 /* fifteenth */
 cond_stmt		::=		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 ELSE block:e3	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,(Block)e3) ; :}
 				|		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 				{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,null) ;:}
-				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT BEGIN exp20  DEFAULT DOUBLEDOT block END	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
+				|		SWITCH OPENPRANTHES ID:e1 CLOSEDPRANTHES OF DOUBLEDOT BEGIN exp20:e2  DEFAULT DOUBLEDOT block:e3 END	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new Switch((String)e1, (ArrayList <Case>)e2, (Block) e3) ; :}
 				;
 exp20			::=		CASE INT_CONST:e1 DOUBLEDOT block:e2 exp20:e3		{: if( DEBUGS ){ System.out.println("exp20 found"); } ArrayList <Case> a = (ArrayList <Case>)e3; a.add(new Case(new IntConstExp(HelperFunctions.parseInt((String)e1)),(Block)e2)); RESULT = a ;  :}
 				|														{: if( DEBUGS ){ System.out.println("exp20 found"); } RESULT = new ArrayList <Case>() ;:}

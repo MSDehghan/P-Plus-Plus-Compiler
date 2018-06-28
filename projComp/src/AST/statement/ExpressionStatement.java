@@ -8,8 +8,9 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
  */
 public class ExpressionStatement extends Statement {
     Exp exp;
-    ExpressionStatement(){
-
+    //TODO just remember to pop the top value
+    public ExpressionStatement(Exp exp){
+        this.exp = exp;
     }
 
     @Override
