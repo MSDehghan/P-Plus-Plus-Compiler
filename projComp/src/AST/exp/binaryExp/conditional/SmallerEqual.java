@@ -5,7 +5,7 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class SmallerEqual extends BinaryExp {
-    SmallerEqual(){
+    public SmallerEqual(){
 
     }
 

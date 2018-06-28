@@ -1362,7 +1362,16 @@ class CUP$parser$actions {
           case 66: // expr ::= expr binary_op expr 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		int e1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((BinaryExp)e1,(BinaryExp)e3);  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1506,7 +1515,10 @@ class CUP$parser$actions {
           case 82: // binary_op ::= arithmatic 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("binary op found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("binary op found");RESULT = (BinaryExp)e; } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("binary_op",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1515,7 +1527,10 @@ class CUP$parser$actions {
           case 83: // binary_op ::= conditional 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("binary op found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("binary op found"); }RESULT = (BinaryExp)e; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("binary_op",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1524,7 +1539,7 @@ class CUP$parser$actions {
           case 84: // arithmatic ::= PLUS 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Plus();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1533,7 +1548,7 @@ class CUP$parser$actions {
           case 85: // arithmatic ::= MINUS 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Minus();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1542,7 +1557,7 @@ class CUP$parser$actions {
           case 86: // arithmatic ::= MULT 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mult();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1551,7 +1566,7 @@ class CUP$parser$actions {
           case 87: // arithmatic ::= DIVIDE 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Divide();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1560,7 +1575,7 @@ class CUP$parser$actions {
           case 88: // arithmatic ::= MOD 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mod();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1569,7 +1584,7 @@ class CUP$parser$actions {
           case 89: // arithmatic ::= AND 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.And();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1578,7 +1593,7 @@ class CUP$parser$actions {
           case 90: // arithmatic ::= OR 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Or();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1587,7 +1602,7 @@ class CUP$parser$actions {
           case 91: // arithmatic ::= CAROT 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("arithmatic found"); } 
+		 if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Carot();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arithmatic",20, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1596,7 +1611,7 @@ class CUP$parser$actions {
           case 92: // conditional ::= EQEQUAL 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new EqEqual(); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1605,7 +1620,7 @@ class CUP$parser$actions {
           case 93: // conditional ::= NOTEQUAL 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new NotEqual();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1614,7 +1629,7 @@ class CUP$parser$actions {
           case 94: // conditional ::= BIGEQUAL 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new GreaterEqual();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1623,7 +1638,7 @@ class CUP$parser$actions {
           case 95: // conditional ::= SMALLEQUAL 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new SmallerEqual();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1632,7 +1647,7 @@ class CUP$parser$actions {
           case 96: // conditional ::= SMALLER 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Smaller();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1641,7 +1656,7 @@ class CUP$parser$actions {
           case 97: // conditional ::= BIGGER 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Greater(); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1650,7 +1665,7 @@ class CUP$parser$actions {
           case 98: // conditional ::= ANDC 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.And();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1659,7 +1674,7 @@ class CUP$parser$actions {
           case 99: // conditional ::= ORC 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Or();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1668,7 +1683,7 @@ class CUP$parser$actions {
           case 100: // conditional ::= NOTC 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("conditional found"); } 
+		 if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Not();
               CUP$parser$result = parser.getSymbolFactory().newSymbol("conditional",21, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1689,7 +1704,10 @@ class CUP$parser$actions {
           case 102: // const_val ::= REAL_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } RESULT = new RealConstExp(Double.parseDouble((String)e)); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1698,7 +1716,10 @@ class CUP$parser$actions {
           case 103: // const_val ::= CHAR_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } RESULT = new CharConstExp(((String)e).charAt(0)) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1707,7 +1728,10 @@ class CUP$parser$actions {
           case 104: // const_val ::= BOOL_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } RESULT = new BooleanConstExp(((String)e).equals("true" )? true : false ) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1716,7 +1740,10 @@ class CUP$parser$actions {
           case 105: // const_val ::= STRING_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } RESULT = new StringConstExp((String)e); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1725,7 +1752,10 @@ class CUP$parser$actions {
           case 106: // const_val ::= LONG_CONST 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); }   
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

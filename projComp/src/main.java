@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class main {
+    public static boolean DEBAUG = true;
     static int parseInt(String in){
         if(in.length()>=3   ){
             if(in.charAt(1)=='x'){

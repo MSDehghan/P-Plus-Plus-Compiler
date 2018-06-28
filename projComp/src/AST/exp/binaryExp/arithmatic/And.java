@@ -9,6 +9,9 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
  */
 public class And extends BinaryExp {
 
+    public And(){
+
+    }
 
     @Override
     public void compile(MethodVisitor mv) {

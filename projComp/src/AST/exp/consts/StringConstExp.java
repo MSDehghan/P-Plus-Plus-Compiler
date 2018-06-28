@@ -3,16 +3,19 @@ package AST.exp.consts;
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
+import preDefinedValues.DefinedValues;
 
 public class StringConstExp extends Exp {
-    private StringConstExp value;
+    private String value;
 
-    public StringConstExp(StringConstExp value) {
-        type = Type.getType(StringConstExp.class);
+    public StringConstExp(String value) {
+        if(DefinedValues.DEBUG)
+        System.out.println(value);
+        type = Type.getType(String.class);
         this.value = value;
     }
 
-    public StringConstExp getValue() {
+    public String getValue() {
         return value;
     }
 

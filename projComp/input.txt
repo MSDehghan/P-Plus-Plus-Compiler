@@ -1,4 +1,5 @@
 int pooria()
 begin
-int a = -0xf;
+int a = 1 * 2;
+
 end

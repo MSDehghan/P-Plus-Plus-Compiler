@@ -44,7 +44,7 @@ intNumber = [+-]?{PositiveDecimalInteger}
 
 FloatLiteral1    = [0-9]+ \. [0-9]*
 FloatLiteral2    = \. [0-9]+
-FloatLiteral3    = [0-9]+ \.
+FloatLiteral3    = [0-9]+
 Exponent = [eE] [+-]? [0-9]+
 
 RealNumber = [+-]?({FloatLiteral1}|{FloatLiteral2}|{FloatLiteral3}) {Exponent}?
@@ -206,8 +206,8 @@ SingleCharacter = [^\r\n\'\\]
  {true}  { return symbol(sym.BOOL_CONST, yytext() ) ; }
 
 {id}		{return symbol(sym.ID, yytext() );}
-{RealNumber} {return symbol(sym.REAL_CONST, yytext() );}
 {intNumber} {return symbol(sym.INT_CONST, yytext() );}
+{RealNumber} {return symbol(sym.REAL_CONST, yytext() );}
 
 
 

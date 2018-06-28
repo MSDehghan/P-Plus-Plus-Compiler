@@ -2,6 +2,8 @@ package AST.exp.binaryExp;
 
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.Type;
+import preDefinedValues.DefinedValues;
+
 
 /**
  * Created by pooria on 6/27/2018.
@@ -17,13 +19,9 @@ public abstract class BinaryExp extends Exp {
 
 
     public BinaryExp SetBinaryExp(Exp exp1, Exp exp2){
-        this.exp1=exp1;
-        this.exp2=exp2;
-        return this;
-    }
-
-
-    protected Exp setExp(Exp exp1, Exp exp2){
+        if(DefinedValues.DEBUG){
+            System.out.println("hey");
+        }
         this.exp1=exp1;
         this.exp2=exp2;
         return this;

@@ -5,7 +5,7 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Greater extends BinaryExp {
-    Greater(){
+    public Greater(){
 
     }
 
