@@ -20,4 +20,11 @@ public abstract class BinaryExp extends Exp {
         this.exp1=exp1;
         this.exp2=exp2;
     }
+
+
+    protected Exp setExp(Exp exp1, Exp exp2){
+        this.exp1=exp1;
+        this.exp2=exp2;
+        return this;
+    }
 }
