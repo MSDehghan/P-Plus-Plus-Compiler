@@ -5,8 +5,8 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Minus extends Unary {
 
-    Minus(Exp exp1) {
-        super(exp1);
+    Minus() {
+
     }
 
     @Override

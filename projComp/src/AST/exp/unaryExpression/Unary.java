@@ -7,7 +7,11 @@ import AST.exp.Exp;
  */
 public abstract class Unary extends Exp{
     Exp exp1;
-    Unary(Exp exp1){
+    Unary(){
+
+    }
+    public Unary setUnary(Exp exp1){
         this.exp1 = exp1;
+        return this;
     }
 }

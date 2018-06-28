@@ -15,9 +15,10 @@ public abstract class BinaryExp extends Exp {
         return null;
     }
 
-    protected BinaryExp(Exp exp1, Exp exp2){
-        super(computeType(exp1.getType(),exp2.getType()));
+
+    public BinaryExp SetBinaryExp(Exp exp1, Exp exp2){
         this.exp1=exp1;
         this.exp2=exp2;
+        return this;
     }
 }

@@ -5,8 +5,8 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Not extends Unary {
 
-    Not(Exp exp1) {
-        super(exp1);
+    Not() {
+
     }
 
     @Override
