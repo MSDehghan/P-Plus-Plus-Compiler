@@ -17,6 +17,18 @@ public class SymbolTable {
         stackScopes.add(new HashMapOurs<String, DSCP>());
     }
 
+
+    /**
+     *
+     * @param name
+     * @return
+     * @exception throws exception at the seeing of class names which do not exist
+     */
+    Integer getSize(String name){
+
+        return null;
+    }
+
     public static Type getTypeFromName(String varType) {
         Type type;
         switch (varType) {

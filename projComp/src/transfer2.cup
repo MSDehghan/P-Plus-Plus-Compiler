@@ -284,7 +284,6 @@ statement		::=		expr SEMI			{: if( DEBUGS ){ System.out.println("statement found
 				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				|		BREAK SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				|		CONTINUE SEMI		{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		SIZEOF OPENPRANTHES type CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				;
 
 /* twelveth */
@@ -344,6 +343,7 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 			|		PP variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } PPPrefix a = new PPPrefix() ; a.setUnary((Exp)e) ;RESULT = a;:}
 			|		variable:e MM	{: if( DEBUGS ){ System.out.println("variable found"); } MMPostfix a = new MMPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
 			|		variable:e PP	{: if( DEBUGS ){ System.out.println("variable found"); } PPPostfix a = new PPPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
+			|		SIZEOF OPENPRANTHES type:e CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("statement found"); } :}
 			;
 
 
