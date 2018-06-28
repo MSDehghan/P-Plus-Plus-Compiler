@@ -13,6 +13,7 @@ import AST.exp.unaryExpression.* ;
 import AST.exp.var.* ;
 import AST.statement.* ;
 import AST.statement.loop.* ;
+import AST.statement.cond.* ;
 import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
 import java.util.ArrayList;
@@ -234,16 +235,16 @@ exp6 			::=		OPENBRAK CLOSEDBRAK exp6	{: if( DEBUGS ){ System.out.println("exp6 
 				;
 
 /* sixth */
-type	::=	INT 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	BOOL 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	FLOAT		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	LONG 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	CHAR 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	DOUBLE 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	ID			{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	STRING 		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	VOID		{: if( DEBUGS ){ System.out.println("type found"); } :}
-		|	AUTO 		{: if( DEBUGS ){ System.out.println("type found"); } :}
+type	::=	INT:e 		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	BOOL:e 		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	FLOAT:e		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	LONG:e 		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	CHAR:e 		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	DOUBLE:e	{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	ID:e		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	STRING:e	{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	VOID:e		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
+		|	AUTO:e		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e ; :}
 		;
 
 
@@ -302,12 +303,12 @@ parameters		::=		expr:e	{: if( DEBUGS ){ System.out.println("parameters found");
 
 
 /* fifteenth */
-cond_stmt		::=		IF OPENPRANTHES expr CLOSEDPRANTHES block ELSE block	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
-				|		IF OPENPRANTHES expr CLOSEDPRANTHES block 				{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
-				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT OPENCURLBRAK exp20  DEFAULT DOUBLEDOT block CLOSEDCURLBRAK	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
+cond_stmt		::=		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 ELSE block:e3	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,(Block)e3) ; :}
+				|		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 				{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,null) ;:}
+				|		SWITCH OPENPRANTHES ID 	CLOSEDPRANTHES OF DOUBLEDOT BEGIN exp20  DEFAULT DOUBLEDOT block END	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } :}
 				;
-exp20			::=		CASE INT_CONST DOUBLEDOT block exp20	{: if( DEBUGS ){ System.out.println("exp20 found"); } :}
-				|			{: if( DEBUGS ){ System.out.println("exp20 found"); } :}
+exp20			::=		CASE INT_CONST:e1 DOUBLEDOT block:e2 exp20:e3		{: if( DEBUGS ){ System.out.println("exp20 found"); } ArrayList <Case> a = (ArrayList <Case>)e3; a.add(new Case(new IntConstExp(HelperFunctions.parseInt((String)e1)),(Block)e2)); RESULT = a ;  :}
+				|														{: if( DEBUGS ){ System.out.println("exp20 found"); } RESULT = new ArrayList <Case>() ;:}
 				;
 
 
@@ -343,8 +344,8 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 			|		PP variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } PPPrefix a = new PPPrefix() ; a.setUnary((Exp)e) ;RESULT = a;:}
 			|		variable:e MM	{: if( DEBUGS ){ System.out.println("variable found"); } MMPostfix a = new MMPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
 			|		variable:e PP	{: if( DEBUGS ){ System.out.println("variable found"); } PPPostfix a = new PPPostfix() ; a.setUnary((Exp)e) ;RESULT = a;:}
-			|		SIZEOF OPENPRANTHES type:e CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("statement found"); } :}
-			;
+			|		SIZEOF OPENPRANTHES type:e CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new SizeOf((String)e); :}
+			;//TODO type needs to have a method for computing its type
 
 
 
