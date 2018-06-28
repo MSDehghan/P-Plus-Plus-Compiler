@@ -17,6 +17,7 @@ import AST.statement.cond.* ;
 import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
 import java.util.ArrayList;
+import javafx.util.Pair;
 
 
 
@@ -256,17 +257,18 @@ exp10		::=	var_dcl exp10		{: if( DEBUGS ){ System.out.println("exp10 found"); } 
 			;
 
 /* eightth */
-var_dcl 	::=	CONST type var_dcl_cnt exp13 SEMI	{: if( DEBUGS ){ System.out.println("var_dcl found"); } :}
-			|	type var_dcl_cnt exp13 	SEMI		{: if( DEBUGS ){ System.out.println("var_dcl found"); } :}
+var_dcl 	::=	CONST type:e1 var_dcl_cnt:e2 exp13:e3 SEMI	{: if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); RESULT = new DCLS(a,(String)e1,true); :}
+			|	type:e1 var_dcl_cnt:e2 exp13:e3 SEMI		{: if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); RESULT = new DCLS(a,(String)e1,false); :}
 			;
 			
-exp13		::=	COMMA var_dcl_cnt exp13		 {: if( DEBUGS ){ System.out.println("exp13 found"); } :}
-			|				{: if( DEBUGS ){ System.out.println("exp13 found"); } :}
+exp13		::=	COMMA var_dcl_cnt:e1 exp13:e2	 {: if( DEBUGS ){ System.out.println("exp13 found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e2; a.add((SpecClass)e1); RESULT = a ; :}
+			|				{: if( DEBUGS ){ System.out.println("exp13 found"); } RESULT = new ArrayList <SpecClass>() ; :}
 			;
 
 /* nineth */
-var_dcl_cnt		::=		variable:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
-				|		variable				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+//TODO the meaning had to change for it to mage sense
+var_dcl_cnt		::=		ID:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); }RESULT = new SpecClass((String)v, null, (Exp)e); ; :}
+				|		ID:e1 exp23:e2		{: if( DEBUGS ){ System.out.println("var dcl cnt found"); }RESULT = new SpecClass((String)e1, (ArrayList <Exp>)e2, null); :}
 				;
 
 /* tenth */
@@ -353,7 +355,7 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 variable		::=		ID:e1 exp23:e2	{: if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,(ArrayList <Exp>)e2);}:}
 				;
 
-exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ((ArrayList <Exp>)e1).add((Exp)e2); :}
+exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ArrayList <Exp> a=(ArrayList <Exp>)e1;a.add((Exp)e2); RESULT = a; :}
 				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Exp>() ; :}
 				;
 

@@ -1,9 +1,10 @@
 package AST.declaration;
 
+import AST.OperationCode;
 import AST.SymbolTable.SymbolTable;
 import jdk.internal.org.objectweb.asm.Type;
 
-public class VariableDeclaration {
+public abstract class VariableDeclaration extends OperationCode {
     String name;
 
     public String getName() {

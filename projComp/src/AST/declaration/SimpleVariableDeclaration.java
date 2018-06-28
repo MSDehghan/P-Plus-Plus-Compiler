@@ -5,6 +5,7 @@ import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_VAR_DYNAMIC;
 import AST.SymbolTable.dscp.DSCP_VAR_STATIC;
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
@@ -45,5 +46,10 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);
+    }
+
+    @Override
+    public void compile(MethodVisitor mv) {
+
     }
 }

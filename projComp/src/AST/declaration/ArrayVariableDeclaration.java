@@ -1,6 +1,7 @@
 package AST.declaration;
 
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.List;
 
@@ -10,6 +11,11 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     public ArrayVariableDeclaration(String varName,List<Exp> dimensions) {
         name = varName;
         this.dimensions = dimensions;
+
+    }
+
+    @Override
+    public void compile(MethodVisitor mv) {
 
     }
 }
