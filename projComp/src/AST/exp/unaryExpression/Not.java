@@ -5,7 +5,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Not extends Unary {
 
-    Not() {
+    public Not() {
 
     }
 

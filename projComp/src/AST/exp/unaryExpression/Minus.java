@@ -5,7 +5,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Minus extends Unary {
 
-    Minus() {
+    public Minus() {
 
     }
 

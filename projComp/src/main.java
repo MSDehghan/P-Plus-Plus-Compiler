@@ -2,6 +2,7 @@ import java_cup.runtime.Symbol;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class main {
     public static boolean DEBAUG = true;
@@ -35,7 +36,6 @@ public class main {
 
 
 //        System.out.println(Integer.parseInt("-0x1f"));
-
 
         parser p = new parser(new Yylex(new FileReader("input.txt")));
         Object result = p.parse().value;

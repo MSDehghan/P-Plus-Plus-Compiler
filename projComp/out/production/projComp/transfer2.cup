@@ -16,6 +16,7 @@ import AST.statement.* ;
 import AST.statement.loop.* ;
 import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
+import java.util.ArrayList;
 
 
 
@@ -183,6 +184,7 @@ precedence left MULT, DIVIDE, MOD;
 precedence right EXCLEM;
 precedence left  OPENBRAK, CLOSEDBRAK, OPENPRANTHES, CLOSEDPRANTHES;
 precedence right PP, MM, NOTC;
+precedence right TILDA;
 precedence left UMINUS;
 
 
@@ -264,7 +266,7 @@ exp13		::=	COMMA var_dcl_cnt exp13		 {: if( DEBUGS ){ System.out.println("exp13 
 			;
 
 /* nineth */
-var_dcl_cnt		::=		variablePayande EQUAL expr	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+var_dcl_cnt		::=		variablePayande:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
 				|		variablePayande				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
 				;
 variablePayande ::=		ID exp23		{: if( DEBUGS ){ System.out.println("var payande found"); } :}
@@ -290,7 +292,7 @@ statement		::=		expr SEMI			{: if( DEBUGS ){ System.out.println("statement found
 				;
 
 /* twelveth */
-assignment		::=		variablePayande EQUAL expr		{: if( DEBUGS ){ System.out.println("assignment found"); } :}
+assignment		::=		variablePayande:v EQUAL expr:e		{: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new AST.exp.Assignment((Variable)v,(Exp)e); :}
 				;
 
 /* thirteenth */
@@ -334,20 +336,20 @@ loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTH
 
 
 /* eighteenth */
-expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((BinaryExp)e1,(BinaryExp)e3);  :}
-			|		OPENPRANTHES expr CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } :}
-			|		method_call	{: if( DEBUGS ){ System.out.println("expr found"); } :}
+expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((Exp)e1,(Exp)e3);  :}
+			|		OPENPRANTHES expr:e  CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; :}
+			|		method_call	{: if( DEBUGS ){ System.out.println("expr found"); }  :}
 			|		variable		{: if( DEBUGS ){ System.out.println("expr found"); } :}
-			|		const_val		{: if( DEBUGS ){ System.out.println("expr found"); } :}
-			|		MINUS expr {: if( DEBUGS ){ System.out.println("expr found"); } :}	%prec  UMINUS
-			|		EXCLEM expr	{: if( DEBUGS ){ System.out.println("expr found"); } :}
-			|		assignment  	{::}
+			|		const_val:e		{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; :}
+			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
+			|		EXCLEM expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
+			|		assignment:e 	{:if( DEBUGS ){ System.out.println("expr found"); }RESULT = e;:}
 			;
 
 
 
 /* tweenth */
-variable		::=		ID exp23	{: if( DEBUGS ){ System.out.println("variable found"); } :}
+variable		::=		ID exp23	{: if( DEBUGS ){ System.out.println("variable found"); }  :}
 				|		TILDA variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
 				|		MM variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
 				|		PP variable	{: if( DEBUGS ){ System.out.println("variable found"); } :}
@@ -355,8 +357,8 @@ variable		::=		ID exp23	{: if( DEBUGS ){ System.out.println("variable found"); }
 				|		variable PP	{: if( DEBUGS ){ System.out.println("variable found"); } :}
 				;
 
-exp23			::=		OPENBRAK expr CLOSEDBRAK exp23	{: if( DEBUGS ){ System.out.println("exp32 found"); } :}
-				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } :}
+exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ((ArrayList <Object>)e1).add(e2); :}
+				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Object>() ; :}
 				;
 
 

@@ -20,6 +20,7 @@ import AST.statement.*;
 import AST.statement.loop.*;
 import AST.SymbolTable.*;
 import AST.SymbolTable.dscp.*;
+import java.util.ArrayList;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -280,7 +281,7 @@ public class parser extends java_cup.runtime.lr_parser {
     "\uffb4\070\uffb4\071\uffb4\072\uffb4\073\uffb4\074\uffb4\075\uffb4" +
     "\076\uffb4\077\uffb4\100\uffb4\101\uffb4\102\uffb4\001\002\000" +
     "\060\005\uffb6\010\uffb6\026\uffb6\042\uffb6\056\uffb6\057\uffb6" +
-    "\061\116\062\115\064\uffb6\065\uffb6\066\uffb6\067\uffb6\070" +
+    "\061\uffb6\062\uffb6\064\uffb6\065\uffb6\066\uffb6\067\uffb6\070" +
     "\uffb6\071\uffb6\072\uffb6\073\uffb6\074\uffb6\075\uffb6\076\uffb6" +
     "\077\uffb6\100\uffb6\101\uffb6\102\uffb6\001\002\000\062\005" +
     "\uffb7\010\uffb7\026\uffb7\027\uffde\042\uffb7\056\uffb7\057\uffb7" +
@@ -1065,6 +1066,12 @@ class CUP$parser$actions {
           case 33: // var_dcl_cnt ::= variablePayande EQUAL expr 
             {
               Object RESULT =null;
+		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object v = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
 		 if( DEBUGS ){ System.out.println("var dcl cnt found"); } 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("var_dcl_cnt",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1200,7 +1207,13 @@ class CUP$parser$actions {
           case 48: // assignment ::= variablePayande EQUAL expr 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("assignment found"); } 
+		int vleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int vright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object v = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new AST.exp.Assignment((Variable)v,(Exp)e); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("assignment",13, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1371,7 +1384,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((BinaryExp)e1,(BinaryExp)e3);  
+		 if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((Exp)e1,(Exp)e3);  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1380,7 +1393,10 @@ class CUP$parser$actions {
           case 67: // expr ::= OPENPRANTHES expr CLOSEDPRANTHES 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1389,7 +1405,7 @@ class CUP$parser$actions {
           case 68: // expr ::= method_call 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		 if( DEBUGS ){ System.out.println("expr found"); }  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1407,7 +1423,10 @@ class CUP$parser$actions {
           case 70: // expr ::= const_val 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1416,7 +1435,10 @@ class CUP$parser$actions {
           case 71: // expr ::= MINUS expr 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1425,7 +1447,10 @@ class CUP$parser$actions {
           case 72: // expr ::= EXCLEM expr 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("expr found"); } 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1434,7 +1459,10 @@ class CUP$parser$actions {
           case 73: // expr ::= assignment 
             {
               Object RESULT =null;
-		
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		if( DEBUGS ){ System.out.println("expr found"); }RESULT = e;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1443,7 +1471,7 @@ class CUP$parser$actions {
           case 74: // variable ::= ID exp23 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("variable found"); } 
+		 if( DEBUGS ){ System.out.println("variable found"); }  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1497,7 +1525,13 @@ class CUP$parser$actions {
           case 80: // exp23 ::= OPENBRAK expr CLOSEDBRAK exp23 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("exp32 found"); } 
+		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int e1left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("exp32 found"); } ((ArrayList <Object>)e1).add(e2); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp23",27, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1506,7 +1540,7 @@ class CUP$parser$actions {
           case 81: // exp23 ::= 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("exp23 found"); } 
+		 if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Object>() ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("exp23",27, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

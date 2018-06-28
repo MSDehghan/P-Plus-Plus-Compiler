@@ -5,7 +5,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Parentheses extends Unary {
 
-    Parentheses() {
+    public Parentheses() {
 
     }
 
