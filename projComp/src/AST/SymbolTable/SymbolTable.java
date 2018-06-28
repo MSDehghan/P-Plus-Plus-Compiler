@@ -24,7 +24,7 @@ public class SymbolTable {
      * @return
      * @exception throws exception at the seeing of class names which do not exist
      */
-    Integer getSize(String name){
+    static Integer getSize(String name){
 
         return null;
     }
