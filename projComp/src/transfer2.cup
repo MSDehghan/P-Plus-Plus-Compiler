@@ -265,8 +265,9 @@ exp13		::=	COMMA var_dcl_cnt exp13		 {: if( DEBUGS ){ System.out.println("exp13 
 			;
 
 /* nineth */
-var_dcl_cnt		::=		variable:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
-				|		variable				{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+//TODO the meaning had to change for it to mage sense
+var_dcl_cnt		::=		ID:v EQUAL expr:e	{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
+				|		ID:e1 exp23:e2		{: if( DEBUGS ){ System.out.println("var dcl cnt found"); } :}
 				;
 
 /* tenth */
