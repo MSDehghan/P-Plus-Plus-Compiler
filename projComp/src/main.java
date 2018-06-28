@@ -33,11 +33,11 @@ public class main {
 //        }
 
 
-        System.out.println(parseInt("-0x1f"));
+//        System.out.println(Integer.parseInt("-0x1f"));
 
 
-//        parser p = new parser(new Yylex(new FileReader("input.txt")));
-//        Object result = p.parse().value;
+        parser p = new parser(new Yylex(new FileReader("input.txt")));
+        Object result = p.parse().value;
 //        System.out.println(result);
     }
 }

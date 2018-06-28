@@ -1,1 +1,4 @@
--0x15
+int pooria()
+begin
+int a = -0xf;
+end

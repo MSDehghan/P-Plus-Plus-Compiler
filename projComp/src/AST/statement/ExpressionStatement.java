@@ -1,15 +1,15 @@
 package AST.statement;
 
 import AST.exp.Exp;
-import AST.exp.var.Variable;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-public class Assignment extends Statement {
-    Variable var;
+/**
+ * Created by pooria on 6/28/2018.
+ */
+public class ExpressionStatement extends Statement {
     Exp exp;
-    Assignment(Variable var, Exp exp){
-        this.var = var;
-        this.exp = exp;
+    ExpressionStatement(){
+
     }
 
     @Override

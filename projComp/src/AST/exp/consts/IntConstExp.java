@@ -8,6 +8,7 @@ public class IntConstExp extends Exp {
     private Integer value;
 
     public IntConstExp(Integer value) {
+        System.out.println(value);
         type = Type.INT_TYPE;
         this.value = value;
     }

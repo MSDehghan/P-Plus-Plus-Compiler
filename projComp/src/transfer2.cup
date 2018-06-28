@@ -1,8 +1,27 @@
 
 import java_cup.runtime.*;
 import java.util.ArrayList;
+import AST.*;
+import AST.block.* ;
+import AST.declaration.* ;
+import AST.exp.* ;
+import AST.exp.binaryExp.* ;
+import AST.exp.binaryExp.arithmatic.* ;
+import AST.exp.binaryExp.conditional.* ;
+import AST.exp.consts.* ;
+import AST.exp.unaryExpression.* ;
+import AST.exp.var.* ;
+import AST.mehtodCall.* ;
+import AST.statement.* ;
+import AST.statement.loop.* ;
+import AST.SymbolTable.* ;
+import AST.SymbolTable.dscp.* ;
+
+
+
 parser code {:
 	boolean DEBUGS = true;
+
     /* Change the method report_error so it will display the line and
        column of where the error occurred in the input as well as the
        reason for the error which is passed into the method in the
@@ -373,7 +392,7 @@ conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional foun
 
 
 /* twenty fourth */
-const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } RESULT = new Node(new Integer((String)e)) ; :}
+const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by INT_CONST"); } RESULT = new IntConstExp(HelperFunctions.parseInt((String)e)) ; :}
 				|		REAL_CONST		{: if( DEBUGS ){ System.out.println("const val found by REAL_CONST"); } :}
 				|		CHAR_CONST		{: if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } :}
 				|		BOOL_CONST		{: if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } :}

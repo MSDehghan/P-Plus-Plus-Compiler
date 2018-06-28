@@ -5,8 +5,8 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 public class Not extends BinaryExp {
-    Not(Exp exp1, Exp exp2){
-        super(exp1, exp2);
+    Not(){
+
     }
 
     @Override
