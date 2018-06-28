@@ -30,7 +30,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
 
     /**
      * @param staticDec check if it is static or not
-     * @param type Type of Variable
+     * @param type      Type of Variable
      * @throws IllegalArgumentException if type and name is not set!
      */
     private void declare(boolean staticDec, Type type) {

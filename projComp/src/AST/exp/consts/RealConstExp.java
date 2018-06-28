@@ -10,7 +10,8 @@ public class RealConstExp extends Exp {
 
     public RealConstExp(Double value) {
         if(DefinedValues.DEBUG)
-        System.out.println(value);
+            System.out.println(value);
+
         this.value = value;
         type = Type.DOUBLE_TYPE;
     }
