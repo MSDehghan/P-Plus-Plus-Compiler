@@ -292,13 +292,13 @@ assignment		::=		variable:v EQUAL expr:e		{: if( DEBUGS ){ System.out.println("a
 				;
 
 /* thirteenth */
-method_call		::=		ID OPENPRANTHES parameters CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found"); } :}
-				|		ID:e OPENPRANTHES  CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found");  }  :}
+method_call		::=		ID:e OPENPRANTHES parameters:e1 CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found"); } RESULT = new MethodCall((String)e, (ArrayList<Exp>)e1); :}
+				|		ID:e OPENPRANTHES  CLOSEDPRANTHES		{: if( DEBUGS ){ System.out.println("method found");  } RESULT = new MethodCall((String)e,new ArrayList<Exp>()); :}
 				;
 
 /* fourteenth */
-parameters		::=		expr	{: if( DEBUGS ){ System.out.println("parameters found"); } :}
-				|		expr COMMA parameters	{: if( DEBUGS ){ System.out.println("parameters found"); } :}
+parameters		::=		expr:e	{: if( DEBUGS ){ System.out.println("parameters found"); } ArrayList <Exp> a = new ArrayList<Exp>();	 a.add((Exp)e); RESULT = a; :}
+				|		expr:e COMMA parameters:e1	{: if( DEBUGS ){ System.out.println("parameters found"); } ((ArrayList <Exp>)e1).add((Exp)e); RESULT = e1; :}
 				;
 
 
@@ -334,7 +334,7 @@ loop_stmt 		::=		FOR OPENPRANTHES var_dcl SEMI expr SEMI assignment CLOSEDPRANTH
 /* eighteenth */
 expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((Exp)e1,(Exp)e3);  :}
 			|		OPENPRANTHES expr:e  CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; :}
-			|		method_call	{: if( DEBUGS ){ System.out.println("expr found"); }  :}
+			|		method_call:e	{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e;  :}
 			|		variable:e		{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e ; :}
 			|		const_val:e		{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; :}
 			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
