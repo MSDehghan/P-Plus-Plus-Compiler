@@ -3,9 +3,6 @@ import java_cup.runtime.Symbol;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-/**
- * Created by pooria on 6/24/2018.
- */
 public class main {
     static int parseInt(String in){
         if(in.length()>=3   ){

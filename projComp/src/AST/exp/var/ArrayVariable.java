@@ -15,6 +15,6 @@ public class ArrayVariable extends Variable {
 
     @Override
     public void compile(MethodVisitor mv) {
-    	
+
     }
 }
