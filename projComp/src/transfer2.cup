@@ -256,13 +256,11 @@ block		::=		BEGIN exp15 END	{: if( DEBUGS ){ System.out.println("block found"); 
 			;
 exp15		::=		var_dcl exp15		{: if( DEBUGS ){ System.out.println("exp15 found var"); } :}
 			|		statement exp15		{: if( DEBUGS ){ System.out.println("exp15 found state"); } :}
-			|  		variable SEMI		{: if( DEBUGS ){ System.out.println("exp15 found empty"); } :}
 			|  							{: if( DEBUGS ){ System.out.println("exp15 found empty"); } :}
 			;
 
 /* eleventh */
-statement		::=		assignment			{: if( DEBUGS ){ System.out.println("statement found"); } :}
-				|		method_call	SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } :}
+statement		::=		expr SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				|		cond_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				|		loop_stmt			{: if( DEBUGS ){ System.out.println("statement found"); } :}
 				|		RETURN expr SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } :}
@@ -273,7 +271,7 @@ statement		::=		assignment			{: if( DEBUGS ){ System.out.println("statement foun
 				;
 
 /* twelveth */
-assignment		::=		variable EQUAL expr		{: if( DEBUGS ){ System.out.println("assignment found"); } :}
+assignment		::=		variablePayande EQUAL expr		{: if( DEBUGS ){ System.out.println("assignment found"); } :}
 				;
 
 /* thirteenth */
@@ -324,6 +322,7 @@ expr		::=		expr  binary_op  expr			{: if( DEBUGS ){ System.out.println("expr fou
 			|		const_val		{: if( DEBUGS ){ System.out.println("expr found"); } :}
 			|		MINUS expr {: if( DEBUGS ){ System.out.println("expr found"); } :}	%prec  UMINUS
 			|		EXCLEM expr	{: if( DEBUGS ){ System.out.println("expr found"); } :}
+			|		assignment  	{::}
 			;
 
 
