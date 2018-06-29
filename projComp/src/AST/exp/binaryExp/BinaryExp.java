@@ -17,6 +17,13 @@ public abstract class BinaryExp extends Exp {
         return null;
     }
 
+    @Override
+    public Type getType() {
+        if (type != null) return type;
+        if (exp1.getType() != exp2.getType())
+            throw new IllegalArgumentException("Two Operands must be of the same type");
+        return type = exp1.getType();
+    }
 
     public BinaryExp SetBinaryExp(Exp exp1, Exp exp2){
         if(DefinedValues.DEBUG){
