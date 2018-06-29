@@ -1,21 +1,29 @@
 package AST.exp.unaryExpression;
 
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
 /**
  * Created by pooria on 6/28/2018.
  */
 public abstract class Unary extends Exp{
-    Exp exp1;
+    Exp exp;
     public Unary(){
 
     }
+
+    @Override
+    public Type getType() {
+        if (type != null) return type;
+        return type = exp.getType();
+    }
+
     public Unary setUnary(Exp exp1){
         if(DefinedValues.DEBUG){
             System.out.println("unary was made in ast");
         }
-        this.exp1 = exp1;
+        this.exp = exp1;
         return this;
     }
 }

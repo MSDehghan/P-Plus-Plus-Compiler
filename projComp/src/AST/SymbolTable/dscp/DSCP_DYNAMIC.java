@@ -19,4 +19,8 @@ public abstract class DSCP_DYNAMIC extends DSCP {
         super(name, typeS);
         this.index = index;
     }
+
+    public int getIndex() {
+        return index;
+    }
 }

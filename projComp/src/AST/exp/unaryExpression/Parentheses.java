@@ -11,6 +11,6 @@ public class Parentheses extends Unary {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        exp.compile(mv,cv);
     }
 }
