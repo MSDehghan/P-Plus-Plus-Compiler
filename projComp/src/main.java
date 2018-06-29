@@ -1,14 +1,16 @@
+import AST.Program;
 import java_cup.runtime.Symbol;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 
 public class main {
-    public static ArrayList <Node> program =new ArrayList<Node>() ;
+    public static Program program =new Program() ;
 
 
 
     public static void main(String[] args) throws Exception {
+//        program.nodes.add();
 
 //        Long a = new Long("-12L");
 //        System.out.println(a.substring(0,a.length()-1));

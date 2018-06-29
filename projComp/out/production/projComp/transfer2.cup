@@ -203,9 +203,9 @@ precedence left UMINUS;
 
 
 /* first */
-program 	::=		var_dcl:e       program 	{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e); :}
-			|		func_extern:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e);:}
-			|		struct_dec:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e);:}
+program 	::=		var_dcl:e       program 	{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
+			|		func_extern:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
+			|		struct_dec:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
 			|						
 			; 
 
