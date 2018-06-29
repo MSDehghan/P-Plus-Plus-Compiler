@@ -22,6 +22,6 @@ public class StringConstExp extends Exp {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        mv.visitLdcInsn(value);
     }
 }

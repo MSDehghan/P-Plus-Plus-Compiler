@@ -14,7 +14,7 @@ public class SizeOf extends Exp {
 
     public SizeOf(String id) {
         type = Type.INT_TYPE;
-        this.value = SymbolTable.getSize(id);
+        this.value = SymbolTable.getInstance().getSize(id);
     }
 
     public Integer getValue() {
@@ -23,6 +23,6 @@ public class SizeOf extends Exp {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        IntConstExp.storeIntValue(mv, value);
     }
 }

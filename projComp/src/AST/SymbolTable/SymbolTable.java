@@ -14,19 +14,47 @@ public class SymbolTable {
     private ArrayList<HashMapOurs<String, DSCP>> stackScopes = new ArrayList<HashMapOurs<String, DSCP>>();
 
     private SymbolTable() {
-        stackScopes.add(new HashMapOurs<String, DSCP>());
+        HashMapOurs<String, DSCP> mainFrame = new HashMapOurs<>();
+        mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
+        stackScopes.add(mainFrame);
     }
 
 
     /**
      *
-     * @param name
-     * @return
-     * @exception throws exception at the seeing of class names which do not exist
+     * @param name name of type
+     * @return int
+     * @throws IllegalArgumentException at the seeing of class names which do not exist
      */
-    public static Integer getSize(String name){
+    public int getSize(String name){
+        int  size;
+        switch (name) {
+            case "int":
+                size = Integer.SIZE;
+                break;
+            case "long":
+                size = Long.SIZE;
+                break;
+            case "char":
+                size = Character.SIZE;
+                break;
+            case "bool":
+                size = 1;
+                break;
+            case "double":
+                size = Double.SIZE;
+                break;
+            case "float":
+                size = Float.SIZE;
+                break;
+            case "string":
+                size = Integer.SIZE;
+                break;
+            default:
+                throw new IllegalArgumentException("Type is not Valid");
 
-        return null;
+        }
+        return size;
     }
 
     public static Type getTypeFromName(String varType) {
