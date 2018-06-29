@@ -2200,7 +2200,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); }   
+		 if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } RESULT = new LongConstExp(new Long(((String)e).substring(0,((String)e).length()-1)));  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("const_val",19, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

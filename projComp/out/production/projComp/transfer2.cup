@@ -410,7 +410,7 @@ const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val foun
 				|		CHAR_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by CHAR_CONST"); } RESULT = new CharConstExp(((String)e).charAt(0)) ; :}
 				|		BOOL_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by BOOL_CONST"); } RESULT = new BooleanConstExp(((String)e).equals("true" )? true : false ) ; :}
 				|		STRING_CONST:e	{: if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } RESULT = new StringConstExp((String)e); :}
-				|		LONG_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); }   :}
+				|		LONG_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } RESULT = new LongConstExp(new Long(((String)e).substring(0,((String)e).length()-1)));  :}
 				;
 
 

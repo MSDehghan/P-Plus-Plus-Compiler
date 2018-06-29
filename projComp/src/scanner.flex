@@ -40,6 +40,7 @@ UnsignedHexLiteral    = 0 [xX] 0* {HexDigit} {1,16}
 HexDigit      = [0-9a-fA-F]
 PositiveDecimalInteger = 0 | [1-9][0-9]* | {UnsignedHexLiteral}
 intNumber = [+-]?{PositiveDecimalInteger}
+longNumber = {intNumber}"L"
 
 
 FloatLiteral1    = [0-9]+ \. [0-9]*
@@ -98,10 +99,6 @@ carot = "^"
 mult = "*"
 plus = "+"
 minus = "-"
-plusEqual = "+="
-minusEqual = "-="
-multEqual = "*="
-divideEqual ="/="
 divide = "/"
 mode = "%"
 openCurlBrak = "{"
@@ -156,10 +153,6 @@ SingleCharacter = [^\r\n\'\\]
  \' { yybegin(CHAR);  }
 
 
- {plusAssign}       {return symbol(sym.PLUSASSIGN,yytext());}
- {minusAssign}      {return symbol(sym.MINUSASSIGN,yytext());}
- {multAssign}       {return symbol(sym.MULTASSIGN,yytext());}
- {divideAssign}     {return symbol(sym.DIVIDEASSIGN,yytext());}
 
 {auto}               {return symbol(sym.AUTO,yytext());}
 {void}               {return symbol(sym.VOID,yytext());}
@@ -219,15 +212,16 @@ SingleCharacter = [^\r\n\'\\]
 
 {id}		{return symbol(sym.ID, yytext() );}
 {intNumber} {return symbol(sym.INT_CONST, yytext() );}
+{longNumber} {return symbol(sym.LONG_CONST, yytext() );}
 {RealNumber} {return symbol(sym.REAL_CONST, yytext() );}
 {Dot}        {return symbol(sym.DOT, yytext() );}
 
 
-{divideEqual}    {return symbol(sym.DIVIDEEQUAL,yytext());}
+ {plusAssign}       {return symbol(sym.PLUSASSIGN,yytext());}
+ {minusAssign}      {return symbol(sym.MINUSASSIGN,yytext());}
+ {multAssign}       {return symbol(sym.MULTASSIGN,yytext());}
+ {divideAssign}     {return symbol(sym.DIVIDEASSIGN,yytext());}
 
-{multEqual}           {return symbol(sym.MULTEQUAL,yytext());}
-{minusEqual}           {return symbol(sym.MINUSEQUAL,yytext());}
-{plusEqual}           {return symbol(sym.PLUSEQUAL,yytext());}
 {plus}           {return symbol(sym.PLUS,yytext());}
 {minus}           {return symbol(sym.MINUS,yytext());}
 {divide}           {return symbol(sym.DIVIDE,yytext());}
