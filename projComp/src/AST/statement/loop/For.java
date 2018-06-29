@@ -1,8 +1,7 @@
 package AST.statement.loop;
 
 import AST.block.Block;
-import AST.declaration.VariableDeclaration;
-import AST.exp.Assignment;
+import AST.exp.assignments.Assignment;
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 

@@ -122,6 +122,12 @@ mm = "--"
 pp = "++"
 void = "void"
 auto = "auto"
+Dot = "."
+plusAssign = "+="
+minusAssign = "-="
+multAssign = "*="
+divideAssign = "/="
+
 
 LineTerminator = \r\n|\r\n
 InputCharacter = [^\r\n]
@@ -148,6 +154,12 @@ SingleCharacter = [^\r\n\'\\]
 
  \" { yybegin(STRING); string.setLength(0); string.append("\""); }
  \' { yybegin(CHAR);  }
+
+
+ {plusAssign}       {return symbol(sym.PLUSASSIGN,yytext());}
+ {minusAssign}      {return symbol(sym.MINUSASSIGN,yytext());}
+ {multAssign}       {return symbol(sym.MULTASSIGN,yytext());}
+ {divideAssign}     {return symbol(sym.DIVIDEASSIGN,yytext());}
 
 {auto}               {return symbol(sym.AUTO,yytext());}
 {void}               {return symbol(sym.VOID,yytext());}
@@ -208,7 +220,7 @@ SingleCharacter = [^\r\n\'\\]
 {id}		{return symbol(sym.ID, yytext() );}
 {intNumber} {return symbol(sym.INT_CONST, yytext() );}
 {RealNumber} {return symbol(sym.REAL_CONST, yytext() );}
-
+{Dot}        {return symbol(sym.DOT, yytext() );}
 
 
 {divideEqual}    {return symbol(sym.DIVIDEEQUAL,yytext());}

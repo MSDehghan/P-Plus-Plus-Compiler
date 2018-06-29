@@ -1,26 +1,14 @@
-import java_cup.runtime.Symbol;
-import javafx.util.Pair;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 
 public class main {
-    public static boolean DEBAUG = true;
-    static int parseInt(String in){
-        if(in.length()>=3   ){
-            if(in.charAt(1)=='x'){
-                return Integer.parseInt(in.substring(2),16);
-            }else if(in.charAt(2)=='x') {
-                return Integer.parseInt(in.substring(0,1)+in.substring(3),16);
-            }else {
-                return Integer.parseInt(in,10);
-            }
-        }else{
-            return Integer.parseInt(in,10);
-        }
-    }
+    public static ArrayList <Node> program =new ArrayList<Node>() ;
+
+
+
     public static void main(String[] args) throws Exception {
+//        ArrayList <OperationCode> codes =new ArrayList<>();
+//        Assignment a = new Assignment(new SimpleVariable(),new IntConstExp(10));
 //        Yylex y = new Yylex(new FileReader("input.txt"));
 //        Symbol s = y.next_token();
 //        Object s1 = s.value;
@@ -34,11 +22,12 @@ public class main {
 //            s2 = s.sym;
 //
 //        }
-
-
+        int a=1,b=2,c=3;
+        a=(b/=c);
 
 
 //        System.out.println(Integer.parseInt("-0x1f"));
+
 
         parser p = new parser(new Yylex(new FileReader("input.txt")));
         Object result = p.parse().value;

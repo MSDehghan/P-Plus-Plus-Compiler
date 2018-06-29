@@ -17,7 +17,8 @@ import AST.statement.cond.* ;
 import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
 import java.util.ArrayList;
-import javafx.util.Pair;
+import preDefinedValues.*;
+import AST.exp.assignments.*;
 
 
 
@@ -134,6 +135,12 @@ terminal PLUSEQUAL;
 terminal MINUSEQUAL;
 terminal MULTEQUAL;
 terminal DIVIDEEQUAL;
+terminal DOT ;
+terminal PLUSASSIGN;
+terminal MINUSASSIGN;
+terminal DIVIDEASSIGN;
+terminal MULTASSIGN;
+
 
 
 
@@ -185,6 +192,7 @@ precedence right EXCLEM;
 precedence left  OPENBRAK, CLOSEDBRAK, OPENPRANTHES, CLOSEDPRANTHES;
 precedence right PP, MM, NOTC;
 precedence right TILDA;
+precedence left DOT ;
 precedence left UMINUS;
 
 
@@ -195,9 +203,9 @@ precedence left UMINUS;
 
 
 /* first */
-program 	::=		var_dcl program 	{: if( DEBUGS ){ System.out.println("program found"); } :}
-			|		func_extern	program		{: if( DEBUGS ){ System.out.println("program found"); } :}
-			|		struct_dec	program		{: if( DEBUGS ){ System.out.println("program found"); } :}
+program 	::=		var_dcl:e       program 	{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e); :}
+			|		func_extern:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e);:}
+			|		struct_dec:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.add((Node)e);:}
 			|						
 			; 
 
@@ -205,34 +213,34 @@ program 	::=		var_dcl program 	{: if( DEBUGS ){ System.out.println("program foun
 
 /* second */
 
-func_extern 	::=		func_dcl 	{: if( DEBUGS ){ System.out.println("func extern found"); } :}
-				|		extern_dcl 	{: if( DEBUGS ){ System.out.println("func extern found"); } :}
+func_extern 	::=		func_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern found"); } RESULT = e ; :}
+				|		extern_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern found"); } RESULT = e ; :}
 				;
 
 
 /* third */
 
-func_dcl		::=		type ID OPENPRANTHES arguments CLOSEDPRANTHES SEMI 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
-				|		type ID OPENPRANTHES arguments CLOSEDPRANTHES block {: if( DEBUGS ){ System.out.println("func dcl found"); } :}
-				|		type ID OPENPRANTHES CLOSEDPRANTHES SEMI 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
-				|		type ID OPENPRANTHES CLOSEDPRANTHES block 	{: if( DEBUGS ){ System.out.println("func dcl found"); } :}
+func_dcl		::=		FUNCTION type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI     	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; :}
+				|		FUNCTION type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4        {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;:}
+				|		FUNCTION type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	                    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
+				|		FUNCTION type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4      	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
 				;
 
 /* forth */
 
-extern_dcl		::=		EXTERN type ID SEMI	{: if( DEBUGS ){ System.out.println("extern dcl found"); } :}
+extern_dcl		::=		EXTERN type:e1 ID:e2 SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2);:}
 				;
 
 
 /* fifth */
-arguments 		::=		type ID exp6 COMMA arguments	{: if( DEBUGS ){ System.out.println("arguments found"); } :}
-				|		type ID exp6		{: if( DEBUGS ){ System.out.println("arguments found"); } :}
+arguments 		::=		type:e1 ID exp6:e2 COMMA arguments:e3	    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = (ArrayList <PairPooria>)e3   ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
+				|		type:e1 ID exp6:e2		                    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = new ArrayList <PairPooria>() ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
 				;
 
 
 
-exp6 			::=		OPENBRAK CLOSEDBRAK exp6	{: if( DEBUGS ){ System.out.println("exp6 found"); } :}
-				|	{: if( DEBUGS ){ System.out.println("exp6 found"); } :}
+exp6 			::=		OPENBRAK CLOSEDBRAK exp6:e	{: if( DEBUGS ){ System.out.println("exp6 found"); } RESULT = (Integer)e + 1;:}
+				|	                                {: if( DEBUGS ){ System.out.println("exp6 found"); } RESULT = new Integer(0); :}
 				;
 
 /* sixth */
@@ -250,10 +258,10 @@ type	::=	INT:e 		{: if( DEBUGS ){ System.out.println("type found"); } RESULT = e
 
 
 /* seventh */
-struct_dec	::=	RECORD ID BEGIN var_dcl exp10 END RECORD SEMI  {: if( DEBUGS ){ System.out.println("struct dec found"); } :}
+struct_dec	::=	RECORD ID:e1 BEGIN var_dcl:e2 exp10:e3 END RECORD SEMI  {: if( DEBUGS ){ System.out.println("struct dec found"); }ArrayList <DCLS> a = (ArrayList <DCLS>) e3 ;a.add((DCLS)e2); RESULT = new StructDeclaration(a,(String)e1); :}
 			;
-exp10		::=	var_dcl exp10		{: if( DEBUGS ){ System.out.println("exp10 found"); } :}
-			|				{: if( DEBUGS ){ System.out.println("exp10 found"); } :}
+exp10		::=	var_dcl:e1 exp10:e2		    {: if( DEBUGS ){ System.out.println("exp10 found"); } ArrayList <DCLS> a = (ArrayList <DCLS>) e2 ; a.add((DCLS)e1); RESULT = a ; :}
+			|				                {: if( DEBUGS ){ System.out.println("exp10 found"); } ArrayList <DCLS> a = new ArrayList <DCLS>() ; RESULT = a ; :}
 			;
 
 /* eightth */
@@ -261,8 +269,8 @@ var_dcl 	::=	CONST type:e1 var_dcl_cnt:e2 exp13:e3 SEMI	{: if( DEBUGS ){ System.
 			|	type:e1 var_dcl_cnt:e2 exp13:e3 SEMI		{: if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); RESULT = new DCLS(a,(String)e1,false); :}
 			;
 			
-exp13		::=	COMMA var_dcl_cnt:e1 exp13:e2	 {: if( DEBUGS ){ System.out.println("exp13 found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e2; a.add((SpecClass)e1); RESULT = a ; :}
-			|				{: if( DEBUGS ){ System.out.println("exp13 found"); } RESULT = new ArrayList <SpecClass>() ; :}
+exp13		::=	COMMA var_dcl_cnt:e1 exp13:e2   	        {: if( DEBUGS ){ System.out.println("exp13 found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e2; a.add((SpecClass)e1); RESULT = a ; :}
+			|			                                    {: if( DEBUGS ){ System.out.println("exp13 found"); } RESULT = new ArrayList <SpecClass>() ; :}
 			;
 
 /* nineth */
@@ -290,7 +298,11 @@ statement		::=		expr:e SEMI			{: if( DEBUGS ){ System.out.println("statement fou
 				;
 
 /* twelveth */
-assignment		::=		variable:v EQUAL expr:e		{: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new AST.exp.Assignment((Variable)v,(Exp)e); :}
+assignment		::=		variable:v EQUAL expr:e		        {: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new Assignment((Variable)v,(Exp)e); :}
+                |       variable:v PLUSASSIGN expr:e        {: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new PlusAssign((Variable)v,(Exp)e); :}
+                |       variable:v MINUSASSIGN expr:e       {: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new MinusAssign((Variable)v,(Exp)e); :}
+                |       variable:v DIVIDEASSIGN expr:e      {: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new DivideAssign((Variable)v,(Exp)e); :}
+                |       variable:v MULTASSIGN expr:e        {: if( DEBUGS ){ System.out.println("assignment found"); } RESULT = new MultAssign((Variable)v,(Exp)e); :}
 				;
 
 /* thirteenth */
@@ -353,6 +365,7 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 
 /* tweenth */
 variable		::=		ID:e1 exp23:e2	{: if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,(ArrayList <Exp>)e2);}:}
+			    |       variable:e1 DOT variable:e2 {:if( DEBUGS ){ System.out.println("variable found"); } RESULT = new RecordVariableUse((Variable)e1, (Variable)e2);  :}
 				;
 
 exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ArrayList <Exp> a=(ArrayList <Exp>)e1;a.add((Exp)e2); RESULT = a; :}
@@ -399,11 +412,6 @@ const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val foun
 				|		STRING_CONST:e	{: if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } RESULT = new StringConstExp((String)e); :}
 				|		LONG_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); }   :}
 				;
-
-
-
-
-
 
 
 

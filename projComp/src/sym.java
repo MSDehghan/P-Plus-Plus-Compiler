@@ -23,6 +23,7 @@ public class sym {
   public static final int CLOSEDBRAK = 6;
   public static final int PLUSEQUAL = 79;
   public static final int FALSE = 72;
+  public static final int PLUSASSIGN = 84;
   public static final int OPENCURLBRAK = 33;
   public static final int TILDA = 49;
   public static final int FLOAT = 9;
@@ -38,6 +39,7 @@ public class sym {
   public static final int DIVIDE = 51;
   public static final int EQUAL = 21;
   public static final int CHAR = 11;
+  public static final int MULTASSIGN = 87;
   public static final int INPUT = 74;
   public static final int SWITCH = 30;
   public static final int FOR = 39;
@@ -51,8 +53,10 @@ public class sym {
   public static final int ELSE = 29;
   public static final int BREAK = 25;
   public static final int PP = 48;
+  public static final int DOT = 83;
   public static final int BIGGER = 61;
   public static final int INT = 7;
+  public static final int DIVIDEASSIGN = 86;
   public static final int EOF = 0;
   public static final int DEFAULT = 70;
   public static final int FUNCTION = 75;
@@ -78,6 +82,7 @@ public class sym {
   public static final int ANDC = 62;
   public static final int NOTEQUAL = 57;
   public static final int BEINGQ = 22;
+  public static final int MINUSASSIGN = 85;
   public static final int BEGIN = 17;
   public static final int CASE = 36;
   public static final int ENDQ = 23;
@@ -172,7 +177,12 @@ public class sym {
   "PLUSEQUAL",
   "MINUSEQUAL",
   "MULTEQUAL",
-  "DIVIDEEQUAL"
+  "DIVIDEEQUAL",
+  "DOT",
+  "PLUSASSIGN",
+  "MINUSASSIGN",
+  "DIVIDEASSIGN",
+  "MULTASSIGN"
   };
 }
 

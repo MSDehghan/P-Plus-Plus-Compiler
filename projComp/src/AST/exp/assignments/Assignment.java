@@ -1,15 +1,12 @@
-package AST.exp;
+package AST.exp.assignments;
 
+import AST.exp.Exp;
 import AST.exp.var.Variable;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
-public class Assignment extends Exp {
-    Variable var;
-    Exp exp;
-    //TODO do something with
-    Type conv1, conv2;
+public class Assignment extends Exp2Var {
 
     public Assignment(Variable var, Exp exp) {
         if (DefinedValues.DEBUG) {

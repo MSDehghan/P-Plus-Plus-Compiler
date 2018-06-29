@@ -19,6 +19,7 @@ public class DCLS extends OperationCode{
         this.type = type;
         this.Constant = Constant;
     }
+    //TODO keep in mind that the type maybe of struct
     @Override
     public void compile(MethodVisitor mv) {
 
