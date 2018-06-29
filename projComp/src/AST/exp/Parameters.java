@@ -1,7 +1,7 @@
 package AST.exp;
 
 import AST.Node;
-import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Parameters extends Node {
     ArrayList <Exp> expressions = new ArrayList<Exp>();
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 

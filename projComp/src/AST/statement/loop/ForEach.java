@@ -1,6 +1,7 @@
 package AST.statement.loop;
 
 import AST.block.Block;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -14,7 +15,7 @@ public class ForEach extends Loop{
         this.id2=id2;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

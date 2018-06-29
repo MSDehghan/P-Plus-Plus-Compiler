@@ -1,9 +1,8 @@
 package AST.declaration;
 
 
-import AST.Node;
-import AST.OperationCode;
 import AST.block.Block;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import preDefinedValues.PairPooria;
 
@@ -32,7 +31,7 @@ public class FunctionDeclaration extends FuncDcl {
 
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 

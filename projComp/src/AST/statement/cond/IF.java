@@ -3,6 +3,7 @@ package AST.statement.cond;
 import AST.block.Block;
 import AST.exp.Exp;
 import AST.statement.Statement;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -18,7 +19,7 @@ public class If extends Statement{
         this.block2 = block2;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

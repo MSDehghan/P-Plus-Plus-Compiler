@@ -1,5 +1,6 @@
 package AST.statement;
 
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -10,7 +11,7 @@ public class Break extends Statement {
 
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

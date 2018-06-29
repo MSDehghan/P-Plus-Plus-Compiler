@@ -1,5 +1,6 @@
 package AST.exp.var;
 
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -14,7 +15,7 @@ public class RecordVariableUse extends Variable {
         this.v2 = v2;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

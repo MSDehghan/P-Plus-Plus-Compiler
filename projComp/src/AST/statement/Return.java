@@ -1,6 +1,7 @@
 package AST.statement;
 
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -16,7 +17,7 @@ public class Return extends Statement{
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

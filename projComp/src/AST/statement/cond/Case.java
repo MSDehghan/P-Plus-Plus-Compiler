@@ -3,6 +3,7 @@ package AST.statement.cond;
 import AST.block.Block;
 import AST.exp.consts.IntConstExp;
 import AST.statement.Statement;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -16,7 +17,7 @@ public class Case extends Statement{
         this.block = block;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

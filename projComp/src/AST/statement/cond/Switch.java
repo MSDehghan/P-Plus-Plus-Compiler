@@ -2,6 +2,7 @@ package AST.statement.cond;
 
 import AST.block.Block;
 import AST.statement.Statement;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class Switch extends Statement {
         this.blockDefault = blockDefault;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

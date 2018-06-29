@@ -1,1 +1,5 @@
-a /= 2
+function int pooria()
+begin
+int a;
+a = 2;
+end

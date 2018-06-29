@@ -1,7 +1,7 @@
 package AST.exp.binaryExp.arithmatic;
 
-import AST.exp.Exp;
 import AST.exp.binaryExp.BinaryExp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -13,7 +13,7 @@ public class Plus extends BinaryExp {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

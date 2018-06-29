@@ -3,6 +3,7 @@ package AST.statement.loop;
 import AST.block.Block;
 import AST.exp.assignments.Assignment;
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -29,7 +30,7 @@ public class For extends Loop {
         this.exp2 = exp2 ;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

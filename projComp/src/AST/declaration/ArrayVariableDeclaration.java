@@ -1,6 +1,7 @@
 package AST.declaration;
 
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

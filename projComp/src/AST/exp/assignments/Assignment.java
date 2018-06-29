@@ -2,8 +2,8 @@ package AST.exp.assignments;
 
 import AST.exp.Exp;
 import AST.exp.var.Variable;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
-import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
 public class Assignment extends Exp2Var {
@@ -17,7 +17,7 @@ public class Assignment extends Exp2Var {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

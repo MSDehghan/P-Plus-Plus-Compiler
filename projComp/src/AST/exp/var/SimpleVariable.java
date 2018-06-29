@@ -1,13 +1,8 @@
 package AST.exp.var;
 
-import AST.SymbolTable.dscp.DSCP;
-import AST.SymbolTable.SymbolTable;
 import AST.SymbolTable.VariableNotFound;
-import AST.SymbolTable.dscp.DSCP_VAR_DYNAMIC;
-import AST.SymbolTable.dscp.DSCP_VAR_STATIC;
-import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
-import jdk.internal.org.objectweb.asm.Type;
 
 public class SimpleVariable extends Variable {
 
@@ -22,7 +17,7 @@ public class SimpleVariable extends Variable {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 

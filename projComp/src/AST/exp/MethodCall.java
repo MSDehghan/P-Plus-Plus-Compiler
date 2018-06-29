@@ -1,6 +1,7 @@
 package AST.exp;
 
 import AST.Node;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class MethodCall extends Node {
         this.parameters = parameters ;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

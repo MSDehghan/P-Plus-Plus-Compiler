@@ -10,14 +10,7 @@ public class main {
 
 
     public static void main(String[] args) throws Exception {
-//        program.nodes.add();
 
-//        Long a = new Long("-12L");
-//        System.out.println(a.substring(0,a.length()-1));
-
-
-//        ArrayList <OperationCode> codes =new ArrayList<>();
-//        Assignment a = new Assignment(new SimpleVariable(),new IntConstExp(10));
 
 //        Yylex y = new Yylex(new FileReader("input.txt"));
 //        Symbol s = y.next_token();
@@ -35,11 +28,6 @@ public class main {
 //        }
 
 
-//        int a=1,b=2,c=3;
-//        a=(b/=c);
-
-
-//        System.out.println(Integer.parseInt("-0x1f"));
 
 
         parser p = new parser(new Yylex(new FileReader("input.txt")));

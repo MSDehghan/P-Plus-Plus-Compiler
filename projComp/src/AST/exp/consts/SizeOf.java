@@ -2,6 +2,7 @@ package AST.exp.consts;
 
 import AST.SymbolTable.SymbolTable;
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 
@@ -21,7 +22,7 @@ public class SizeOf extends Exp {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

@@ -1,9 +1,9 @@
 package AST.exp.var;
 
 import AST.exp.Exp;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayVariable extends Variable {
@@ -15,7 +15,7 @@ public class ArrayVariable extends Variable {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

@@ -1,5 +1,6 @@
 package AST.declaration;
 
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 /**
@@ -13,7 +14,7 @@ public class ExternalFunctionDcl extends FuncDcl {
         this.type = type;
     }
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }

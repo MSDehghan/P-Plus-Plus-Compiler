@@ -1,6 +1,7 @@
 package AST.declaration;
 
 import AST.Node;
+import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class StructDeclaration extends Node {
     }
 
     @Override
-    public void compile(MethodVisitor mv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv) {
 
     }
 }
