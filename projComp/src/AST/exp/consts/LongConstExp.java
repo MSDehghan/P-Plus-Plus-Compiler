@@ -6,6 +6,9 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
+import static jdk.internal.org.objectweb.asm.Opcodes.LCONST_0;
+import static jdk.internal.org.objectweb.asm.Opcodes.LCONST_1;
+
 public class LongConstExp extends Exp {
     private Long value;
 
@@ -22,6 +25,11 @@ public class LongConstExp extends Exp {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        if (value == 0)
+            mv.visitInsn(LCONST_0);
+        else if (value == 1)
+            mv.visitInsn(LCONST_1);
+        else
+            mv.visitLdcInsn(value);
     }
 }

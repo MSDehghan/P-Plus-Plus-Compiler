@@ -22,6 +22,6 @@ public class BooleanConstExp extends Exp {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        IntConstExp.storeIntValue(mv, value ? 1 : 0);
     }
 }
