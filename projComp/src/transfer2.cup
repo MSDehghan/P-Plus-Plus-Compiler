@@ -173,6 +173,7 @@ nonterminal exp13 ;
 nonterminal exp15 ; 
 nonterminal exp20 ; 
 nonterminal exp23 ;
+nonterminal globalIndicate ;
 
 
 
@@ -203,10 +204,10 @@ precedence left UMINUS;
 
 
 /* first */
-program 	::=		var_dcl:e       program 	{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
-			|		func_extern:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
-			|		struct_dec:e	program		{: if( DEBUGS ){ System.out.println("program found"); } main.program.nodes.add((Node)e); :}
-			|						
+program 	::=		var_dcl:e       program:e1	 	{: if( DEBUGS ){ System.out.println("program found"); } RESULT = ((Program)e1).add((Node)e); :}
+			|		func_extern:e	program:e1		{: if( DEBUGS ){ System.out.println("program found"); } RESULT = ((Program)e1).add((Node)e); :}
+			|		struct_dec:e	program:e1		{: if( DEBUGS ){ System.out.println("program found"); } RESULT = ((Program)e1).add((Node)e); :}
+			|										{: if( DEBUGS ){ System.out.println("program found"); } RESULT = new Program(); :}
 			; 
 
 
@@ -220,11 +221,16 @@ func_extern 	::=		func_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern f
 
 /* third */
 
-func_dcl		::=		FUNCTION type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI     	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; :}
-				|		FUNCTION type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4        {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;:}
-				|		FUNCTION type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	                    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
-				|		FUNCTION type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4      	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
+func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; :}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;:}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	globalIndicate	                  {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4     globalIndicate 	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
 				;
+
+
+globalIndicate	::=		{:if( DEBUGS ){ System.out.println("func dcl found"); } DefinedValues.changeScope();:}
+				;
+
 
 /* forth */
 

@@ -9,29 +9,33 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import java.util.ArrayList;
 
 
-public class Program extends Node {
+public class Program {
     public ArrayList<Node> nodes = new ArrayList<Node>();
     public Program(){
 
     }
 
-    @Override
-    public void compile(MethodVisitor mv, ClassVisitor cv) {
-        for (Node c : nodes){
-            if(c instanceof StructDeclaration){
-                c.compile(mv, cv);
-            }
-        }
-        for(Node c : nodes){
-            if(c instanceof DCLS){
-                c.compile(mv,cv);
-            }
-        }
-        for (Node c : nodes){
-            if(c instanceof FuncDcl){
-                c.compile(mv, cv);
-            }
-        }
+    public Program add(Node e){
+        nodes.add(e);
+        return this;
+    }
+
+    public void compile(String whereToSave) {
+//        for (Node c : nodes){
+//            if(c instanceof StructDeclaration){
+//                c.compile(mv, cv);
+//            }
+//        }
+//        for(Node c : nodes){
+//            if(c instanceof DCLS){
+//                c.compile(mv,cv);
+//            }
+//        }
+//        for (Node c : nodes){
+//            if(c instanceof FuncDcl){
+//                c.compile(mv, cv);
+//            }
+//        }
 
     }
 

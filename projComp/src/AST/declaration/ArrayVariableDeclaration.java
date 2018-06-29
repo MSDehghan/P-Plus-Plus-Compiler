@@ -9,10 +9,10 @@ import java.util.List;
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
 
-    public ArrayVariableDeclaration(String varName,List<Exp> dimensions) {
+    public ArrayVariableDeclaration(String varName, String type,List<Exp> dimensions, boolean Static,boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
-
+//TODO do something with constant
     }
 
     @Override

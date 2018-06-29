@@ -32,6 +32,8 @@ public class main {
 
         parser p = new parser(new Yylex(new FileReader("input.txt")));
         Object result = p.parse().value;
-//        System.out.println(result);
+        System.out.println(result);
+
+//        System.out.println(!true);
     }
 }

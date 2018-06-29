@@ -12,13 +12,13 @@ import jdk.internal.org.objectweb.asm.Type;
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
 
 public class SimpleVariableDeclaration extends VariableDeclaration {
-    public SimpleVariableDeclaration(String varName, String varType, boolean staticDec) {
+    public SimpleVariableDeclaration(String varName, String varType, boolean staticDec, boolean Constant) {
         name = varName;
         Type type = getTypeFromName(varType);
-        declare(staticDec, type);
+        declare(staticDec, type, Constant);
     }
-
-    public SimpleVariableDeclaration(String varName, String varType, Exp value, boolean staticDec) {
+    //TODO do something with constant
+    public SimpleVariableDeclaration(String varName, String varType, Exp value, boolean staticDec, boolean Constant) {
         name = varName;
         Type type;
         if (varType.equals("auto")) {
@@ -26,7 +26,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
         } else {
             type = getTypeFromName(varType);
         }
-        declare(staticDec, type);
+        declare(staticDec, type, Constant);
     }
 
     /**
@@ -34,7 +34,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
      * @param type      Type of Variable
      * @throws IllegalArgumentException if type and name is not set!
      */
-    private void declare(boolean staticDec, Type type) {
+    private void declare(boolean staticDec, Type type, boolean Constant) {
         if (name == null || type == null)
             throw new IllegalArgumentException();
 
