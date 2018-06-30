@@ -4,7 +4,7 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-public class GreaterEqual extends BinaryExp {
+public class GreaterEqual extends Conditional {
     public GreaterEqual(){
 
     }
