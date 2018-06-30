@@ -33,8 +33,10 @@ public class MMPostfix extends Unary {
 
                     if (dscp instanceof DSCP_DYNAMIC) {
                         int index = ((DSCP_DYNAMIC) dscp).getIndex();
-                        if (type == Type.INT_TYPE || type == Type.CHAR_TYPE)
+                        if (type == Type.INT_TYPE || type == Type.CHAR_TYPE) {
+                            var.compile(mv,cv);
                             mv.visitIincInsn(index, -1);
+                        }
                         else {
                             var.compile(mv,cv);//Postfix
 

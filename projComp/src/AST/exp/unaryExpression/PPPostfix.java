@@ -32,13 +32,17 @@ public class PPPostfix extends Unary {
 
                 if (dscp instanceof DSCP_DYNAMIC) {
                     int index = ((DSCP_DYNAMIC) dscp).getIndex();
-                    if (type == Type.INT_TYPE || type == Type.CHAR_TYPE)
+                    if (type == Type.INT_TYPE || type == Type.CHAR_TYPE) {
+                        var.compile(mv, cv); //Postfix
                         mv.visitIincInsn(index, 1);
+                    }
                     else {
-                        if (type == Type.DOUBLE_TYPE)
+                        if (type == Type.DOUBLE_TYPE) {
                             mv.visitInsn(DCONST_1);
-                        else
+                        }
+                        else {
                             mv.visitInsn(LCONST_1);
+                        }
 
                         var.compile(mv, cv); //Postfix
 
