@@ -1,28 +1,34 @@
 package AST.SymbolTable;
 
+import jdk.internal.org.objectweb.asm.Label;
+
 import java.util.HashMap;
 
 
 public class HashMapOurs <K,V> extends  HashMap <K,V> {
     private int index = 0;
-    private String labelStart ;
-    private String labelLast;
+    private Label labelStart ;
+    private Label labelLast;
 
-    public String getLabelLast() {
+    public Label getLabelLast() {
         return labelLast;
     }
 
     public void setLabelLast(String labelLast) {
-        this.labelLast = labelLast;
+        this.labelLast = new Label();
     }
 
-    public String getLabelStart() {
+    public Label getLabelStart() {
         return labelStart;
     }
 
     public void setLabelStart(String labelStart) {
-        this.labelStart = labelStart;
+        this.labelStart = new Label();
     }
+
+
+
+
 
     public void setIndex(int index) {
         this.index = index;

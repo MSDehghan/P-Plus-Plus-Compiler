@@ -3,6 +3,7 @@ package AST.SymbolTable;
 import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.declaration.InvalidDeclaration;
+import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 
 import java.util.ArrayList;
@@ -136,6 +137,18 @@ public class SymbolTable {
     public int returnNewIndex() {
         return getLastFrame().getAndAddIndex();
     }
+
+
+    public Label getLabelLast(){
+        return getLastFrame().getLabelLast();
+    }
+
+
+    public Label getLabelStart(){
+        return getLastFrame().getLabelStart();
+    }
+
+
 
     private HashMapOurs<String, DSCP> getLastFrame() {
         if (stackScopes.size() == 0)
