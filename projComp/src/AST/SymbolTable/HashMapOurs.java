@@ -14,16 +14,23 @@ public class HashMapOurs <K,V> extends  HashMap <K,V> {
         return labelLast;
     }
 
-    public void setLabelLast(String labelLast) {
+    public void setLabelLast() {
         this.labelLast = new Label();
     }
+    public void setLabelLast(Label label) {
+        this.labelStart = label;
+    }
+
 
     public Label getLabelStart() {
         return labelStart;
     }
 
-    public void setLabelStart(String labelStart) {
+    public void setLabelStart() {
         this.labelStart = new Label();
+    }
+    public void setLabelStart(Label label) {
+        this.labelStart = label;
     }
 
 

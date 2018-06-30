@@ -20,6 +20,10 @@ public class SymbolTable {
         stackScopes.add(mainFrame);
     }
 
+    public void popScope(){
+        stackScopes.remove(stackScopes.size()-1);
+    }
+
 
     /**
      *
@@ -125,8 +129,8 @@ public class SymbolTable {
 
     public void addScope() {
         HashMapOurs<String, DSCP> frame = new HashMapOurs<>();
-        frame.setLabelStart(getNewLabel());
-        frame.setLabelLast(getNewLabel());
+        frame.setLabelStart();
+        frame.setLabelLast();
         frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }
@@ -134,10 +138,20 @@ public class SymbolTable {
     /**
      * @return the first empty slot on the last local variable scope
      */
+
+
+
     public int returnNewIndex() {
         return getLastFrame().getAndAddIndex();
     }
 
+
+    public void setLabelLast(Label label){
+        getLastFrame().setLabelLast(label);
+    }
+    public void setLabelFirst(Label label){
+        getLastFrame().setLabelStart(label);
+    }
 
     public Label getLabelLast(){
         return getLastFrame().getLabelLast();

@@ -1,10 +1,15 @@
 package AST.statement.cond;
 
+import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
 import AST.exp.Exp;
+import AST.exp.binaryExp.conditional.NotEqual;
+import AST.exp.consts.IntConstExp;
 import AST.statement.Statement;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
+import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Opcodes;
 
 
 public class If extends Statement{
@@ -18,6 +23,28 @@ public class If extends Statement{
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
+        SymbolTable.getInstance().addScope();
+        NotEqual notEqual = new NotEqual ();
+        notEqual.SetBinaryExp(exp,new IntConstExp (0));
+        notEqual.compile(mv,cv);
+        Label startElse = new Label();
+        Label endElse = new Label();
+//      if 0 : false : else
+        mv.visitJumpInsn(Opcodes.IFEQ,startElse);
+        mv.visitLabel(SymbolTable.getInstance().getLabelStart());
+        block1.compile(mv,cv);
+        mv.visitJumpInsn(Opcodes.GOTO,endElse);
+        mv.visitLabel(SymbolTable.getInstance().getLabelLast());
+        if(block2!=null){
+            SymbolTable.getInstance().popScope();
+            SymbolTable.getInstance().addScope();
+            SymbolTable.getInstance().setLabelFirst(startElse);
+            SymbolTable.getInstance().setLabelLast(endElse);
+            mv.visitLabel(startElse);
+            block2.compile(mv,cv);
+            mv.visitLabel(endElse);
+        }else{
 
+        }
     }
 }
