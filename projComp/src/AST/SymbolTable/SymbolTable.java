@@ -3,6 +3,7 @@ package AST.SymbolTable;
 import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.declaration.InvalidDeclaration;
+import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 
 import java.util.ArrayList;
@@ -17,6 +18,10 @@ public class SymbolTable {
         HashMapOurs<String, DSCP> mainFrame = new HashMapOurs<>();
         mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
         stackScopes.add(mainFrame);
+    }
+
+    public void popScope(){
+        stackScopes.remove(stackScopes.size()-1);
     }
 
 
@@ -124,8 +129,8 @@ public class SymbolTable {
 
     public void addScope() {
         HashMapOurs<String, DSCP> frame = new HashMapOurs<>();
-        frame.setLabelStart(getNewLabel());
-        frame.setLabelLast(getNewLabel());
+        frame.setLabelStart();
+        frame.setLabelLast();
         frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }
@@ -133,9 +138,31 @@ public class SymbolTable {
     /**
      * @return the first empty slot on the last local variable scope
      */
+
+
+
     public int returnNewIndex() {
         return getLastFrame().getAndAddIndex();
     }
+
+
+    public void setLabelLast(Label label){
+        getLastFrame().setLabelLast(label);
+    }
+    public void setLabelFirst(Label label){
+        getLastFrame().setLabelStart(label);
+    }
+
+    public Label getLabelLast(){
+        return getLastFrame().getLabelLast();
+    }
+
+
+    public Label getLabelStart(){
+        return getLastFrame().getLabelStart();
+    }
+
+
 
     private HashMapOurs<String, DSCP> getLastFrame() {
         if (stackScopes.size() == 0)

@@ -1,10 +1,17 @@
 package AST.statement.loop;
 
+import AST.OperationCode;
+import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
 import AST.exp.assignments.Assignment;
 import AST.exp.Exp;
+import AST.exp.binaryExp.conditional.NotEqual;
+import AST.exp.consts.IntConstExp;
+import java_cup.runtime.Symbol;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Opcodes;
+import jdk.internal.org.objectweb.asm.Type;
 
 
 public class For extends Loop {
@@ -29,6 +36,25 @@ public class For extends Loop {
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
+        SymbolTable.getInstance().addScope();
+        if(assignment!=null){
+            assignment.compile(mv,cv);
+        }
+        mv.visitLabel(SymbolTable.getInstance().getLabelStart());
+        exp1.compile(mv,cv);
+        NotEqual nq = new NotEqual();
+        nq.SetBinaryExp(exp1,new IntConstExp(0));
+        // 0 : false : jumps to end of for
+        mv.visitJumpInsn(Opcodes.IFEQ,SymbolTable.getInstance().getLabelLast());
 
+        if(exp2!=null){
+            exp2.compile(mv,cv);
+            mv.visitInsn(Opcodes.POP);
+        }
+
+        block.compile(mv,cv);
+        mv.visitJumpInsn(Opcodes.GOTO,SymbolTable.getInstance().getLabelStart());
+        mv.visitLabel(SymbolTable.getInstance().getLabelLast());
+        SymbolTable.getInstance().popScope();
     }
 }
