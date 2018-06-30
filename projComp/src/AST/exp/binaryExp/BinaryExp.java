@@ -23,7 +23,7 @@ public abstract class BinaryExp extends Exp {
         return type = exp1.getType();
     }
 
-    public BinaryExp SetBinaryExp(Exp exp1, Exp exp2){
+    public BinaryExp setBinaryExp(Exp exp1, Exp exp2){
         if(DefinedValues.DEBUG){
             System.out.println("hey");
         }

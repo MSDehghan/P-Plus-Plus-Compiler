@@ -25,7 +25,7 @@ public class If extends Statement{
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         SymbolTable.getInstance().addScope();
         NotEqual notEqual = new NotEqual ();
-        notEqual.SetBinaryExp(exp,new IntConstExp (0));
+        notEqual.setBinaryExp(exp,new IntConstExp (0));
         notEqual.compile(mv,cv);
         Label startElse = new Label();
         Label endElse = new Label();

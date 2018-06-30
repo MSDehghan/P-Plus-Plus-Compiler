@@ -2,11 +2,13 @@ package AST.declaration.variable;
 
 import AST.SymbolTable.SymbolTable;
 import AST.SymbolTable.dscp.DSCP;
+import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.SymbolTable.dscp.DSCP_VAR_DYNAMIC;
 import AST.SymbolTable.dscp.DSCP_VAR_STATIC;
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
@@ -17,6 +19,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
         Type type = getTypeFromName(varType);
         declare(staticDec, type, Constant);
     }
+
     //TODO do something with constant
     public SimpleVariableDeclaration(String varName, String varType, Exp value, boolean staticDec, boolean Constant) {
         name = varName;
@@ -26,6 +29,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
         } else {
             type = getTypeFromName(varType);
         }
+        this.exp = value;
         declare(staticDec, type, Constant);
     }
 
@@ -51,6 +55,9 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        // TODO: 30/06/2018 check type and also do it diffrent types static and dynamic
+        exp.compile(mv, cv);
+        int index = ((DSCP_DYNAMIC) SymbolTable.getInstance().getDescriptor(getName())).getIndex();
+        mv.visitVarInsn(exp.getType().getOpcode(Opcodes.ISTORE), index);
     }
 }

@@ -1,17 +1,14 @@
 package AST.statement.loop;
 
-import AST.OperationCode;
 import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
 import AST.exp.assignments.Assignment;
 import AST.exp.Exp;
 import AST.exp.binaryExp.conditional.NotEqual;
 import AST.exp.consts.IntConstExp;
-import java_cup.runtime.Symbol;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
-import jdk.internal.org.objectweb.asm.Type;
 
 
 public class For extends Loop {
@@ -43,7 +40,7 @@ public class For extends Loop {
         mv.visitLabel(SymbolTable.getInstance().getLabelStart());
         exp1.compile(mv,cv);
         NotEqual nq = new NotEqual();
-        nq.SetBinaryExp(exp1,new IntConstExp(0));
+        nq.setBinaryExp(exp1,new IntConstExp(0));
         // 0 : false : jumps to end of for
         mv.visitJumpInsn(Opcodes.IFEQ,SymbolTable.getInstance().getLabelLast());
 

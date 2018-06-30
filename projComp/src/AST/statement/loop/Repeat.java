@@ -22,7 +22,7 @@ public class Repeat extends Loop {
         SymbolTable.getInstance().addScope();
         mv.visitLabel(SymbolTable.getInstance().getLabelStart());
         NotEqual notEqual = new NotEqual();
-        notEqual.SetBinaryExp(exp,new IntConstExp(0));
+        notEqual.setBinaryExp(exp,new IntConstExp(0));
         // 0 : 0 : false
         notEqual.compile(mv,cv);
         mv.visitJumpInsn(Opcodes.IFEQ,SymbolTable.getInstance().getLabelLast());

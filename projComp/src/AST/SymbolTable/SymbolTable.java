@@ -107,7 +107,7 @@ public class SymbolTable {
         }
         getLastFrame().put(name, dscp);
         if (dscp instanceof DSCP_DYNAMIC)
-            getLastFrame().addIndex(dscp.getType().getSize());
+            getLastFrame().addIndex(dscp.getType().getSize()-1);
     }
 
     /**
