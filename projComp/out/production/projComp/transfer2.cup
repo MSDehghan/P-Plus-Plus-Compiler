@@ -1,16 +1,17 @@
-
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import AST.*;
 import AST.block.* ;
 import AST.declaration.* ;
-import AST.dimensions.* ;
-import AST.dimensions.binaryExp.* ;
-import AST.dimensions.binaryExp.arithmatic.* ;
-import AST.dimensions.binaryExp.conditional.* ;
-import AST.dimensions.consts.* ;
-import AST.dimensions.unaryExpression.* ;
-import AST.dimensions.var.* ;
+import AST.declaration.function.*;
+import AST.declaration.variable.*;
+import AST.exp.* ;
+import AST.exp.binaryExp.* ;
+import AST.exp.binaryExp.arithmatic.* ;
+import AST.exp.binaryExp.conditional.* ;
+import AST.exp.consts.* ;
+import AST.exp.unaryExpression.* ;
+import AST.exp.var.* ;
 import AST.statement.* ;
 import AST.statement.loop.* ;
 import AST.statement.cond.* ;
@@ -18,7 +19,7 @@ import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
 import java.util.ArrayList;
 import preDefinedValues.*;
-import AST.dimensions.assignments.*;
+import AST.exp.assignments.*;
 
 
 
@@ -121,6 +122,7 @@ terminal STRING_CONST ;
 terminal LONG_CONST ; 
 terminal DEFAULT ; 
 terminal UMINUS;
+terminal ADDRESS;
 
 
 
@@ -221,8 +223,8 @@ func_extern 	::=		func_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern f
 
 /* third */
 
-func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; :}
-				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;:}
+func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument >)e3, (String)e1, (String)e2, null) ; :}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument>)e3, (String)e1, (String)e2, (Block)e4) ;:}
 				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	globalIndicate	                  {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
 				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4     globalIndicate 	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
 				;
@@ -234,13 +236,14 @@ globalIndicate	::=		{:if( DEBUGS ){ System.out.println("func dcl found"); } Defi
 
 /* forth */
 
-extern_dcl		::=		EXTERN type:e1 ID:e2 SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2);:}
+extern_dcl		::=		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES arguments:e4 CLOSEDPRANTHES SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, (ArrayList<FunctionArgument>)e4);:}
+				|		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES  CLOSEDPRANTHES SEMI								{: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, null);:}
 				;
 
 
 /* fifth */
-arguments 		::=		type:e1 ID exp6:e2 COMMA arguments:e3	    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = (ArrayList <PairPooria>)e3   ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
-				|		type:e1 ID exp6:e2		                    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = new ArrayList <PairPooria>() ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
+arguments 		::=		type:e1 ID:e2 exp6:e3 COMMA arguments:e4	    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = (ArrayList <FunctionArgument>)e4   ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; :}
+				|		type:e1 ID:e2 exp6:e3		                    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = new ArrayList <FunctionArgument>() ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; :}
 				;
 
 
@@ -325,7 +328,7 @@ parameters		::=		expr:e	{: if( DEBUGS ){ System.out.println("parameters found");
 /* fifteenth */
 cond_stmt		::=		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 ELSE block:e3	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,(Block)e3) ; :}
 				|		IF OPENPRANTHES expr:e1 CLOSEDPRANTHES block:e2 				{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new If((Exp)e1,(Block)e2,null) ;:}
-				|		SWITCH OPENPRANTHES ID:e1 CLOSEDPRANTHES OF DOUBLEDOT BEGIN exp20:e2  DEFAULT DOUBLEDOT block:e3 END	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new Switch((String)e1, (ArrayList <Case>)e2, (Block) e3) ; :}
+				|		SWITCH OPENPRANTHES expr:e1 CLOSEDPRANTHES OF DOUBLEDOT BEGIN exp20:e2  DEFAULT DOUBLEDOT block:e3 END	{: if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new Switch((Exp)e1, (ArrayList <Case>)e2, (Block) e3) ; :}
 				;
 exp20			::=		CASE INT_CONST:e1 DOUBLEDOT block:e2 exp20:e3		{: if( DEBUGS ){ System.out.println("exp20 found"); } ArrayList <Case> a = (ArrayList <Case>)e3; a.add(new Case(new IntConstExp(HelperFunctions.parseInt((String)e1)),(Block)e2)); RESULT = a ;  :}
 				|														{: if( DEBUGS ){ System.out.println("exp20 found"); } RESULT = new ArrayList <Case>() ;:}
@@ -352,13 +355,13 @@ loop_stmt 		::=		FOR OPENPRANTHES assignment:e1 SEMI expr:e2  SEMI assignment:e3
 
 
 /* eighteenth */
-expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).SetBinaryExp((Exp)e1,(Exp)e3);  :}
+expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).setBinaryExp((Exp)e1,(Exp)e3);  :}
 			|		OPENPRANTHES expr:e  CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; :}
 			|		method_call:e	{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e;  :}
 			|		variable:e		{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e ; :}
 			|		const_val:e		{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; :}
-			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.dimensions.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
-			|		TILDA expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.dimensions.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
+			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
+			|		TILDA expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
 			|		assignment:e 	{:if( DEBUGS ){ System.out.println("expr found"); }RESULT = e;:}
 			|		MM variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } MMPrefix a = new MMPrefix() ; a.setUnary((Exp)e) ;RESULT = a; :}
 			|		PP variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } PPPrefix a = new PPPrefix() ; a.setUnary((Exp)e) ;RESULT = a;:}
@@ -386,14 +389,14 @@ binary_op		::=		arithmatic:e	{: if( DEBUGS ){ System.out.println("binary op foun
 				;
 
 /* twenty second */
-arithmatic		::=		PLUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Plus();:}
-				|		MINUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Minus();:}
-				|		MULT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Mult();:}
-				|		DIVIDE	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Divide();:}
-				|		MOD		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Mod();:}
-				|		AND		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.And();:}
-				|		OR		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Or();:}
-				|		CAROT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Carot();:}
+arithmatic		::=		PLUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Plus();:}
+				|		MINUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Minus();:}
+				|		MULT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mult();:}
+				|		DIVIDE	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Divide();:}
+				|		MOD		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mod();:}
+				|		AND		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.And();:}
+				|		OR		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Or();:}
+				|		CAROT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Carot();:}
 				;
 
 
@@ -404,9 +407,9 @@ conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional foun
 				|		SMALLEQUAL	{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new SmallerEqual();:}
 				|		SMALLER		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Smaller();:}
 				|		BIGGER		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Greater(); :}
-				|		ANDC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.And();:}
-				|		ORC			{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.Or();:}
-				|		NOTC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.Not();:}
+				|		ANDC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.And();:}
+				|		ORC			{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Or();:}
+				|		NOTC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Not();:}
 				;
 
 
@@ -418,10 +421,4 @@ const_val		::=		INT_CONST:e		{: if( DEBUGS ){ System.out.println("const val foun
 				|		STRING_CONST:e	{: if( DEBUGS ){ System.out.println("const val found by STRING_CONST"); } RESULT = new StringConstExp((String)e); :}
 				|		LONG_CONST:e		{: if( DEBUGS ){ System.out.println("const val found by LONG_CONST"); } RESULT = new LongConstExp(new Long(((String)e).substring(0,((String)e).length()-1)));  :}
 				;
-
-
-
-
-
-
 
