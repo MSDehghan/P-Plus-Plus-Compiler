@@ -4,7 +4,7 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-public class Or extends BinaryExp {
+public class Or extends Conditional {
     public  Or (){
 
     }

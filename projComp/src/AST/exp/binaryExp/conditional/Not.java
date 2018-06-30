@@ -4,7 +4,7 @@ import AST.exp.binaryExp.BinaryExp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-public class Not extends BinaryExp {
+public class Not extends Conditional {
     public Not(){
 
     }
