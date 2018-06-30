@@ -11,7 +11,7 @@ public class Not extends Conditional {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        throw new UnsupportedOperationException();
     }
 }
 
