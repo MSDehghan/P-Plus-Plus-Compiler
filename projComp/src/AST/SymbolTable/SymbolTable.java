@@ -124,6 +124,8 @@ public class SymbolTable {
 
     public void addScope() {
         HashMapOurs<String, DSCP> frame = new HashMapOurs<>();
+        frame.setLabelStart(getNewLabel());
+        frame.setLabelLast(getNewLabel());
         frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }

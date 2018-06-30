@@ -236,7 +236,8 @@ globalIndicate	::=		{:if( DEBUGS ){ System.out.println("func dcl found"); } Defi
 
 /* forth */
 
-extern_dcl		::=		EXTERN type:e1 ID:e2 SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2);:}
+extern_dcl		::=		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES arguments:e4 CLOSEDPRANTHES SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, (ArrayList<PairPooria<String,Integer>>)e4);:}
+				|		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES  CLOSEDPRANTHES SEMI								{: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, null);:}
 				;
 
 
