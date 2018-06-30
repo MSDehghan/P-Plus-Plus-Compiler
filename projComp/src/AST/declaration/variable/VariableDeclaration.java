@@ -1,4 +1,4 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.OperationCode;
 import AST.SymbolTable.SymbolTable;

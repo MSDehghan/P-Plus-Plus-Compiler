@@ -4,9 +4,7 @@ import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
-/**
- * Created by pooria on 6/28/2018.
- */
+
 public abstract class Unary extends Exp{
     Exp exp;
     public Unary(){

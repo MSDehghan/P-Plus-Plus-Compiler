@@ -6,9 +6,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/28/2018.
- */
+
 public class Parameters extends Node {
     ArrayList <Exp> expressions = new ArrayList<Exp>();
 

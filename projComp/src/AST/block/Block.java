@@ -7,9 +7,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/28/2018.
- */
+
 public class Block extends Node{
     ArrayList <OperationCode> operationCodes = new ArrayList<>();
     public Block(ArrayList <OperationCode> operationCodes){

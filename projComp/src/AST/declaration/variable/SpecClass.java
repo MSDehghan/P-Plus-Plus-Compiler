@@ -1,12 +1,10 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.exp.Exp;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class SpecClass {
     public ArrayList <Exp> dims;
     public String name ;

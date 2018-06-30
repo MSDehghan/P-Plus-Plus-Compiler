@@ -8,9 +8,7 @@ import jdk.internal.org.objectweb.asm.Type;
 import static jdk.internal.org.objectweb.asm.Opcodes.IADD;
 import static jdk.internal.org.objectweb.asm.Opcodes.IAND;
 
-/**
- * Created by pooria on 6/27/2018.
- */
+
 public class And extends BinaryExp {
 
     public And(){

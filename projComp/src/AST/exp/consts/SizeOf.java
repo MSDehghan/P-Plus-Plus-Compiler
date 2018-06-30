@@ -6,9 +6,7 @@ import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class SizeOf extends Exp {
     private Integer value;
 

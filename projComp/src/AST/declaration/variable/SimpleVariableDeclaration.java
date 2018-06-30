@@ -1,4 +1,4 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.SymbolTable.SymbolTable;
 import AST.SymbolTable.dscp.DSCP;

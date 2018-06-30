@@ -5,9 +5,7 @@ import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
 
-/**
- * Created by pooria on 6/27/2018.
- */
+
 
 public abstract class BinaryExp extends Exp {
     protected Exp exp1, exp2 ;

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import AST.*;
 import AST.block.*;
 import AST.declaration.*;
+import AST.declaration.function.*;
+import AST.declaration.variable.*;
 import AST.exp.*;
 import AST.exp.binaryExp.*;
 import AST.exp.binaryExp.arithmatic.*;
@@ -906,7 +908,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; 
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument >)e3, (String)e1, (String)e2, null) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -927,7 +929,7 @@ class CUP$parser$actions {
 		int e4left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e4right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument>)e3, (String)e1, (String)e2, (Block)e4) ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -996,13 +998,16 @@ class CUP$parser$actions {
 		int e1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = (ArrayList <PairPooria>)e3   ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; 
+		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
+		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int e4left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int e4right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = (ArrayList <FunctionArgument>)e4   ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arguments",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1014,10 +1019,13 @@ class CUP$parser$actions {
 		int e1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
 		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = new ArrayList <PairPooria>() ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; 
+		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		 if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = new ArrayList <FunctionArgument>() ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("arguments",7, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

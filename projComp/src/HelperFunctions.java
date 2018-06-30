@@ -1,6 +1,4 @@
-/**
- * Created by pooria on 6/28/2018.
- */
+
 public class HelperFunctions {
     public static int parseInt(String in){
         if(in.length()>=3   ){

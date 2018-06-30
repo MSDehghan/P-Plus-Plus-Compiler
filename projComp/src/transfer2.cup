@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import AST.*;
 import AST.block.* ;
 import AST.declaration.* ;
+import AST.declaration.function.*;
+import AST.declaration.variable.*;
 import AST.exp.* ;
 import AST.exp.binaryExp.* ;
 import AST.exp.binaryExp.arithmatic.* ;
@@ -221,8 +223,8 @@ func_extern 	::=		func_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern f
 
 /* third */
 
-func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, null) ; :}
-				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <PairPooria <String,Integer> >)e3, (String)e1, (String)e2, (Block)e4) ;:}
+func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument >)e3, (String)e1, (String)e2, null) ; :}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument>)e3, (String)e1, (String)e2, (Block)e4) ;:}
 				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	globalIndicate	                  {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
 				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4     globalIndicate 	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
 				;
@@ -239,8 +241,8 @@ extern_dcl		::=		EXTERN type:e1 ID:e2 SEMI	                {: if( DEBUGS ){ Syst
 
 
 /* fifth */
-arguments 		::=		type:e1 ID exp6:e2 COMMA arguments:e3	    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = (ArrayList <PairPooria>)e3   ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
-				|		type:e1 ID exp6:e2		                    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <PairPooria> a = new ArrayList <PairPooria>() ; a.add(new PairPooria<String, Integer>((String)e1, (Integer)e2)); RESULT = a ; :}
+arguments 		::=		type:e1 ID:e2 exp6:e3 COMMA arguments:e4	    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = (ArrayList <FunctionArgument>)e4   ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; :}
+				|		type:e1 ID:e2 exp6:e3		                    {: if( DEBUGS ){ System.out.println("arguments found"); }ArrayList <FunctionArgument> a = new ArrayList <FunctionArgument>() ; a.add(new FunctionArgument((String)e1, (String)e2,(Integer)e3)); RESULT = a ; :}
 				;
 
 

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import AST.*;
 import AST.block.* ;
 import AST.declaration.* ;
-import AST.exp.* ;
-import AST.exp.binaryExp.* ;
-import AST.exp.binaryExp.arithmatic.* ;
-import AST.exp.binaryExp.conditional.* ;
-import AST.exp.consts.* ;
-import AST.exp.unaryExpression.* ;
-import AST.exp.var.* ;
+import AST.dimensions.* ;
+import AST.dimensions.binaryExp.* ;
+import AST.dimensions.binaryExp.arithmatic.* ;
+import AST.dimensions.binaryExp.conditional.* ;
+import AST.dimensions.consts.* ;
+import AST.dimensions.unaryExpression.* ;
+import AST.dimensions.var.* ;
 import AST.statement.* ;
 import AST.statement.loop.* ;
 import AST.statement.cond.* ;
@@ -18,7 +18,7 @@ import AST.SymbolTable.* ;
 import AST.SymbolTable.dscp.* ;
 import java.util.ArrayList;
 import preDefinedValues.*;
-import AST.exp.assignments.*;
+import AST.dimensions.assignments.*;
 
 
 
@@ -357,8 +357,8 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 			|		method_call:e	{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e;  :}
 			|		variable:e		{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e ; :}
 			|		const_val:e		{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = e; :}
-			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.exp.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
-			|		TILDA expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.exp.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
+			|		MINUS expr:e {: if( DEBUGS ){ System.out.println("expr found"); }Unary a = new AST.dimensions.unaryExpression.Minus();a.setUnary((Exp)e) ;RESULT = a; :}	%prec  UMINUS
+			|		TILDA expr:e	{: if( DEBUGS ){ System.out.println("expr found"); } Unary a = new AST.dimensions.unaryExpression.Not();a.setUnary((Exp)e) ;RESULT = a;:}
 			|		assignment:e 	{:if( DEBUGS ){ System.out.println("expr found"); }RESULT = e;:}
 			|		MM variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } MMPrefix a = new MMPrefix() ; a.setUnary((Exp)e) ;RESULT = a; :}
 			|		PP variable:e	{: if( DEBUGS ){ System.out.println("variable found"); } PPPrefix a = new PPPrefix() ; a.setUnary((Exp)e) ;RESULT = a;:}
@@ -386,14 +386,14 @@ binary_op		::=		arithmatic:e	{: if( DEBUGS ){ System.out.println("binary op foun
 				;
 
 /* twenty second */
-arithmatic		::=		PLUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Plus();:}
-				|		MINUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Minus();:}
-				|		MULT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mult();:}
-				|		DIVIDE	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Divide();:}
-				|		MOD		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Mod();:}
-				|		AND		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.And();:}
-				|		OR		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Or();:}
-				|		CAROT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.exp.binaryExp.arithmatic.Carot();:}
+arithmatic		::=		PLUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Plus();:}
+				|		MINUS	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Minus();:}
+				|		MULT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Mult();:}
+				|		DIVIDE	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Divide();:}
+				|		MOD		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Mod();:}
+				|		AND		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.And();:}
+				|		OR		{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Or();:}
+				|		CAROT	{: if( DEBUGS ){ System.out.println("arithmatic found"); } RESULT = new AST.dimensions.binaryExp.arithmatic.Carot();:}
 				;
 
 
@@ -404,9 +404,9 @@ conditional		::=		EQEQUAL		{: if( DEBUGS ){ System.out.println("conditional foun
 				|		SMALLEQUAL	{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new SmallerEqual();:}
 				|		SMALLER		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Smaller();:}
 				|		BIGGER		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new Greater(); :}
-				|		ANDC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.And();:}
-				|		ORC			{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Or();:}
-				|		NOTC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.exp.binaryExp.conditional.Not();:}
+				|		ANDC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.And();:}
+				|		ORC			{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.Or();:}
+				|		NOTC		{: if( DEBUGS ){ System.out.println("conditional found"); } RESULT = new AST.dimensions.binaryExp.conditional.Not();:}
 				;
 
 

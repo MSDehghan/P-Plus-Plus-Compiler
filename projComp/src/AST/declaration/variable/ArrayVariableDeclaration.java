@@ -1,4 +1,4 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;

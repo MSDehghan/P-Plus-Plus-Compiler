@@ -7,9 +7,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class Switch extends Statement {
     String id;
     ArrayList <Case> cases;

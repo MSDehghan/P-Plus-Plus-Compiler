@@ -1,10 +1,9 @@
 package AST.SymbolTable.dscp;
 
+import AST.SymbolTable.SymbolTable;
 import jdk.internal.org.objectweb.asm.Type;
 
-/**
- * Created by pooria on 6/27/2018.
- */
+
 // TODO: 28/06/2018 method must be done
 public abstract class DSCP {
     Type type;
@@ -21,7 +20,7 @@ public abstract class DSCP {
     }
 
     DSCP(String name, String typeS) {
-        this.type = Type.getType(typeS);
+        this.type = SymbolTable.getTypeFromName(typeS);
         this.name = name;
     }
 

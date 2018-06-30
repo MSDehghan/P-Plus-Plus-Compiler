@@ -6,9 +6,7 @@ import AST.statement.Statement;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class If extends Statement{
     Exp exp;
     Block block1, block2;

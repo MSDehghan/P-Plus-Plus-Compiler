@@ -1,4 +1,4 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.OperationCode;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
@@ -7,9 +7,7 @@ import preDefinedValues.DefinedValues;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class DCLS extends OperationCode{
     boolean Constant;
     public ArrayList <SpecClass> specClasses;

@@ -1,4 +1,4 @@
-package AST.declaration;
+package AST.declaration.variable;
 
 import AST.Node;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
@@ -6,9 +6,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 
 import java.util.ArrayList;
 
-/**
- * Created by pooria on 6/29/2018.
- */
+
 public class StructDeclaration extends Node {
     ArrayList <DCLS> dclses ;
     String name ;

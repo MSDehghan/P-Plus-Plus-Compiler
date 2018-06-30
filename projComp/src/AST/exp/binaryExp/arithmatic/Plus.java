@@ -7,9 +7,7 @@ import jdk.internal.org.objectweb.asm.Type;
 
 import static jdk.internal.org.objectweb.asm.Opcodes.IADD;
 
-/**
- * Created by pooria on 6/27/2018.
- */
+
 public class Plus extends BinaryExp {
     public Plus(){
 
