@@ -53,7 +53,9 @@ public class $Main {
     GOTO L1
    L2
     INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    ILOAD 1
     ICONST_5
+    IDIV
     ISTORE 1
     ILOAD 1
     POP

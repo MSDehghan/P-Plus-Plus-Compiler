@@ -10,7 +10,8 @@ public class firstDynamic {
     static int stat = 0;
     public static void main(String[] args) {
 //        test(1);
-        stat = 2;
+        stat /= 2;
+
     }
     public SecondDynamic sc=new SecondDynamic();
 }
