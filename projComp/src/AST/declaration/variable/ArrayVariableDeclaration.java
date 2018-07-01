@@ -1,22 +1,62 @@
 package AST.declaration.variable;
 
+import AST.SymbolTable.SymbolTable;
+import AST.SymbolTable.dscp.DSCP;
+import AST.SymbolTable.dscp.DSCP_ARR_DYNAMIC;
+import AST.SymbolTable.dscp.DSCP_ARR_STATIC;
+import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Type;
+import preDefinedValues.HelperFunctions;
 
 import java.util.List;
+
+import static jdk.internal.org.objectweb.asm.Opcodes.ASTORE;
 
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
 
-    public ArrayVariableDeclaration(String varName, String type,List<Exp> dimensions, boolean Static,boolean Constant) {
+    public ArrayVariableDeclaration(String varName, String type, List<Exp> dimensions, boolean Static, boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
+        declare(Static, SymbolTable.getTypeFromName(type), Constant);
         //TODO do something with constant
+    }
+
+    private void declare(boolean staticDec, Type type, boolean Constant) {
+        // TODO: 01/07/2018 SymbolTable Should Change
+        if (name == null || type == null)
+            throw new IllegalArgumentException();
+
+
+        dimensions.forEach(exp -> {
+            if (!HelperFunctions.isInteger(exp.getType()))
+                throw new RuntimeException("Bad Index Type"); // TODO: 01/07/2018 Write Good Exception
+        });
+
+        int[] dimsArray = new int[dimensions.size()];
+        String repeatedArray = new String(new char[dimensions.size()]).replace("\0", "[");
+        Type arrayType = Type.getType(repeatedArray + type.getDescriptor()); // TODO: 01/07/2018 PLease Testtttttt!
+        DSCP dscp;
+
+        if (staticDec) {
+            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size());
+        } else {
+            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size());
+        }
+
+        SymbolTable.getInstance().addVariable(dscp, name);
     }
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        if (getDSCP() instanceof DSCP_DYNAMIC)
+            for (Exp dimension : dimensions) {
+                dimension.compile(mv, cv);
+            }
+        mv.visitMultiANewArrayInsn(getType().getDescriptor(), dimensions.size());
+        mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
     }
 }

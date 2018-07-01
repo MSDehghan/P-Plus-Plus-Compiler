@@ -1,3 +1,5 @@
+package preDefinedValues;
+
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
@@ -29,6 +31,7 @@ public class HelperFunctions {
         }
         return false;
     }
+
     private static boolean checkForDouble(Type type1,Type type2,MethodVisitor mv, ClassVisitor cv){
         if(type2==Type.DOUBLE_TYPE){
             if(isInteger(type1)){
@@ -40,6 +43,7 @@ public class HelperFunctions {
         }
         return false;
     }
+
     private static boolean checkForLong(Type type1,Type type2,MethodVisitor mv, ClassVisitor cv){
         if(type2==Type.LONG_TYPE){
             if(isInteger(type1)){
@@ -49,6 +53,7 @@ public class HelperFunctions {
         }
         return false;
     }
+
     public static void cast(Type type1, Type type2,MethodVisitor mv, ClassVisitor cv){
         if(isRecord(type1)||isRecord(type2)){
             if(type1!=type2){
@@ -59,6 +64,5 @@ public class HelperFunctions {
                 checkForLong(type1,type2,mv,cv);
             }
         }
-
     }
 }

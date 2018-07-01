@@ -2,36 +2,25 @@ package AST.SymbolTable.dscp;
 
 import jdk.internal.org.objectweb.asm.Type;
 
-import java.util.ArrayList;
-
 public class DSCP_ARR_STATIC extends DSCP_STATIC {
-    ArrayList<Integer> dims = new ArrayList<Integer>();
-    int up;
+    private int dimensions;
 
-    DSCP_ARR_STATIC(String name, Type type, int index, int up, int... dims) {
+    public DSCP_ARR_STATIC(String name, Type type, int dimensions) {
         super(name, type);
-
-        for (int i : dims) {
-            this.dims.add(i);
-        }
-        this.up = up;
+        this.dimensions = dimensions;
     }
 
-    DSCP_ARR_STATIC(String name, Class<?> clazz, int index, int up, int... dims) {
+    DSCP_ARR_STATIC(String name, Class<?> clazz, int dimensions) {
         super(name, clazz);
-
-        for (int i : dims) {
-            this.dims.add(i);
-        }
-        this.up = up;
+        this.dimensions = dimensions;
     }
 
-    DSCP_ARR_STATIC(String name, String typeS, int index, int up, int... dims) {
+    DSCP_ARR_STATIC(String name, String typeS, int dimensions) {
         super(name, typeS);
+        this.dimensions = dimensions;
+    }
 
-        for (int i : dims) {
-            this.dims.add(i);
-        }
-        this.up = up;
+    public int getDimensions() {
+        return dimensions;
     }
 }
