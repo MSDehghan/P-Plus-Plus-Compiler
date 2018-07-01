@@ -28,8 +28,6 @@ public class MethodCall extends Exp {
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
-
         Label start = new Label();
         Label middle = new Label();
         Label end = new Label();
@@ -57,20 +55,23 @@ public class MethodCall extends Exp {
                         mv.visitFieldInsn(Opcodes.GETFIELD, e.getVars().get(i).address, e.getVars().get(i).name, e.getVars().get(i).type);
                     }
                 }
-                mv.visitJumpInsn(Opcodes.GOTO,start);
-                mv.visitLabel(end);
 //            TODO what is this false
                 String s = funcDcl.getType().toString();
                 if (s.charAt(0) == 'L') {
                     s = s.substring(1, s.length() - 1);
                 }
 //            else do nothing
+                mv.visitJumpInsn(Opcodes.GOTO,start);
+                mv.visitLabel(end);
                 mv.visitMethodInsn(INVOKEVIRTUAL, e.getAddress(), id, e.getFunctionSignature(), false);
             }else {
+                mv.visitJumpInsn(Opcodes.GOTO,start);
+                mv.visitLabel(end);
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC,e.getAddress(),e.getName(),e.getFunctionSignature(),false);
             }
         }else {
             if(parameters.size()!=funcDcl.inputs.length){
+
                 throw new RuntimeException("the static array doesn't have any signature like this");
             }
 

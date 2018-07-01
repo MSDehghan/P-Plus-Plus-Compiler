@@ -1,4 +1,9 @@
 
+function int pooria()
+begin
+return 0;
+end
+
 function int pooria(int a)
 begin
 return a*3;
@@ -7,6 +12,7 @@ end
 
 function void start()
 begin
+println(pooria());
 println(pooria(3));
 end
 

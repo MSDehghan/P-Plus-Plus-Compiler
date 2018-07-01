@@ -5,8 +5,18 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class HelperFunctions {
+
+    public static ArrayList reverse(ArrayList a){
+        Collections.reverse(a);
+        return a;
+    }
+
     public static int parseInt(String in){
+
         if(in.length()>=3   ){
             if(in.charAt(1)=='x'){
                 return Integer.parseInt(in.substring(2),16);

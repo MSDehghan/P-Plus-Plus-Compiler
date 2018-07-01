@@ -920,7 +920,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument >)e3, (String)e1, (String)e2, null) ; 
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration(HelperFunctions.reverse((ArrayList <FunctionArgument >)e3), (String)e1, (String)e2, null) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -941,7 +941,7 @@ class CUP$parser$actions {
 		int e4left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e4right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument>)e3, (String)e1, (String)e2, (Block)e4) ;
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration(HelperFunctions.reverse((ArrayList <FunctionArgument >)e3), (String)e1, (String)e2, (Block)e4) ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-8)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1004,7 +1004,7 @@ class CUP$parser$actions {
 		int e4left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e4right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (ArrayList<StaticVarsExtern>)e2, (String)e3, (String)e4); 
+		 if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, HelperFunctions.reverse((ArrayList<StaticVarsExtern>)e2), (String)e3, (String)e4); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("extern_dcl",5, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-5)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1232,7 +1232,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-3)).value;
-		 if( DEBUGS ){ System.out.println("struct dec found"); }ArrayList <DCLS> a = (ArrayList <DCLS>) e3 ;a.add((DCLS)e2); RESULT = new StructDeclaration(a,(String)e1); 
+		 if( DEBUGS ){ System.out.println("struct dec found"); }ArrayList <DCLS> a = (ArrayList <DCLS>) e3 ;a.add((DCLS)e2);a = HelperFunctions.reverse(a) ;RESULT = new StructDeclaration(a,(String)e1); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("struct_dec",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1274,7 +1274,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); RESULT = new DCLS(a,(String)e1,true); 
+		 if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); HelperFunctions.reverse(a); RESULT = new DCLS(a,(String)e1,true); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("var_dcl",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1292,7 +1292,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); RESULT = new DCLS(a,(String)e1,false); 
+		 if( DEBUGS ){ System.out.println("var_dcl found"); }ArrayList <SpecClass> a = (ArrayList <SpecClass>) e3; a.add((SpecClass)e2); HelperFunctions.reverse(a);RESULT = new DCLS(a,(String)e1,false); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("var_dcl",1, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1346,7 +1346,7 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("var dcl cnt found"); }RESULT = new SpecClass((String)e1, (ArrayList <Exp>)e2, null); 
+		 if( DEBUGS ){ System.out.println("var dcl cnt found"); }RESULT = new SpecClass((String)e1, HelperFunctions.reverse((ArrayList <Exp>)e2), null); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("var_dcl_cnt",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1358,7 +1358,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("block found"); } RESULT = new Block((ArrayList <OperationCode>)e) ; 
+		 if( DEBUGS ){ System.out.println("block found"); } RESULT = new Block(HelperFunctions.reverse((ArrayList <OperationCode>)e)) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("block",8, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1562,7 +1562,7 @@ class CUP$parser$actions {
 		int e1left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e1right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e1 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("method found"); } RESULT = new MethodCall((String)e, (ArrayList<Exp>)e1); 
+		 if( DEBUGS ){ System.out.println("method found"); } RESULT = new MethodCall((String)e, HelperFunctions.reverse((ArrayList<Exp>)e1)); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("method_call",14, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-3)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1652,7 +1652,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new Switch((Exp)e1, (ArrayList <Case>)e2, (Block) e3) ; 
+		 if( DEBUGS ){ System.out.println("cond_stmt found"); } RESULT = new Switch((Exp)e1, HelperFunctions.reverse((ArrayList <Case>)e2), (Block) e3) ; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("cond_stmt",15, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-11)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2000,7 +2000,7 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,(ArrayList <Exp>)e2);}
+		 if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,HelperFunctions.reverse((ArrayList <Exp>)e2));}
               CUP$parser$result = parser.getSymbolFactory().newSymbol("variable",10, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
