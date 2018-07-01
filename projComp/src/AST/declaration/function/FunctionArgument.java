@@ -13,7 +13,6 @@ public class FunctionArgument {
         this.name = name;
         this.dimensions = dimensions;
     }
-
     public Type getType() {
         return type;
     }
