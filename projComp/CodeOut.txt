@@ -24,45 +24,30 @@ public class $Main {
    L7
     GOTO L8
    L9
-    ICONST_3
+    LDC 3.0
     GOTO L10
    L8
     GOTO L9
    L10
-    INVOKESTATIC $Main.pooria (I)I 
+    INVOKESTATIC $Main.pooria (D)D 
     GOTO L11
    L6
     GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
     GOTO L7
    L11
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    INVOKEVIRTUAL java/io/PrintStream.println (D)V 
     RETURN
     MAXSTACK = 0
     MAXLOCALS = 0
 
   // access flags 0x9
-  public static pooria(I)I
-    ICONST_2
-    ISTORE 1
-    GOTO L0
-   L1
-    ILOAD 1
-    GOTO L2
-   L0
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    GOTO L1
-   L2
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
-    ILOAD 1
-    ICONST_5
-    IDIV
-    ISTORE 1
-    ILOAD 1
-    POP
-    ILOAD 0
-    ILOAD 1
-    IMUL
-    IRETURN
+  public static pooria(D)D
+    LDC 4.0
+    DSTORE 2
+    DLOAD 0
+    DLOAD 2
+    DMUL
+    DRETURN
     MAXSTACK = 0
     MAXLOCALS = 0
 

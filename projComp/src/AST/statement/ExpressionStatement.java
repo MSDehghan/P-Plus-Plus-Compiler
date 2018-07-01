@@ -19,7 +19,10 @@ public class ExpressionStatement extends Statement {
         exp.compile(mv,cv);
         if(exp.getType()!= Type.VOID_TYPE){
 //            TODO check for other combinations
+            if(!exp.getType().equals(Type.DOUBLE_TYPE)&&!exp.getType().equals(Type.LONG_TYPE))
             mv.visitInsn(Opcodes.POP);
+            else
+                mv.visitInsn(Opcodes.POP2);
         }
     }
 }

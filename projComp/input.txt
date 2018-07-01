@@ -4,19 +4,18 @@ begin
 return 0;
 end
 
-function int pooria(int a)
+function double pooria(double a)
 begin
-int b = 2;
-println(b);
-b = 5;
-return a*b;
+double d = 4.0 ;
+return a*d;
 end
 
 
 function void start()
 begin
 println(pooria());
-println(pooria(3));
+println(pooria(3.0));
 end
 
 
+s

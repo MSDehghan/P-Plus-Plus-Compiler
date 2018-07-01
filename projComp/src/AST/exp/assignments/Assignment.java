@@ -8,6 +8,7 @@ import AST.exp.var.Variable;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
+import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
 import static jdk.internal.org.objectweb.asm.Opcodes.ISTORE;
@@ -35,11 +36,15 @@ public class Assignment extends Exp2Var {
 
         DSCP dscp = var.getDSCP();
         exp.compile(mv,cv);
-
         if(dscp instanceof DSCP_DYNAMIC) {
             int index = ((DSCP_DYNAMIC) dscp).getIndex();
-            mv.visitVarInsn(var.getType().getOpcode(ISTORE), index);
-            var.compile(mv,cv);
+            if(var.getType().equals(Type.DOUBLE_TYPE)){
+                mv.visitVarInsn(var.getType().getOpcode(ISTORE), index);
+                var.compile(mv,cv);
+            }else{
+                mv.visitVarInsn(var.getType().getOpcode(ISTORE), index);
+                var.compile(mv,cv);
+            }
         }else{
             // TODO: 29/06/2018 For Static Variables;
             mv.visitFieldInsn(Opcodes.PUTSTATIC, DefinedValues.nameClass, dscp.getName(), dscp.getType().toString());

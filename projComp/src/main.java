@@ -36,6 +36,13 @@ public class main {
         ins.add(new StaticVarsExtern("Ljava/io/PrintStream;","out","java/lang/System"));
         ExternalFunctionDcl a = new ExternalFunctionDcl("java/io/PrintStream",ins,"println","(I)V");
 
+
+        ins = new ArrayList<StaticVarsExtern>();
+        ins.add(new StaticVarsExtern("Ljava/io/PrintStream;","out","java/lang/System"));
+        a = new ExternalFunctionDcl("java/io/PrintStream",ins,"println","(D)V");
+
+
+
         parser p = new parser(new Yylex(new FileReader("input.txt")));
         Object result = p.parse().value;
         Program pr = (Program) result;

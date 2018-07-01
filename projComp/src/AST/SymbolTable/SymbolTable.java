@@ -146,6 +146,7 @@ public class SymbolTable {
                 }
             }
 //          TODO make this go away in case of saying something later
+
             throw new RuntimeException("no such function was found");
         } else {
 //          TODO make this go away in case of saying something later
