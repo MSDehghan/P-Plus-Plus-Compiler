@@ -2,6 +2,7 @@ package AST.block;
 
 import AST.Node;
 import AST.OperationCode;
+import AST.SymbolTable.SymbolTable;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 
@@ -15,7 +16,9 @@ public class Block extends Node{
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        for(OperationCode oc : operationCodes){
+            oc.compile(mv,cv);
+        }
     }
 }
 

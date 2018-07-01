@@ -14,6 +14,10 @@ public class Continue extends Statement {
 //    TODO this asserts that you have pushed the right
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        mv.visitJumpInsn(Opcodes.GOTO, SymbolTable.getInstance().getLabelStart());
+        if (SymbolTable.getInstance().canHaveBreak()){
+            mv.visitJumpInsn(Opcodes.GOTO, SymbolTable.getInstance().getLabelStart());
+        }else {
+            throw new RuntimeException("This part is not switch nor Loop");
+        }
     }
 }

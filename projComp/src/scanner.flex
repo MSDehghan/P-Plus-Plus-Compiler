@@ -35,6 +35,9 @@ import java_cup.runtime.*;
 
 white = \r|\n|\t|" "
 id = ("_"|[a-z]|[A-Z])([0-9]|"_"|[a-z]|[A-Z])*
+address = ({id}"/")+{id}
+typesOfByteCode = "B"|"C"|"D"|"F"|"I"|"J"|"S"|"V"|"Z"|"L"{address}";"|("[")+("B"|"C"|"D"|"F"|"I"|"J"|"S"|"V"|"Z"|"L"{address}";")
+functionSignature = "("({typesOfByteCode})*")"{typesOfByteCode}
 //notice int number has to come latter
 UnsignedHexLiteral    = 0 [xX] 0* {HexDigit} {1,16}
 HexDigit      = [0-9a-fA-F]
@@ -153,7 +156,7 @@ SingleCharacter = [^\r\n\'\\]
  \' { yybegin(CHAR);  }
 
 
-
+{address}            {return symbol(sym.ADDRESS,yytext());}
 {auto}               {return symbol(sym.AUTO,yytext());}
 {void}               {return symbol(sym.VOID,yytext());}
 {pp}               {return symbol(sym.PP,yytext());}
@@ -236,6 +239,8 @@ SingleCharacter = [^\r\n\'\\]
 {exclem}               {return symbol(sym.EXCLEM,yytext());}
 
 
+{typesOfByteCode}       {return symbol(sym.TYPESOFBYTECODE,yytext());}
+{functionSignature}     {return symbol(sym.FUNCTIONSIGNATURE,yytext());}
 
 
 

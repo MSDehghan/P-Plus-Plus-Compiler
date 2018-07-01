@@ -9,7 +9,7 @@ public class HashMapOurs <K,V> extends  HashMap <K,V> {
     private int index = 0;
     private Label labelStart ;
     private Label labelLast;
-
+    private int typeOfScope;
     public Label getLabelLast() {
         return labelLast;
     }
@@ -50,5 +50,13 @@ public class HashMapOurs <K,V> extends  HashMap <K,V> {
     }
     public void addIndex(int add){
         index += add;
+    }
+
+    public int getTypeOfScope() {
+        return typeOfScope;
+    }
+
+    public void setTypeOfScope(int typeOfScope) {
+        this.typeOfScope = typeOfScope;
     }
 }

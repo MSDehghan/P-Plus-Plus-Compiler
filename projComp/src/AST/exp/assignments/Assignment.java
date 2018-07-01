@@ -13,6 +13,7 @@ import static jdk.internal.org.objectweb.asm.Opcodes.ISTORE;
 
 public class Assignment extends Exp2Var {
 
+    //TODO we should make something for assigning records to records
     public Assignment(Variable var, Exp exp) {
         if (DefinedValues.DEBUG) {
             System.out.println("assignment added to AST");

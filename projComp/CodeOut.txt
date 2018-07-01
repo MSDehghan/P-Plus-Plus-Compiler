@@ -1,0 +1,14 @@
+// class version 52.0 (52)
+// access flags 0x21
+public class $Main {
+
+
+  // access flags 0x9
+  public static main([Ljava/lang/String;)V
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    BIPUSH 10
+    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    RETURN
+    MAXSTACK = 0
+    MAXLOCALS = 0
+}
