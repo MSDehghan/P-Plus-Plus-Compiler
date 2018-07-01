@@ -6,6 +6,8 @@ import AST.exp.Exp;
 import AST.exp.consts.Constant;
 import jdk.internal.org.objectweb.asm.*;
 
+import javax.sound.midi.Soundbank;
+
 import static AST.SymbolTable.SymbolTable.getInstance;
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
 import static jdk.internal.org.objectweb.asm.Opcodes.*;
@@ -14,18 +16,18 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
     boolean staticDec;
     boolean Constant;
     String  varType;
-    Exp value ;
     public SimpleVariableDeclaration(String varName, String varType, boolean staticDec, boolean Constant) {
         name = varName;
         this.varType = varType;
         this.staticDec = staticDec;
         this.Constant = Constant;
+
     }
     //TODO do something with constant
     public SimpleVariableDeclaration(String varName, String varType, Exp value, boolean staticDec, boolean Constant) {
         name = varName;
         this.varType = varType ;
-        this.value = value;
+        this.exp = value;
         this.staticDec = staticDec;
         this.Constant = Constant;
     }

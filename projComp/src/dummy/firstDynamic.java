@@ -7,9 +7,10 @@ public class firstDynamic {
     public static int test(int b){
         return b*2;
     }
-
+    static int stat = 0;
     public static void main(String[] args) {
-        test(1);
+//        test(1);
+        stat = 2;
     }
     public SecondDynamic sc=new SecondDynamic();
 }

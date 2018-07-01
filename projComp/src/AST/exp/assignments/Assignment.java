@@ -7,6 +7,7 @@ import AST.exp.var.SimpleVariable;
 import AST.exp.var.Variable;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Opcodes;
 import preDefinedValues.DefinedValues;
 
 import static jdk.internal.org.objectweb.asm.Opcodes.ISTORE;
@@ -20,11 +21,11 @@ public class Assignment extends Exp2Var {
         }
         this.var = var;
         this.exp = exp;
-        this.type = var.getType();
     }
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
+        this.type = var.getType();
         if (var.getType() != exp.getType())
             throw new RuntimeException();
 
@@ -40,8 +41,9 @@ public class Assignment extends Exp2Var {
             mv.visitVarInsn(var.getType().getOpcode(ISTORE), index);
             var.compile(mv,cv);
         }else{
-            // TODO: 29/06/2018 For Static Variables
-            throw new RuntimeException();
+            // TODO: 29/06/2018 For Static Variables;
+            mv.visitFieldInsn(Opcodes.PUTSTATIC, DefinedValues.nameClass, dscp.getName(), dscp.getType().toString());
+//            throw new RuntimeException();
         }
 
 

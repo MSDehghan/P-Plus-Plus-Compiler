@@ -42,8 +42,23 @@ public class $Main {
 
   // access flags 0x9
   public static pooria(I)I
+    ICONST_2
+    ISTORE 1
+    GOTO L0
+   L1
+    ILOAD 1
+    GOTO L2
+   L0
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    GOTO L1
+   L2
+    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    ICONST_5
+    ISTORE 1
+    ILOAD 1
+    POP
     ILOAD 0
-    ICONST_3
+    ILOAD 1
     IMUL
     IRETURN
     MAXSTACK = 0
