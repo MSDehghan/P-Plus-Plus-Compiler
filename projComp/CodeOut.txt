@@ -5,10 +5,24 @@ public class $Main {
 
   // access flags 0x9
   public static main([Ljava/lang/String;)V
+    INVOKESTATIC $Main.funcMain ()V 
+    RETURN
+    MAXSTACK = 0
+    MAXLOCALS = 0
+
+  // access flags 0x9
+  public static funcMain()V
+   L0
+   L1
+    ICONST_1
+    IFEQ L2
     GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
     BIPUSH 10
     INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    GOTO L1
+   L2
     RETURN
+   L3
     MAXSTACK = 0
     MAXLOCALS = 0
 }

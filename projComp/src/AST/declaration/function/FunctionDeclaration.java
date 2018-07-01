@@ -36,7 +36,7 @@ public class FunctionDeclaration extends FuncDcl {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
 //        TODO we can add generics and others later (that's why the last two are null)
-        MethodVisitor newMv = cv.visitMethod(Opcodes.ACC_PUBLIC,name,this.signature,null,null);
+        MethodVisitor newMv = cv.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC,name,this.signature,null,null);
 
         newMv.visitCode();
 
@@ -51,7 +51,7 @@ public class FunctionDeclaration extends FuncDcl {
                     VariableDeclaration v = new SimpleVariableDeclaration(f.getName(),f.getType().getClassName(),false,false);
                 }else{
 //                   TODO we can add constant to the function too
-                    VariableDeclaration v = new ArrayVariableDeclaration(f.getName(),f.getType().getClassName(),f.getDimensions(),false);
+                    VariableDeclaration v = new ArrayVariableDeclaration(f.getName(),f.getType().getClassName(),f.getDimensions(),false,false);
                 }
             }
 

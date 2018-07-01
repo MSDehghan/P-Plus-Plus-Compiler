@@ -19,6 +19,14 @@ import static jdk.internal.org.objectweb.asm.Opcodes.*;
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
 
+    public ArrayVariableDeclaration(String varName, String type, int dims, boolean Static, boolean Constant) {
+        name = varName;
+        this.dimensions = dimensions;
+        declare(Static, SymbolTable.getTypeFromName(type), Constant);
+        //TODO do something with constant
+    }
+
+
     public ArrayVariableDeclaration(String varName, String type, List<Exp> dimensions, boolean Static, boolean Constant) {
         name = varName;
         this.dimensions = dimensions;

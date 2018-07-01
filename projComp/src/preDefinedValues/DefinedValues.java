@@ -10,5 +10,5 @@ public class DefinedValues {
     public  static void changeScope(){
         DefinedValues.GLOBAL = !DefinedValues.GLOBAL;
     }
-    public  static boolean DEBUG =  true;
+    public  static boolean DEBUG =  false;
 }
