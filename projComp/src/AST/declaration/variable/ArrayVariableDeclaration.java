@@ -41,9 +41,9 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
         DSCP dscp;
 
         if (staticDec) {
-            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size());
+            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size(),Constant);
         } else {
-            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size());
+            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size(),Constant);
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);

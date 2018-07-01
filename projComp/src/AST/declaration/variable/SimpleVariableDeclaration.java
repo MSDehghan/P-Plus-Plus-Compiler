@@ -45,9 +45,9 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
         DSCP dscp;
 
         if (staticDec) {
-            dscp = new DSCP_VAR_STATIC(name, type);
+            dscp = new DSCP_VAR_STATIC(name, type, Constant);
         } else {
-            dscp = new DSCP_VAR_DYNAMIC(name, type, SymbolTable.getInstance().returnNewIndex());
+            dscp = new DSCP_VAR_DYNAMIC(name, type, SymbolTable.getInstance().returnNewIndex(), Constant);
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);
