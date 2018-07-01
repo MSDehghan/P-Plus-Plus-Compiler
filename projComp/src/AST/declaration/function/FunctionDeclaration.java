@@ -3,6 +3,11 @@ package AST.declaration.function;
 
 import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
+import AST.declaration.variable.ArrayVariableDeclaration;
+import AST.declaration.variable.SimpleVariableDeclaration;
+import AST.declaration.variable.VariableDeclaration;
+import AST.exp.consts.IntConstExp;
+import AST.exp.var.Variable;
 import AST.statement.Return;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
@@ -37,6 +42,21 @@ public class FunctionDeclaration extends FuncDcl {
 
         SymbolTable.getInstance().addScope(SymbolTable.FUNCTION);
         SymbolTable.setLastSeenFunction(this);
+
+//        this part shall be for declaring new variables
+
+            for (FunctionArgument f : arguments){
+                if(f.getDimensions()==0){
+//                   TODO we can add constant to the function too
+                    VariableDeclaration v = new SimpleVariableDeclaration(f.getName(),f.getType().getClassName(),false,false);
+                }else{
+//                   TODO we can add constant to the function too
+                    VariableDeclaration v = new ArrayVariableDeclaration(f.getName(),f.getType().getClassName(),f.getDimensions(),false);
+                }
+            }
+
+
+//
         newMv.visitLabel(SymbolTable.getInstance().getLabelStart());
         block.compile(newMv,cv);
 
@@ -49,7 +69,8 @@ public class FunctionDeclaration extends FuncDcl {
         }
 
         newMv.visitLabel(SymbolTable.getInstance().getLabelLast());
-
+        newMv.visitMaxs(0, 0);
+        newMv.visitEnd();
         SymbolTable.getInstance().popScope();
 
 
