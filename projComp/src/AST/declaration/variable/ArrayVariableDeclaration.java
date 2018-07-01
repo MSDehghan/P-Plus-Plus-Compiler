@@ -55,6 +55,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
             for (Exp dimension : dimensions) {
                 dimension.compile(mv, cv);
             }
+
             if (dimensions.size() == 1) {
                 if (!HelperFunctions.isRecord(getType().getElementType())) {
                     mv.visitIntInsn(NEWARRAY, HelperFunctions.getTType(getType().getElementType()));
@@ -64,6 +65,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
             } else {
                 mv.visitMultiANewArrayInsn(getType().getDescriptor(), dimensions.size());
             }
+
             mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
         } else {
             cv.visitField(ACC_STATIC + ACC_PUBLIC, getName(), getType().getDescriptor(), null, null);
