@@ -31,10 +31,11 @@ public class HelperFunctions {
         }
         return false;
     }
-
     private static boolean checkForDouble(Type type1,Type type2,MethodVisitor mv, ClassVisitor cv){
         if(type2==Type.DOUBLE_TYPE){
-            if(isInteger(type1)){
+            if(type1 == Type.FLOAT_TYPE){
+                mv.visitInsn(Opcodes.F2D);
+            }else if(isInteger(type1)){
                 mv.visitInsn(Opcodes.I2D);
             }else if(type1==Type.LONG_TYPE){
                 mv.visitInsn(Opcodes.L2D);
@@ -43,7 +44,17 @@ public class HelperFunctions {
         }
         return false;
     }
-
+    private static boolean checkForFloat(Type type1,Type type2,MethodVisitor mv, ClassVisitor cv){
+        if(type2==Type.FLOAT_TYPE){
+            if(isInteger(type1)){
+                mv.visitInsn(Opcodes.I2F);
+            }else if(type1==Type.LONG_TYPE){
+                mv.visitInsn(Opcodes.L2F);
+            }
+            return true;
+        }
+        return false;
+    }
     private static boolean checkForLong(Type type1,Type type2,MethodVisitor mv, ClassVisitor cv){
         if(type2==Type.LONG_TYPE){
             if(isInteger(type1)){
@@ -53,7 +64,6 @@ public class HelperFunctions {
         }
         return false;
     }
-
     public static void cast(Type type1, Type type2,MethodVisitor mv, ClassVisitor cv){
         if(isRecord(type1)||isRecord(type2)){
             if(type1!=type2){
@@ -61,8 +71,11 @@ public class HelperFunctions {
             }
         }else {
             if(!checkForDouble(type1,type2,mv,cv)){
-                checkForLong(type1,type2,mv,cv);
+                if(!checkForFloat(type1,type2,mv,cv)){
+                    checkForLong(type1,type2,mv,cv);
+                }
             }
         }
+
     }
 }

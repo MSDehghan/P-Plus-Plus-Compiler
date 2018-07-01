@@ -9,6 +9,7 @@ import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
+import preDefinedValues.DefinedValues;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,15 @@ public class MethodCall extends Exp {
                 mv.visitMethodInsn(Opcodes.INVOKESTATIC,e.getAddress(),e.getName(),e.getFunctionSignature(),false);
             }
         }else {
+            if(parameters.size()!=funcDcl.inputs.length){
+                throw new RuntimeException("the static array doesn't have any signature like this");
+            }
 
+            for (Exp p : parameters){
+                p.compile(mv,cv);
+            }
+
+            mv.visitMethodInsn(Opcodes.INVOKESTATIC, DefinedValues.nameClass, funcDcl.getName(), funcDcl.getSignature(), false);
         }
     }
 }
