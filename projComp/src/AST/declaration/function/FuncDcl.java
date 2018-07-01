@@ -14,6 +14,9 @@ public abstract class FuncDcl extends Node {
     protected String name;
     protected String signature;
     public Type [] inputs;
+    public String getSignature(){
+        return signature;
+    }
     public String getName() {
         return name;
     }

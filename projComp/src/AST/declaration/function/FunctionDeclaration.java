@@ -73,7 +73,6 @@ public class FunctionDeclaration extends FuncDcl {
         newMv.visitEnd();
         SymbolTable.getInstance().popScope();
 
-
     }
 
 }
