@@ -122,7 +122,11 @@ terminal STRING_CONST ;
 terminal LONG_CONST ; 
 terminal DEFAULT ; 
 terminal UMINUS;
+
+
 terminal ADDRESS;
+terminal TYPESOFBYTECODE ;
+terminal FUNCTIONSIGNATURE ;
 
 
 
@@ -175,6 +179,7 @@ nonterminal exp13 ;
 nonterminal exp15 ; 
 nonterminal exp20 ; 
 nonterminal exp23 ;
+nonterminal exp100;
 nonterminal globalIndicate ;
 
 
@@ -236,9 +241,14 @@ globalIndicate	::=		{:if( DEBUGS ){ System.out.println("func dcl found"); } Defi
 
 /* forth */
 
-extern_dcl		::=		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES arguments:e4 CLOSEDPRANTHES SEMI	                {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, (ArrayList<FunctionArgument>)e4);:}
-				|		EXTERN ADDRESS:e1 type:e2  ID:e3  OPENPRANTHES  CLOSEDPRANTHES SEMI								{: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (String)e2, (String)e3, null);:}
+extern_dcl		::=		EXTERN ADDRESS:e1 exp100:e2 ID:e3   FUNCTIONSIGNATURE:e4 SEMI  		 {: if( DEBUGS ){ System.out.println("extern dcl found"); } RESULT = new ExternalFunctionDcl((String)e1, (ArrayList<StaticVarsExtern>)e2, (String)e3, (String)e4); :}
 				;
+
+
+exp100			::=		TYPESOFBYTECODE:e1 ADDRESS:e4 DOT ID:e2 DOT exp100:e3			{:ArrayList<StaticVarsExtern> a = (ArrayList<StaticVarsExtern>) e3 ; a.add(new StaticVarsExtern((String)e1, (String)e2, (String)e4)); RESULT = a ;:}
+				|																		{:RESULT = new ArrayList<StaticVarsExtern>();:}
+				;
+
 
 
 /* fifth */

@@ -12,6 +12,10 @@ public class Break extends Statement {
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        mv.visitJumpInsn(Opcodes.GOTO, SymbolTable.getInstance().getLabelLast());
+        if(SymbolTable.getInstance().canHaveBreak()){
+            mv.visitJumpInsn(Opcodes.GOTO, SymbolTable.getInstance().getLabelLast());
+        }else {
+            throw new RuntimeException("This part is not switch nor Loop");
+        }
     }
 }

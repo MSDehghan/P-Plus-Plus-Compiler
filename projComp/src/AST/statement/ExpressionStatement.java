@@ -4,6 +4,7 @@ import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
+import jdk.internal.org.objectweb.asm.Type;
 
 
 public class ExpressionStatement extends Statement {
@@ -16,6 +17,9 @@ public class ExpressionStatement extends Statement {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         exp.compile(mv,cv);
-        mv.visitInsn(Opcodes.POP);
+        if(exp.getType()!= Type.VOID_TYPE){
+//            TODO check for other combinations
+            mv.visitInsn(Opcodes.POP);
+        }
     }
 }

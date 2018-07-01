@@ -23,7 +23,7 @@ public class If extends Statement{
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        SymbolTable.getInstance().addScope();
+        SymbolTable.getInstance().addScope(SymbolTable.COND_OTHER_THAN_SWITCH);
         NotEqual notEqual = new NotEqual ();
         notEqual.setBinaryExp(exp,new IntConstExp (0));
         notEqual.compile(mv,cv);
@@ -37,7 +37,7 @@ public class If extends Statement{
         mv.visitLabel(SymbolTable.getInstance().getLabelLast());
         if(block2!=null){
             SymbolTable.getInstance().popScope();
-            SymbolTable.getInstance().addScope();
+            SymbolTable.getInstance().addScope(SymbolTable.COND_OTHER_THAN_SWITCH);
             SymbolTable.getInstance().setLabelFirst(startElse);
             SymbolTable.getInstance().setLabelLast(endElse);
             mv.visitLabel(startElse);

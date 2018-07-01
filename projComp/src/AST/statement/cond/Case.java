@@ -1,5 +1,6 @@
 package AST.statement.cond;
 
+import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
 import AST.exp.binaryExp.conditional.Not;
 import AST.exp.binaryExp.conditional.NotEqual;
@@ -22,6 +23,10 @@ public class Case extends Statement{
      * jump is for making it like pascal cause it has a better design
      */
     Label jump;
+    /**
+     * start is for us to now where to start from after a continue
+     */
+    Label start;
     public Case(IntConstExp exp, Block block){
         this.exp = exp;
         this.block = block;
@@ -31,10 +36,14 @@ public class Case extends Statement{
         labelStartCase = new Label();
         mv.visitLabel(labelStartCase);
         NotEqual notEqual = new NotEqual();
-        notEqual.setBinaryExp(new IntConstExp(0),exp);
+        notEqual.setBinaryExp(new IntConstExp(0), exp);
         // 0 : 0 : false
         mv.visitJumpInsn(Opcodes.IFEQ,jump);
-        exp.compile(mv,cv);
+        SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
+        SymbolTable.getInstance().setLabelLast(jump);
+        SymbolTable.getInstance().setLabelFirst(start);
+        block.compile(mv,cv);
+        SymbolTable.getInstance().popScope();
         mv.visitJumpInsn(Opcodes.GOTO,jump);
 
     }

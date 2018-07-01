@@ -1,6 +1,7 @@
 package AST.declaration.function;
 
 
+import AST.SymbolTable.SymbolTable;
 import AST.block.Block;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
@@ -17,7 +18,7 @@ public class FunctionDeclaration extends FuncDcl {
      * @param type  the type that the function returns
      */
     public FunctionDeclaration(ArrayList <FunctionArgument> arguments, String type, String name, Block block){
-        super(type, name);
+        super(type, name, arguments);
         //TODO keep in mind that the arguments and the block part may be null
         this.arguments = arguments;
         this.block = block;

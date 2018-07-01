@@ -19,7 +19,7 @@ public class Repeat extends Loop {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        SymbolTable.getInstance().addScope();
+        SymbolTable.getInstance().addScope(SymbolTable.LOOP);
         mv.visitLabel(SymbolTable.getInstance().getLabelStart());
         NotEqual notEqual = new NotEqual();
         notEqual.setBinaryExp(exp,new IntConstExp(0));

@@ -3,17 +3,24 @@ package AST.SymbolTable;
 import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.declaration.InvalidDeclaration;
+import AST.declaration.function.FuncDcl;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 // TODO: 28/06/2018 pop scope
 public class SymbolTable {
+    public static int FUNCTION = 0;
+    public static int LOOP = 0;
+    public static int SWITCH = 0;
+    public static int COND_OTHER_THAN_SWITCH = 0;
+
     private static int labelCounter = 0;
     private static SymbolTable instance = new SymbolTable();
     private ArrayList<HashMapOurs<String, DSCP>> stackScopes = new ArrayList<HashMapOurs<String, DSCP>>();
-
+    private HashMap<String,ArrayList<FuncDcl>> funcDcls = new HashMap<String,ArrayList<FuncDcl>>();
     private SymbolTable() {
         HashMapOurs<String, DSCP> mainFrame = new HashMapOurs<>();
         mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
@@ -62,6 +69,34 @@ public class SymbolTable {
         return size;
     }
 
+
+    public void addFunction(FuncDcl funcDcl){
+        if(funcDcls.containsKey(funcDcl.getName())){
+            funcDcls.get(funcDcl.getName()).add(funcDcl);
+        }else {
+            ArrayList funcDclMapper = new ArrayList<FuncDcl>();
+            funcDclMapper.add(funcDcl);
+            funcDcls.put(funcDcl.getName(),funcDclMapper);
+        }
+    }
+
+
+    public FuncDcl getFunction(String name, Type [] inputs){
+        if(funcDcls.containsKey(name)){
+            ArrayList <FuncDcl> funcDclMapper = funcDcls.get(name);
+            for (FuncDcl f : funcDclMapper){
+                if(f.checkIfEqual(inputs, name)){
+                    return f;
+                }
+            }
+//          TODO make this go away in case of saying something later
+            throw new RuntimeException("no such function was found");
+        }else {
+//          TODO make this go away in case of saying something later
+            throw new RuntimeException("no such function was found");
+        }
+    }
+
     public static Type getTypeFromName(String varType) {
         Type type;
         switch (varType) {
@@ -87,7 +122,8 @@ public class SymbolTable {
                 type = Type.getType(String.class);
                 break;
             default:
-                throw new InvalidDeclaration("Type is not Valid");
+                type = Type.getType(varType);
+//                throw new InvalidDeclaration("Type is not Valid");
 
         }
         return type;
@@ -127,14 +163,21 @@ public class SymbolTable {
     }
 
 
-    public void addScope() {
+    public void addScope(int typeOfScope) {
         HashMapOurs<String, DSCP> frame = new HashMapOurs<>();
         frame.setLabelStart();
         frame.setLabelLast();
+        frame.setTypeOfScope(typeOfScope);
         frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }
 
+    public boolean canHaveBreak(){
+        if(!(getLastFrame().getTypeOfScope()==LOOP||getLastFrame().getTypeOfScope()==SWITCH)){
+            return false;
+        }
+        return true;
+    }
     /**
      * @return the first empty slot on the last local variable scope
      */
@@ -171,3 +214,4 @@ public class SymbolTable {
         return stackScopes.get(stackScopes.size() - 1);
     }
 }
+
