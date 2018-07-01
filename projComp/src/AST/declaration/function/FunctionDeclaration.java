@@ -52,8 +52,7 @@ public class FunctionDeclaration extends FuncDcl {
 //                   TODO we can add constant to the function too
                     VariableDeclaration v = new SimpleVariableDeclaration(f.getName(),f.getType().getClassName(),false,false);
                     v.compile(newMv,cv);
-                    System.out.println(f.getName());
-                    System.out.println(SymbolTable.getInstance().getLastFrame().keySet());
+
                 }else{
 //                   TODO we can add constant to the function too
                     VariableDeclaration v = new ArrayVariableDeclaration(f.getName(),f.getType().getClassName(),f.getDimensions(),false,false);

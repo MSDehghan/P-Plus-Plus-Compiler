@@ -46,6 +46,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
             dscp = new DSCP_VAR_STATIC(name, type, Constant);
         } else {
             dscp = new DSCP_VAR_DYNAMIC(name, type, SymbolTable.getInstance().returnNewIndex(), Constant);
+
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);
@@ -65,7 +66,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
             }
             int access = ACC_STATIC + ACC_PUBLIC;
             access += isConstant() ? Opcodes.ACC_FINAL : 0;
-            System.out.println(value);
+
             FieldVisitor fv = cv.visitField(access, dscp.getName(), dscp.getType().getDescriptor(), null, value);
             fv.visitEnd();
         } else {
@@ -74,10 +75,10 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
                 getExp().compile(mv, cv);
                 mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
             }
-            else{
-                mv.visitInsn(getType().getOpcode(Opcodes.ICONST_0));
-                mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
-            }
+//            else{
+//                mv.visitInsn(getType().getOpcode(Opcodes.ICONST_0));
+//                mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
+//            }
         }
     }
 }

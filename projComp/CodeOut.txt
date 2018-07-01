@@ -27,9 +27,7 @@ public class $Main {
 
   // access flags 0x9
   public static pooria(I)I
-    ICONST_0
-    ISTORE 1
-    ILOAD 1
+    ILOAD 0
     ICONST_3
     IMUL
     IRETURN

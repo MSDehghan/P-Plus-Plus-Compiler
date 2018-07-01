@@ -34,11 +34,9 @@ public class main {
         ArrayList<StaticVarsExtern> ins = new ArrayList<StaticVarsExtern>();
         ins.add(new StaticVarsExtern("Ljava/io/PrintStream;","out","java/lang/System"));
         ExternalFunctionDcl a = new ExternalFunctionDcl("java/io/PrintStream",ins,"println","(I)V");
-        System.out.println(SymbolTable.getInstance().getKeySet());;
 
         parser p = new parser(new Yylex(new FileReader("input.txt")));
         Object result = p.parse().value;
-        System.out.println(result);
         Program pr = (Program) result;
         pr.compile(DefinedValues.nameClass);
 

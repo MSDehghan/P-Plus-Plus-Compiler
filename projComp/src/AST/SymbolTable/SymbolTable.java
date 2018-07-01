@@ -201,7 +201,8 @@ public class SymbolTable {
         frame.setLabelStart();
         frame.setLabelLast();
         frame.setTypeOfScope(typeOfScope);
-        frame.setIndex(getLastFrame().getIndex());
+        if(typeOfScope!=FUNCTION)
+            frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }
 
