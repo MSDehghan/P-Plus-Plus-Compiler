@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 // TODO: 28/06/2018 pop scope
 public class SymbolTable {
+    private static FuncDcl LastSeenFunction;
     public static int FUNCTION = 0;
     public static int LOOP = 0;
     public static int SWITCH = 0;
@@ -25,6 +26,14 @@ public class SymbolTable {
         HashMapOurs<String, DSCP> mainFrame = new HashMapOurs<>();
         mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
         stackScopes.add(mainFrame);
+    }
+
+    public static FuncDcl getLastSeenFunction() {
+        return LastSeenFunction;
+    }
+
+    public static void setLastSeenFunction(FuncDcl lastSeenFunction) {
+        LastSeenFunction = lastSeenFunction;
     }
 
     public void popScope(){
@@ -207,7 +216,7 @@ public class SymbolTable {
 
 
 
-    private HashMapOurs<String, DSCP> getLastFrame() {
+    public HashMapOurs<String, DSCP> getLastFrame() {
         if (stackScopes.size() == 0)
             throw new RuntimeException("Something Goes Wrong");
 

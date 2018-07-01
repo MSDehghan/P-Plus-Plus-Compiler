@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public abstract class FuncDcl extends Node {
     protected Type type;
     protected String name;
+    protected String signature;
     public Type [] inputs;
     public String getName() {
         return name;
@@ -30,9 +31,22 @@ public abstract class FuncDcl extends Node {
             inputs[i++]=f.getType();
         }
         SymbolTable.getInstance().addFunction(this);
+
+
+        String signature = "";
+        signature = signature + "(";
+        for(Type typeIn : inputs){
+            signature = signature+typeIn.toString();
+        }
+        signature = signature + ")";
+        signature = signature + type;
+        this.signature = signature;
+
+
     }
 
     public FuncDcl(String functionSignature, String name) {
+        this.signature = functionSignature;
         Type[] types = Type.getArgumentTypes(functionSignature);
         Type [] arguments = types;
         this.type = Type.getType(functionSignature.substring(functionSignature.indexOf(')')+1));
