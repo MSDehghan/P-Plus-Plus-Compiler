@@ -1,6 +1,7 @@
 package AST.declaration.variable;
 
 import AST.OperationCode;
+import AST.exp.var.Variable;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import preDefinedValues.DefinedValues;
@@ -19,7 +20,7 @@ public class DCLS extends OperationCode{
         this.Constant = Constant;
 
         for(SpecClass c : this.specClasses){
-            if(c.dims.size()==0){
+            if(c.dims==null||c.dims.size()==0){
                 if(c.value==null){
                     dcls.add(new SimpleVariableDeclaration(c.name,type, DefinedValues.getScope(),Constant));
                 }else{
@@ -35,6 +36,8 @@ public class DCLS extends OperationCode{
     //TODO keep in mind that the type maybe of struct
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-
+        for (VariableDeclaration v : dcls){
+            v.compile(mv,cv);
+        }
     }
 }

@@ -6,27 +6,28 @@ import AST.exp.Exp;
 import AST.exp.consts.Constant;
 import jdk.internal.org.objectweb.asm.*;
 
+import static AST.SymbolTable.SymbolTable.getInstance;
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
 import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class SimpleVariableDeclaration extends VariableDeclaration {
+    boolean staticDec;
+    boolean Constant;
+    String  varType;
+    Exp value ;
     public SimpleVariableDeclaration(String varName, String varType, boolean staticDec, boolean Constant) {
         name = varName;
-        Type type = getTypeFromName(varType);
-        declare(staticDec, type, Constant);
+        this.varType = varType;
+        this.staticDec = staticDec;
+        this.Constant = Constant;
     }
-
     //TODO do something with constant
     public SimpleVariableDeclaration(String varName, String varType, Exp value, boolean staticDec, boolean Constant) {
         name = varName;
-        Type type;
-        if (varType.equals("auto")) {
-            type = value.getType();
-        } else {
-            type = getTypeFromName(varType);
-        }
-        this.exp = value;
-        declare(staticDec, type, Constant);
+        this.varType = varType ;
+        this.value = value;
+        this.staticDec = staticDec;
+        this.Constant = Constant;
     }
 
     /**
@@ -52,22 +53,29 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
+        Type type = getTypeFromName(varType);
+        declare(staticDec, type, Constant);
         DSCP dscp = getDSCP();
         if (dscp instanceof DSCP_STATIC) {
             DSCP_STATIC dscpStatic = (DSCP_STATIC) dscp;
             Object value = null;
             // TODO: 01/07/2018 Handle Not Constant
-            if (getExp() instanceof Constant && getExp().getType() == getType()) {
+            if (getExp() instanceof Constant && getExp().getType().equals(getType())) {
                 value = ((Constant) getExp()).getValue();
             }
             int access = ACC_STATIC + ACC_PUBLIC;
             access += isConstant() ? Opcodes.ACC_FINAL : 0;
+            System.out.println(value);
             FieldVisitor fv = cv.visitField(access, dscp.getName(), dscp.getType().getDescriptor(), null, value);
             fv.visitEnd();
         } else {
             DSCP_DYNAMIC dscpDynamic = (DSCP_DYNAMIC) dscp;
-            if (getExp() != null && getExp().getType() == getType()) {
+            if (getExp() != null && getExp().getType().equals(getType()) ) {
                 getExp().compile(mv, cv);
+                mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
+            }
+            else{
+                mv.visitInsn(getType().getOpcode(Opcodes.ICONST_0));
                 mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
             }
         }

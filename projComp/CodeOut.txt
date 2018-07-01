@@ -4,25 +4,42 @@ public class $Main {
 
 
   // access flags 0x9
-  public static main([Ljava/lang/String;)V
-    INVOKESTATIC $Main.funcMain ()V 
+  public static start()V
+    GOTO L0
+   L1
+    GOTO L2
+   L3
+    ICONST_3
+    GOTO L4
+   L2
+    GOTO L3
+   L4
+    INVOKESTATIC $Main.pooria (I)I 
+    GOTO L5
+   L0
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+    GOTO L1
+   L5
+    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
     RETURN
     MAXSTACK = 0
     MAXLOCALS = 0
 
   // access flags 0x9
-  public static funcMain()V
-   L0
-   L1
-    ICONST_1
-    IFEQ L2
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    BIPUSH 10
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
-    GOTO L1
-   L2
+  public static pooria(I)I
+    ICONST_0
+    ISTORE 1
+    ILOAD 1
+    ICONST_3
+    IMUL
+    IRETURN
+    MAXSTACK = 0
+    MAXLOCALS = 0
+
+  // access flags 0x9
+  public static main([Ljava/lang/String;)V
+    INVOKESTATIC $Main.start ()V 
     RETURN
-   L3
     MAXSTACK = 0
     MAXLOCALS = 0
 }

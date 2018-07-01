@@ -10,7 +10,10 @@ public class Parentheses extends Unary {
     }
 
     @Override
-    public void compile(MethodVisitor mv, ClassVisitor cv) {
+    public void compile(MethodVisitor mv, ClassVisitor cv)
+    {
         exp.compile(mv,cv);
+        type = exp.getType();
+
     }
 }

@@ -7,6 +7,8 @@ import com.sun.org.apache.bcel.internal.generic.IRETURN;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
+import jdk.internal.org.objectweb.asm.Type;
+import preDefinedValues.HelperFunctions;
 
 import java.util.HashMap;
 
@@ -33,8 +35,18 @@ public class Return extends Statement{
         f.returns.add(this);
         if(exp1!=null){
             exp1.compile(mv,cv);
-            exp1.getType().getOpcode(Opcodes.IRETURN);
+            if(f.getType().equals(Type.VOID_TYPE)){
+                throw new RuntimeException("you can not return in void");
+            }
+            if(!f.getType().equals(exp1.getType())){
+                throw new RuntimeException("type mismatch");
+            }
+            HelperFunctions.cast(exp1.getType(),f.getType(),mv,cv);
+            mv.visitInsn(exp1.getType().getOpcode(Opcodes.IRETURN));
         }else {
+            if(!f.getType().equals(Type.VOID_TYPE)){
+                throw new RuntimeException("you should try and return something");
+            }
             mv.visitInsn(Opcodes.RETURN);
         }
     }

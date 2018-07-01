@@ -16,6 +16,7 @@ public class Minus extends Unary {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         exp.compile(mv,cv);
+        type=exp.getType();
         mv.visitInsn(exp.getType().getOpcode(INEG));
     }
 }

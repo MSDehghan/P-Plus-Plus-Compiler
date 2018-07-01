@@ -16,10 +16,12 @@ public class Carot extends BinaryExp {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        Type type = getType();
 
         exp1.compile(mv,cv);
         exp2.compile(mv,cv);
+
+        Type type = getType();
+
         mv.visitInsn(type.getOpcode(IXOR));
 
     }

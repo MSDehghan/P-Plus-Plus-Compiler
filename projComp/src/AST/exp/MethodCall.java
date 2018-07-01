@@ -5,10 +5,7 @@ import AST.SymbolTable.SymbolTable;
 import AST.declaration.function.ExternalFunctionDcl;
 import AST.declaration.function.FuncDcl;
 import AST.declaration.function.StaticVarsExtern;
-import jdk.internal.org.objectweb.asm.ClassVisitor;
-import jdk.internal.org.objectweb.asm.MethodVisitor;
-import jdk.internal.org.objectweb.asm.Opcodes;
-import jdk.internal.org.objectweb.asm.Type;
+import jdk.internal.org.objectweb.asm.*;
 import preDefinedValues.DefinedValues;
 
 import java.util.ArrayList;
@@ -23,23 +20,36 @@ public class MethodCall extends Exp {
     //TODO alos should check the signature of the function
     ArrayList <Exp> parameters ;
     FuncDcl funcDcl;
+    boolean externOrNot;
     public MethodCall(String id, ArrayList <Exp> parameters){
         this.id = id ;
         this.parameters = parameters ;
-        Type [] typesInComped = new Type[parameters.size()];
-        for (int i = 0; i < parameters.size(); i++) {
-            typesInComped[i] = parameters.get(i).type;
-        }
-        //        TODO handle how to make it so that it won't give us an error if we name it later
-        this.funcDcl = SymbolTable.getInstance().getFunction(id, typesInComped);
-        this.type = funcDcl.getType();
 
     }
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
 
+
+        Label start = new Label();
+        Label middle = new Label();
+        Label end = new Label();
+        mv.visitJumpInsn(Opcodes.GOTO,middle);
+        mv.visitLabel(start);
+        for (Exp exp : parameters) {
+            exp.compile(mv, cv);
+        }
+        mv.visitJumpInsn(Opcodes.GOTO,end);
+        Type [] typesInComped = new Type[parameters.size()];
+        for (int i = 0; i < parameters.size(); i++) {
+            typesInComped[i] = parameters.get(i).getType();
+        }
+        //        TODO handle how to make it so that it won't give us an error if we name it later
+        this.funcDcl = SymbolTable.getInstance().getFunction(id, typesInComped);
+        this.type = funcDcl.getType();
+
         if(funcDcl instanceof ExternalFunctionDcl){
             ExternalFunctionDcl e = (ExternalFunctionDcl) funcDcl;
+            mv.visitLabel(middle);
             if(e.getVars().size()!=0) {
                 mv.visitFieldInsn(GETSTATIC, e.getVars().get(0).address, e.getVars().get(0).name, e.getVars().get(0).type);
                 if (e.getVars().size() > 1) {
@@ -47,9 +57,8 @@ public class MethodCall extends Exp {
                         mv.visitFieldInsn(Opcodes.GETFIELD, e.getVars().get(i).address, e.getVars().get(i).name, e.getVars().get(i).type);
                     }
                 }
-                for (Exp exp : parameters) {
-                    exp.compile(mv, cv);
-                }
+                mv.visitJumpInsn(Opcodes.GOTO,start);
+                mv.visitLabel(end);
 //            TODO what is this false
                 String s = funcDcl.getType().toString();
                 if (s.charAt(0) == 'L') {
@@ -65,10 +74,9 @@ public class MethodCall extends Exp {
                 throw new RuntimeException("the static array doesn't have any signature like this");
             }
 
-            for (Exp p : parameters){
-                p.compile(mv,cv);
-            }
-
+            mv.visitLabel(middle);
+            mv.visitJumpInsn(Opcodes.GOTO,start);
+            mv.visitLabel(end);
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, DefinedValues.nameClass, funcDcl.getName(), funcDcl.getSignature(), false);
         }
     }

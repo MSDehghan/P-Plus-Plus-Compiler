@@ -765,7 +765,7 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
 
-	boolean DEBUGS = true;
+	boolean DEBUGS = false;
 
     /* Change the method report_error so it will display the line and
        column of where the error occurred in the input as well as the
@@ -956,7 +956,7 @@ class CUP$parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
 		Object e2 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( new ArrayList <FunctionArgument>(), (String)e1, (String)e2, null) ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -974,7 +974,7 @@ class CUP$parser$actions {
 		int e4left = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int e4right = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e4 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;
+		 if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( new ArrayList <FunctionArgument>(), (String)e1, (String)e2, (Block)e4) ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("func_dcl",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-7)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1445,7 +1445,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return((Exp)e) ;
+		 if( DEBUGS ){ System.out.println("statement ret found"); } RESULT = new Return((Exp)e) ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("statement",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1454,7 +1454,7 @@ class CUP$parser$actions {
           case 46: // statement ::= RETURN SEMI 
             {
               Object RESULT =null;
-		 if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return() ;
+		 if( DEBUGS ){ System.out.println("statement ret found"); } RESULT = new Return() ;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("statement",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1841,7 +1841,7 @@ class CUP$parser$actions {
 		int e3left = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int e3right = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e3 = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).setBinaryExp((Exp)e1,(Exp)e3);  
+		 if( DEBUGS ){ System.out.println("expr found"); };RESULT = ((BinaryExp)e2).setBinaryExp((Exp)e1,(Exp)e3);  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",11, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2051,7 +2051,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("binary op found");RESULT = (BinaryExp)e; } 
+		 if( DEBUGS ){ System.out.println("binary op found");}RESULT = (BinaryExp)e;  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("binary_op",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -2063,7 +2063,7 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 if( DEBUGS ){ System.out.println("binary op found"); }RESULT = (BinaryExp)e; 
+		 if( DEBUGS ){ System.out.println("binary op found");}RESULT = (BinaryExp)e;  
               CUP$parser$result = parser.getSymbolFactory().newSymbol("binary_op",18, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class StructDeclaration extends Node {
     ArrayList <DCLS> dclses ;
     String name ;
-
     public StructDeclaration(ArrayList<DCLS> dclses, String name){
         this.dclses = dclses ;
         this.name = name ;

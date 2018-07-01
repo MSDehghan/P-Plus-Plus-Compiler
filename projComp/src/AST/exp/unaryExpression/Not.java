@@ -15,11 +15,11 @@ public class Not extends Unary {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        Type type = getType();
         if (type != Type.INT_TYPE)
             throw new RuntimeException("Invalid Type");
 
         exp.compile(mv, cv);
+        type = getType();
         mv.visitInsn(ICONST_M1);
         mv.visitInsn(type.getOpcode(IXOR));
     }

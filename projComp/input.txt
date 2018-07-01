@@ -1,5 +1,13 @@
-function int pooria()
+
+function int pooria(int a)
 begin
-int a;
-a = 2;
+return a*3;
 end
+
+
+function void start()
+begin
+println(pooria(3));
+end
+
+

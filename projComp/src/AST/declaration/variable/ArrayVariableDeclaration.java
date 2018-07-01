@@ -18,11 +18,16 @@ import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
-
+    int dims;
+    boolean Static;
+    boolean Constant;
+    String type1;
     public ArrayVariableDeclaration(String varName, String type, int dims, boolean Static, boolean Constant) {
         name = varName;
-        this.dimensions = dimensions;
-        declare(Static, SymbolTable.getTypeFromName(type), Constant);
+        this.dims = dims;
+        this.Static = Static;
+        this.Constant = Constant;
+        type1 = type;
         //TODO do something with constant
     }
 
@@ -30,7 +35,9 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     public ArrayVariableDeclaration(String varName, String type, List<Exp> dimensions, boolean Static, boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
-        declare(Static, SymbolTable.getTypeFromName(type), Constant);
+        this.Static = Static;
+        this.Constant = Constant;
+        type1 = type;
         //TODO do something with constant
     }
 
@@ -60,6 +67,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
+        declare(Static, SymbolTable.getTypeFromName(type1), Constant);
         if (getDSCP() instanceof DSCP_DYNAMIC) {
             for (Exp dimension : dimensions) {
                 dimension.compile(mv, cv);

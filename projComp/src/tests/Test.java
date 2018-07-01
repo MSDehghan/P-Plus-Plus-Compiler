@@ -42,7 +42,7 @@ public class Test {
         ArrayList<StaticVarsExtern> ins = new ArrayList<StaticVarsExtern>();
         ins.add(new StaticVarsExtern("Ljava/io/PrintStream;","out","java/lang/System"));
         ExternalFunctionDcl a = new ExternalFunctionDcl("java/io/PrintStream",ins,"println","(I)V");
-        ArrayList <Exp> exps = new ArrayList<Exp>();
+
 
 
 

@@ -39,8 +39,10 @@ public class FunctionDeclaration extends FuncDcl {
         MethodVisitor newMv = cv.visitMethod(Opcodes.ACC_PUBLIC+Opcodes.ACC_STATIC,name,this.signature,null,null);
 
         newMv.visitCode();
-
+//        System.out.println(SymbolTable.getInstance().getLastFrame().keySet());
         SymbolTable.getInstance().addScope(SymbolTable.FUNCTION);
+//        System.out.println(SymbolTable.getInstance().getLastFrame().keySet());
+
         SymbolTable.setLastSeenFunction(this);
 
 //        this part shall be for declaring new variables
@@ -49,26 +51,28 @@ public class FunctionDeclaration extends FuncDcl {
                 if(f.getDimensions()==0){
 //                   TODO we can add constant to the function too
                     VariableDeclaration v = new SimpleVariableDeclaration(f.getName(),f.getType().getClassName(),false,false);
+                    v.compile(newMv,cv);
+                    System.out.println(f.getName());
+                    System.out.println(SymbolTable.getInstance().getLastFrame().keySet());
                 }else{
 //                   TODO we can add constant to the function too
                     VariableDeclaration v = new ArrayVariableDeclaration(f.getName(),f.getType().getClassName(),f.getDimensions(),false,false);
+                    v.compile(newMv,cv);
                 }
             }
 
 
 //
-        newMv.visitLabel(SymbolTable.getInstance().getLabelStart());
         block.compile(newMv,cv);
 
         if(returns.size()==0){
-            if (type==Type.VOID_TYPE){
+            if (type.equals(Type.VOID_TYPE)){
                 newMv.visitInsn(Opcodes.RETURN);
             }else{
                 throw new RuntimeException("no return type seen , but should have seen one");
             }
         }
 
-        newMv.visitLabel(SymbolTable.getInstance().getLabelLast());
         newMv.visitMaxs(0, 0);
         newMv.visitEnd();
         SymbolTable.getInstance().popScope();

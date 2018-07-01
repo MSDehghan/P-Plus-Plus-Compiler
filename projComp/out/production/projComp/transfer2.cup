@@ -24,7 +24,7 @@ import AST.exp.assignments.*;
 
 
 parser code {:
-	boolean DEBUGS = true;
+	boolean DEBUGS = false;
 
     /* Change the method report_error so it will display the line and
        column of where the error occurred in the input as well as the
@@ -230,8 +230,8 @@ func_extern 	::=		func_dcl:e 	{: if( DEBUGS ){ System.out.println("func extern f
 
 func_dcl		::=		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES SEMI  globalIndicate   	    {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument >)e3, (String)e1, (String)e2, null) ; :}
 				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES arguments:e3 CLOSEDPRANTHES block:e4  globalIndicate      {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration((ArrayList <FunctionArgument>)e3, (String)e1, (String)e2, (Block)e4) ;:}
-				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	globalIndicate	                  {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, null) ;:}
-				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4     globalIndicate 	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( null, (String)e1, (String)e2, (Block)e4) ;:}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES SEMI 	globalIndicate	                  {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( new ArrayList <FunctionArgument>(), (String)e1, (String)e2, null) ;:}
+				|		FUNCTION globalIndicate type:e1 ID:e2 OPENPRANTHES CLOSEDPRANTHES block:e4     globalIndicate 	            {: if( DEBUGS ){ System.out.println("func dcl found"); } RESULT = new FunctionDeclaration( new ArrayList <FunctionArgument>(), (String)e1, (String)e2, (Block)e4) ;:}
 				;
 
 
@@ -310,8 +310,8 @@ exp15		::=		var_dcl:e1 exp15:e2			{: if( DEBUGS ){ System.out.println("exp15 fou
 statement		::=		expr:e SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new ExpressionStatement((Exp)e); :}
 				|		cond_stmt:e			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = e ;:}
 				|		loop_stmt:e			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = e ;:}
-				|		RETURN expr:e SEMI	{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return((Exp)e) ;:}
-				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Return() ;:}
+				|		RETURN expr:e SEMI	{: if( DEBUGS ){ System.out.println("statement ret found"); } RESULT = new Return((Exp)e) ;:}
+				|		RETURN SEMI			{: if( DEBUGS ){ System.out.println("statement ret found"); } RESULT = new Return() ;:}
 				|		BREAK SEMI			{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Break()  ;:}
 				|		CONTINUE SEMI		{: if( DEBUGS ){ System.out.println("statement found"); } RESULT = new Continue();:}
 				;
@@ -365,7 +365,7 @@ loop_stmt 		::=		FOR OPENPRANTHES assignment:e1 SEMI expr:e2  SEMI assignment:e3
 
 
 /* eighteenth */
-expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); }RESULT = ((BinaryExp)e2).setBinaryExp((Exp)e1,(Exp)e3);  :}
+expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println("expr found"); };RESULT = ((BinaryExp)e2).setBinaryExp((Exp)e1,(Exp)e3);  :}
 			|		OPENPRANTHES expr:e  CLOSEDPRANTHES	{: if( DEBUGS ){ System.out.println("expr found"); } Parentheses a = new Parentheses(); a.setUnary((Exp)e); RESULT = a ; :}
 			|		method_call:e	{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e;  :}
 			|		variable:e		{: if( DEBUGS ){ System.out.println("expr found"); } RESULT = e ; :}
@@ -388,14 +388,14 @@ variable		::=		ID:e1 exp23:e2	{: if( DEBUGS ){ System.out.println("variable foun
 				;
 
 exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ArrayList <Exp> a=(ArrayList <Exp>)e1;a.add((Exp)e2); RESULT = a; :}
-				|	{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Exp>() ; :}
+				|												{: if( DEBUGS ){ System.out.println("exp23 found"); } RESULT = new ArrayList <Exp>() ; :}
 				;
 
 
 
 /* tweny first */
-binary_op		::=		arithmatic:e	{: if( DEBUGS ){ System.out.println("binary op found");RESULT = (BinaryExp)e; } :}
-				|		conditional:e	{: if( DEBUGS ){ System.out.println("binary op found"); }RESULT = (BinaryExp)e; :}
+binary_op		::=		arithmatic:e	{: if( DEBUGS ){ System.out.println("binary op found");}RESULT = (BinaryExp)e;  :}
+				|		conditional:e	{: if( DEBUGS ){ System.out.println("binary op found");}RESULT = (BinaryExp)e;  :}
 				;
 
 /* twenty second */

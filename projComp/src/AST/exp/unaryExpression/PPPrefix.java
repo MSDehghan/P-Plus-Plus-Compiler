@@ -19,12 +19,12 @@ public class PPPrefix extends Unary {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        Type type = exp.getType();
         if (!(exp instanceof Variable) || (type != Type.INT_TYPE && type != Type.DOUBLE_TYPE && type != Type.LONG_TYPE && type != Type.CHAR_TYPE))
             throw new IllegalArgumentException();
 
 
         Variable var = (Variable) exp;
+        type = exp.getType();
 
         // TODO: 29/06/2018 For Array And Records Should Be Added !!
         if (exp instanceof SimpleVariable) {

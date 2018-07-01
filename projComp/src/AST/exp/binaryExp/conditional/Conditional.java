@@ -16,11 +16,14 @@ public abstract class Conditional extends BinaryExp {
     }
 
     public void compare(int notIntOpcode, int intOpcode, MethodVisitor mv, ClassVisitor cv) {
-        Type type = getType();
-        // TODO: 30/06/2018 Exception for Record
 
         exp1.compile(mv, cv);
         exp2.compile(mv, cv);
+
+        Type type = getType();
+        // TODO: 30/06/2018 Exception for Record
+
+
 
         int opcode;
         if (type != Type.INT_TYPE) {
@@ -41,9 +44,6 @@ public abstract class Conditional extends BinaryExp {
     }
 
     public void AndOr(boolean isAdd,MethodVisitor mv, ClassVisitor cv) {
-        Type type = getType();
-        if (type != Type.INT_TYPE)
-            throw new InvalidVariableType("Only Int Types Can Be Operands Of Conditional And");
 
         Label label = new Label();
         Label EndLabel = new Label();
@@ -57,5 +57,10 @@ public abstract class Conditional extends BinaryExp {
         mv.visitLabel(label);
         mv.visitInsn(isAdd? ICONST_0 : ICONST_1);
         mv.visitLabel(EndLabel);
+
+        Type type = getType();
+
+        if (type != Type.INT_TYPE)
+            throw new InvalidVariableType("Only Int Types Can Be Operands Of Conditional And");
     }
 }

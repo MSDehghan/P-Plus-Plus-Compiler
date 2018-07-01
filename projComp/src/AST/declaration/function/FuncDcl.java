@@ -25,15 +25,14 @@ public abstract class FuncDcl extends Node {
         return type;
     }
 
-    public FuncDcl(String type, String name, ArrayList<FunctionArgument > arguments) {
-        this.type = SymbolTable.getTypeFromName(type);
+    public FuncDcl(String type1, String name, ArrayList<FunctionArgument > arguments) {
+        this.type = SymbolTable.getTypeFromName(type1);
         this.name = name;
         inputs = new Type[arguments.size()];
         int i = 0;
         for(FunctionArgument f : arguments){
             inputs[i++]=f.getType();
         }
-        SymbolTable.getInstance().addFunction(this);
 
 
         String signature = "";
@@ -42,9 +41,14 @@ public abstract class FuncDcl extends Node {
             signature = signature+typeIn.toString();
         }
         signature = signature + ")";
-        signature = signature + type;
+        signature = signature + type.toString();
         this.signature = signature;
 
+        try {
+            SymbolTable.getInstance().getFunction(name,inputs);
+        }catch (RuntimeException r){
+            SymbolTable.getInstance().addFunction(this);
+        }
 
     }
 
@@ -71,14 +75,15 @@ public abstract class FuncDcl extends Node {
     }
 
     public boolean checkIfEqual(Type [] inputs, String name){
-        if (this.name!=name){
+
+        if (!this.name.equals(name)){
             return false;
         }else if (this.inputs.length!=inputs.length){
             return false;
         }else {
             int i = 0;
             for(Type t : inputs){
-                if(this.inputs[i++]!=t){
+                if(!this.inputs[i++].equals(t)){
                     return false;
                 }
             }

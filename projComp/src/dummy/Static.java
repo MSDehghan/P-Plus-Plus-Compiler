@@ -5,4 +5,8 @@ package dummy;
  */
 public class Static {
     public static firstDynamic f=new firstDynamic();
+
+    public static void main(String[] args) {
+
+    }
 }

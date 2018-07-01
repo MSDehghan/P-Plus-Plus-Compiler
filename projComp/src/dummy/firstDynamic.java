@@ -4,9 +4,12 @@ package dummy;
  * Created by pooria on 7/1/2018.
  */
 public class firstDynamic {
-    public int test(int i ){
-        i = 2;
-        return i;
+    public static int test(double b){
+        return 1;
+    }
+
+    public static void main(String[] args) {
+        test(1);
     }
     public SecondDynamic sc=new SecondDynamic();
 }

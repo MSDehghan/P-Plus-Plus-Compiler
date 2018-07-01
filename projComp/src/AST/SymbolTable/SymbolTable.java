@@ -2,12 +2,15 @@ package AST.SymbolTable;
 
 import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
+import AST.declaration.function.ExternalFunctionDcl;
 import AST.declaration.function.FuncDcl;
+import AST.declaration.function.StaticVarsExtern;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 // TODO: 28/06/2018 pop scope
 public class SymbolTable {
@@ -26,7 +29,9 @@ public class SymbolTable {
         mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
         stackScopes.add(mainFrame);
     }
-
+    public Set<String> getKeySet(){
+        return funcDcls.keySet();
+    }
     public static FuncDcl getLastSeenFunction() {
         return LastSeenFunction;
     }
@@ -58,6 +63,12 @@ public class SymbolTable {
                 break;
             case "string":
                 type = Type.getType(String.class);
+                break;
+            case "void":
+                type = Type.VOID_TYPE;
+                break;
+            case "short":
+                type = Type.SHORT_TYPE;
                 break;
             default:
                 type = Type.getType(varType);
@@ -122,6 +133,11 @@ public class SymbolTable {
     }
 
     public FuncDcl getFunction(String name, Type[] inputs) {
+//        System.out.println(name);
+//        for(Type t:inputs){
+//            System.out.println(t);
+//        }
+//        System.out.println();
         if (funcDcls.containsKey(name)) {
             ArrayList<FuncDcl> funcDclMapper = funcDcls.get(name);
             for (FuncDcl f : funcDclMapper) {
@@ -139,6 +155,18 @@ public class SymbolTable {
 
     public String getNewLabel() {
         return "L" + labelCounter++;
+    }
+
+    /**
+     * only call this method during compile
+     * @param name
+     * @return
+     */
+    public boolean externOrNot(String name){
+        if(!funcDcls.containsKey(name)){
+            throw new RuntimeException("no such funciton");
+        }
+        return funcDcls.get(name).get(0) instanceof ExternalFunctionDcl;
     }
 
     public void addVariable(DSCP dscp, String name) {
@@ -159,6 +187,7 @@ public class SymbolTable {
         int from = stackScopes.size();
         while (from != 0) {
             from--;
+
             if (stackScopes.get(from).containsKey(name)) {
                 return stackScopes.get(from).get(name);
             }
