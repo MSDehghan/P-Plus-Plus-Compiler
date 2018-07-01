@@ -25,4 +25,7 @@ public abstract class VariableDeclaration extends OperationCode {
     public DSCP getDSCP() {
         return SymbolTable.getInstance().getDescriptor(name);
     }
+    public boolean isConstant(){
+        return getDSCP().isConstant();
+    }
 }

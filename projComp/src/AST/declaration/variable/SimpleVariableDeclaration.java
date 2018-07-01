@@ -4,10 +4,7 @@ import AST.SymbolTable.SymbolTable;
 import AST.SymbolTable.dscp.*;
 import AST.exp.Exp;
 import AST.exp.consts.Constant;
-import jdk.internal.org.objectweb.asm.ClassVisitor;
-import jdk.internal.org.objectweb.asm.FieldVisitor;
-import jdk.internal.org.objectweb.asm.MethodVisitor;
-import jdk.internal.org.objectweb.asm.Type;
+import jdk.internal.org.objectweb.asm.*;
 
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
 import static jdk.internal.org.objectweb.asm.Opcodes.*;
@@ -63,7 +60,9 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
             if (getExp() instanceof Constant && getExp().getType() == getType()) {
                 value = ((Constant) getExp()).getValue();
             }
-            FieldVisitor fv = cv.visitField(ACC_STATIC + ACC_PUBLIC, dscp.getName(), dscp.getType().getDescriptor(), null, value);
+            int access = ACC_STATIC + ACC_PUBLIC;
+            access += isConstant() ? Opcodes.ACC_FINAL : 0;
+            FieldVisitor fv = cv.visitField(access, dscp.getName(), dscp.getType().getDescriptor(), null, value);
             fv.visitEnd();
         } else {
             DSCP_DYNAMIC dscpDynamic = (DSCP_DYNAMIC) dscp;

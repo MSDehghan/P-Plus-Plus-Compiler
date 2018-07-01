@@ -8,6 +8,7 @@ import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.exp.Exp;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
+import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.HelperFunctions;
 
@@ -41,9 +42,9 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
         DSCP dscp;
 
         if (staticDec) {
-            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size(),Constant);
+            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size(), Constant);
         } else {
-            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size(),Constant);
+            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size(), Constant);
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);
@@ -68,7 +69,9 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
             mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
         } else {
-            cv.visitField(ACC_STATIC + ACC_PUBLIC, getName(), getType().getDescriptor(), null, null);
+            int access = ACC_STATIC + ACC_PUBLIC;
+            access += isConstant() ? Opcodes.ACC_FINAL : 0;
+            cv.visitField(access, getName(), getType().getDescriptor(), null, null);
         }
     }
 }
