@@ -13,7 +13,7 @@ import preDefinedValues.HelperFunctions;
 
 import java.util.List;
 
-import static jdk.internal.org.objectweb.asm.Opcodes.ASTORE;
+import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
@@ -36,7 +36,6 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
                 throw new RuntimeException("Bad Index Type"); // TODO: 01/07/2018 Write Good Exception
         });
 
-        int[] dimsArray = new int[dimensions.size()];
         String repeatedArray = new String(new char[dimensions.size()]).replace("\0", "[");
         Type arrayType = Type.getType(repeatedArray + type.getDescriptor()); // TODO: 01/07/2018 PLease Testtttttt!
         DSCP dscp;
@@ -52,11 +51,22 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        if (getDSCP() instanceof DSCP_DYNAMIC)
+        if (getDSCP() instanceof DSCP_DYNAMIC) {
             for (Exp dimension : dimensions) {
                 dimension.compile(mv, cv);
             }
-        mv.visitMultiANewArrayInsn(getType().getDescriptor(), dimensions.size());
-        mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
+            if (dimensions.size() == 1) {
+                if (!HelperFunctions.isRecord(getType().getElementType())) {
+                    mv.visitIntInsn(NEWARRAY, HelperFunctions.getTType(getType().getElementType()));
+                } else {
+                    mv.visitTypeInsn(ANEWARRAY, getType().getElementType().getInternalName());
+                }
+            } else {
+                mv.visitMultiANewArrayInsn(getType().getDescriptor(), dimensions.size());
+            }
+            mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
+        } else {
+            cv.visitField(ACC_STATIC + ACC_PUBLIC, getName(), getType().getDescriptor(), null, null);
+        }
     }
 }

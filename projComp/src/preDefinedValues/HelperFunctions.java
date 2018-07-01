@@ -78,4 +78,18 @@ public class HelperFunctions {
         }
 
     }
+    public static int getTType(Type type){
+        if(type == Type.INT_TYPE)
+            return Opcodes.T_INT;
+        else if(type == Type.LONG_TYPE)
+            return Opcodes.T_LONG;
+        else if(type == Type.DOUBLE_TYPE)
+            return Opcodes.T_DOUBLE;
+        else if(type == Type.CHAR_TYPE)
+            return Opcodes.T_CHAR;
+        else if(type == Type.BOOLEAN_TYPE)
+            return Opcodes.T_BOOLEAN;
+        else
+            throw new RuntimeException("Should Not Happen");
+    }
 }
