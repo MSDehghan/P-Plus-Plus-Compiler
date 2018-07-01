@@ -9,7 +9,7 @@ import preDefinedValues.DefinedValues;
 import static jdk.internal.org.objectweb.asm.Opcodes.DCONST_0;
 import static jdk.internal.org.objectweb.asm.Opcodes.DCONST_1;
 
-public class RealConstExp extends Exp {
+public class RealConstExp extends Constant {
     private Double value;
 
     public RealConstExp(Double value) {
@@ -20,6 +20,7 @@ public class RealConstExp extends Exp {
         type = Type.DOUBLE_TYPE;
     }
 
+    @Override
     public Double getValue() {
         return value;
     }

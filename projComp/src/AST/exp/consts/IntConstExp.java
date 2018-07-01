@@ -10,7 +10,7 @@ import static jdk.internal.org.objectweb.asm.Opcodes.*;
 import static jdk.internal.org.objectweb.asm.Opcodes.BIPUSH;
 import static jdk.internal.org.objectweb.asm.Opcodes.SIPUSH;
 
-public class IntConstExp extends Exp {
+public class IntConstExp extends Constant {
     private Integer value;
 
     public IntConstExp(Integer value) {
@@ -20,6 +20,7 @@ public class IntConstExp extends Exp {
         this.value = value;
     }
 
+    @Override
     public Integer getValue() {return value;}
 
     @Override

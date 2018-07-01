@@ -7,7 +7,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 
 
-public class SizeOf extends Exp {
+public class SizeOf extends Constant {
     private Integer value;
 
     public SizeOf(String id) {
@@ -15,6 +15,7 @@ public class SizeOf extends Exp {
         this.value = SymbolTable.getInstance().getSize(id);
     }
 
+    @Override
     public Integer getValue() {
         return value;
     }

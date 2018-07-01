@@ -12,7 +12,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     public ArrayVariableDeclaration(String varName, String type,List<Exp> dimensions, boolean Static,boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
-//TODO do something with constant
+        //TODO do something with constant
     }
 
     @Override

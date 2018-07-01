@@ -6,7 +6,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
 
-public class CharConstExp extends Exp {
+public class CharConstExp extends Constant {
     private Character value;
 
     public CharConstExp(Character value) {
@@ -16,6 +16,7 @@ public class CharConstExp extends Exp {
         type = Type.CHAR_TYPE;
     }
 
+    @Override
     public Character getValue() {
         return value;
     }

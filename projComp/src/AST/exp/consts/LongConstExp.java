@@ -9,7 +9,7 @@ import preDefinedValues.DefinedValues;
 import static jdk.internal.org.objectweb.asm.Opcodes.LCONST_0;
 import static jdk.internal.org.objectweb.asm.Opcodes.LCONST_1;
 
-public class LongConstExp extends Exp {
+public class LongConstExp extends Constant {
     private Long value;
 
     public LongConstExp(Long value) {
@@ -19,6 +19,7 @@ public class LongConstExp extends Exp {
         type = Type.LONG_TYPE;
     }
 
+    @Override
     public Long getValue() {
         return value;
     }

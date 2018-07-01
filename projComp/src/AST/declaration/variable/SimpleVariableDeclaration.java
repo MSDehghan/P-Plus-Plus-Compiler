@@ -1,17 +1,16 @@
 package AST.declaration.variable;
 
 import AST.SymbolTable.SymbolTable;
-import AST.SymbolTable.dscp.DSCP;
-import AST.SymbolTable.dscp.DSCP_DYNAMIC;
-import AST.SymbolTable.dscp.DSCP_VAR_DYNAMIC;
-import AST.SymbolTable.dscp.DSCP_VAR_STATIC;
+import AST.SymbolTable.dscp.*;
 import AST.exp.Exp;
+import AST.exp.consts.Constant;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
+import jdk.internal.org.objectweb.asm.FieldVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
-import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 
 import static AST.SymbolTable.SymbolTable.getTypeFromName;
+import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class SimpleVariableDeclaration extends VariableDeclaration {
     public SimpleVariableDeclaration(String varName, String varType, boolean staticDec, boolean Constant) {
@@ -39,6 +38,7 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
      * @throws IllegalArgumentException if type and name is not set!
      */
     private void declare(boolean staticDec, Type type, boolean Constant) {
+        // TODO: 01/07/2018 SymbolTable Should Change
         if (name == null || type == null)
             throw new IllegalArgumentException();
 
@@ -55,9 +55,22 @@ public class SimpleVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        // TODO: 30/06/2018 check type and also do it diffrent types static and dynamic
-        exp.compile(mv, cv);
-        int index = ((DSCP_DYNAMIC) SymbolTable.getInstance().getDescriptor(getName())).getIndex();
-        mv.visitVarInsn(exp.getType().getOpcode(Opcodes.ISTORE), index);
+        DSCP dscp = getDSCP();
+        if (dscp instanceof DSCP_STATIC) {
+            DSCP_STATIC dscpStatic = (DSCP_STATIC) dscp;
+            Object value = null;
+            // TODO: 01/07/2018 Handle Not Constant
+            if (getExp() instanceof Constant && getExp().getType() == getType()) {
+                value = ((Constant) getExp()).getValue();
+            }
+            FieldVisitor fv = cv.visitField(ACC_STATIC + ACC_PUBLIC, dscp.getName(), dscp.getType().getDescriptor(), null, value);
+            fv.visitEnd();
+        } else {
+            DSCP_DYNAMIC dscpDynamic = (DSCP_DYNAMIC) dscp;
+            if (getExp() != null && getExp().getType() == getType()) {
+                getExp().compile(mv, cv);
+                mv.visitVarInsn(getType().getOpcode(ISTORE), dscpDynamic.getIndex());
+            }
+        }
     }
 }
