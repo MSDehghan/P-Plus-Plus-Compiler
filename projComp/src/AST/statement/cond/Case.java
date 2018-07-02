@@ -35,10 +35,7 @@ public class Case extends Statement{
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         labelStartCase = new Label();
         mv.visitLabel(labelStartCase);
-        NotEqual notEqual = new NotEqual();
-        notEqual.setBinaryExp(new IntConstExp(0), exp);
-        // 0 : 0 : false
-        mv.visitJumpInsn(Opcodes.IFEQ,jump);
+
         SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
         SymbolTable.getInstance().setLabelLast(jump);
         SymbolTable.getInstance().setLabelFirst(start);

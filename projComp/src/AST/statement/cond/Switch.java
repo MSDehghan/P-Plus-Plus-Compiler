@@ -26,11 +26,39 @@ public class Switch extends Statement {
         this.cases = cases;
         this.blockDefault = blockDefault;
     }
+
+    public void compile2(MethodVisitor mv, ClassVisitor cv) {
+       /* SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
+//        SymbolTable.getInstance().setLabelFirst(start);
+//        SymbolTable.getInstance().setLabelLast(end);
+        Label [] labels = new Label[cases.size()];
+        int [] ints = new int[cases.size()];
+        int i = 0 ;
+//        mv.visitLabel(start);
+        exp.compile(mv,cv);
+        mv.visitJumpInsn(Opcodes.GOTO,lookUpTable);
+        for(Case c : cases){
+            c.jump = end;
+            c.start = start;
+            c.compile(mv,cv);
+            labels[i]=c.labelStartCase;
+            ints[i++]=c.exp.getValue();
+        }
+        mv.visitLabel(labelDefault);
+        blockDefault.compile(mv,cv);
+        mv.visitJumpInsn(Opcodes.GOTO,end);
+        mv.visitLabel(lookUpTable);
+        mv.visitLookupSwitchInsn(labelDefault,ints,labels);
+        mv.visitLabel(end);
+        SymbolTable.getInstance().popScope();*/
+    }
+
+
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
-//        SymbolTable.getInstance().setLabelFirst(start);
-//        SymbolTable.getInstance().setLabelLast(end);
+        SymbolTable.getInstance().setLabelFirst(start);
+        SymbolTable.getInstance().setLabelLast(end);
         Label [] labels = new Label[cases.size()];
         int [] ints = new int[cases.size()];
         int i = 0 ;
