@@ -5,7 +5,7 @@ public class $Main {
 
   // access flags 0x9
   public static start()V
-    ICONST_2
+    ICONST_1
     ISTORE 0
    L0
     ILOAD 0
@@ -13,49 +13,40 @@ public class $Main {
    L2
     GOTO L3
    L4
-    ICONST_0
     GOTO L5
-   L3
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    GOTO L4
+   L6
+    ICONST_1
+    GOTO L7
    L5
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V
+    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
     GOTO L6
    L7
-    GOTO L8
-   L9
-    ICONST_1
-    GOTO L10
+    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    GOTO L3
    L8
-    GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
     GOTO L9
    L10
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V
-    GOTO L6
-   L11
-    GOTO L12
-   L13
-    ICONST_2
-    GOTO L14
-   L12
+    ICONST_1
+    GOTO L11
+   L9
     GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
-    GOTO L13
-   L14
-    INVOKEVIRTUAL java/io/PrintStream.println (I)V
-    GOTO L6
+    GOTO L10
+   L11
+    INVOKEVIRTUAL java/io/PrintStream.println (I)V 
+    GOTO L3
    L1
     LOOKUPSWITCH
       0: L2
-      1: L7
-      default: L11
-   L6
+      1: L4
+      default: L8
+   L3
     RETURN
     MAXSTACK = 1
     MAXLOCALS = 1
 
   // access flags 0x9
   public static main([Ljava/lang/String;)V
-    INVOKESTATIC $Main.start ()V
+    INVOKESTATIC $Main.start ()V 
     RETURN
     MAXSTACK = 0
     MAXLOCALS = 0

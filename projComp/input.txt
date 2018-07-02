@@ -1,20 +1,17 @@
 function void start()
 begin
-int a = 2 ;
+int a = 1 ;
 switch(a) of : begin
-
 case 0 :
 begin
-println(0);
 end
 case 1:
 begin
 println(1);
 end
-
 default :
 begin
-println(2);
+println(1);
 end
 end
 

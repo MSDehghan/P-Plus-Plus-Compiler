@@ -34,8 +34,8 @@ public class Case extends Statement{
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         labelStartCase = new Label();
-        mv.visitLabel(labelStartCase);
-
+        mv.visitLabel(labelStartCase);;
+        // 0 : 0 : false
         SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
         SymbolTable.getInstance().setLabelLast(jump);
         SymbolTable.getInstance().setLabelFirst(start);
