@@ -70,8 +70,7 @@ public class FunctionDeclaration extends FuncDcl {
                 throw new RuntimeException("no return type seen , but should have seen one");
             }
         }
-
-        newMv.visitMaxs(0, 0);
+        newMv.visitMaxs(1, 1);
         newMv.visitEnd();
         SymbolTable.getInstance().popScope();
 

@@ -1,25 +1,20 @@
-function double pooria(double a)
-begin
-double d = 4.0 ;
-return a*d;
-end
-
-record Pooria begin
-    int a[5];
-    double b = 5.0;
-    long c;
-    String d;
-end record ;
-
-record Sadegh begin
-    Pooria a;
-end record ;
-
 function void start()
 begin
-int a[5];
-a[1];
-println(pooria(3.0));
+int a = 1 ;
+switch(a) of : begin
+case 0 :
+begin
+println(1);
+end
+case 1:
+begin
+println(1);
+end
+default :
+begin
+end
+end
+
 end
 
 

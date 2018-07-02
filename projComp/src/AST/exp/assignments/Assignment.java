@@ -10,6 +10,7 @@ import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import jdk.internal.org.objectweb.asm.Type;
 import preDefinedValues.DefinedValues;
+import preDefinedValues.HelperFunctions;
 
 import static jdk.internal.org.objectweb.asm.Opcodes.ISTORE;
 
@@ -27,8 +28,6 @@ public class Assignment extends Exp2Var {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         this.type = var.getType();
-        if (var.getType() != exp.getType())
-            throw new RuntimeException();
 
         // TODO: 29/06/2018 handle Arrays
         if (!(var instanceof SimpleVariable))
@@ -36,6 +35,8 @@ public class Assignment extends Exp2Var {
 
         DSCP dscp = var.getDSCP();
         exp.compile(mv,cv);
+        if (var.getType() != exp.getType())
+            HelperFunctions.cast(exp.getType(), var.getType(), mv, cv);
         if(dscp instanceof DSCP_DYNAMIC) {
             int index = ((DSCP_DYNAMIC) dscp).getIndex();
             if(var.getType().equals(Type.DOUBLE_TYPE)){

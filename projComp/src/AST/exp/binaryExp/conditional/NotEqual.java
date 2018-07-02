@@ -12,7 +12,7 @@ public class NotEqual extends Conditional {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        compare(IFNE,IF_ICMPNE, mv, cv);
+        compare(IFEQ,IF_ICMPEQ, mv, cv);
     }
 }
 

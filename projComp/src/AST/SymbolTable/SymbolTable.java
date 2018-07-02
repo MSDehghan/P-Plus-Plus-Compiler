@@ -15,9 +15,9 @@ import java.util.Set;
 // TODO: 28/06/2018 pop scope
 public class SymbolTable {
     public static int FUNCTION = 0;
-    public static int LOOP = 0;
-    public static int SWITCH = 0;
-    public static int COND_OTHER_THAN_SWITCH = 0;
+    public static int LOOP = 2;
+    public static int SWITCH = 1;
+    public static int COND_OTHER_THAN_SWITCH = 3;
     private static FuncDcl LastSeenFunction;
     private static int labelCounter = 0;
     private static SymbolTable instance = new SymbolTable();

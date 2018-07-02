@@ -29,6 +29,8 @@ public class Switch extends Statement {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         SymbolTable.getInstance().addScope(SymbolTable.SWITCH);
+//        SymbolTable.getInstance().setLabelFirst(start);
+//        SymbolTable.getInstance().setLabelLast(end);
         Label [] labels = new Label[cases.size()];
         int [] ints = new int[cases.size()];
         int i = 0 ;

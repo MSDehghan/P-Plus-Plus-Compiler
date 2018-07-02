@@ -9,6 +9,7 @@ import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
 import jdk.internal.org.objectweb.asm.Opcodes;
 import preDefinedValues.DefinedValues;
+import preDefinedValues.HelperFunctions;
 
 import static jdk.internal.org.objectweb.asm.Opcodes.ISTORE;
 
@@ -25,8 +26,6 @@ public class MinusAssign extends Exp2Var {
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
         this.type = var.getType();
-        if (var.getType() != exp.getType())
-            throw new RuntimeException();
         // TODO: 29/06/2018 handle Arrays
         if (!(var instanceof SimpleVariable))
             throw new RuntimeException();
@@ -34,6 +33,8 @@ public class MinusAssign extends Exp2Var {
         DSCP dscp = var.getDSCP();
         var.compile(mv,cv);
         exp.compile(mv,cv);
+        if (var.getType() != exp.getType())
+            HelperFunctions.cast(exp.getType(), var.getType(), mv, cv);
         mv.visitInsn(var.getType().getOpcode(Opcodes.ISUB));
         if(dscp instanceof DSCP_DYNAMIC) {
             int index = ((DSCP_DYNAMIC) dscp).getIndex();

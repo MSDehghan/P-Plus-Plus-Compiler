@@ -31,10 +31,10 @@ public class If extends Statement{
         Label endElse = new Label();
 //      if 0 : false : else
         mv.visitJumpInsn(Opcodes.IFEQ,startElse);
-        mv.visitLabel(SymbolTable.getInstance().getLabelStart());
+//        mv.visitLabel(SymbolTable.getInstance().getLabelStart());
         block1.compile(mv,cv);
         mv.visitJumpInsn(Opcodes.GOTO,endElse);
-        mv.visitLabel(SymbolTable.getInstance().getLabelLast());
+//        mv.visitLabel(SymbolTable.getInstance().getLabelLast());
         if(block2!=null){
             SymbolTable.getInstance().popScope();
             SymbolTable.getInstance().addScope(SymbolTable.COND_OTHER_THAN_SWITCH);
@@ -44,7 +44,8 @@ public class If extends Statement{
             block2.compile(mv,cv);
             mv.visitLabel(endElse);
         }else{
-
+            mv.visitLabel(startElse);
+            mv.visitLabel(endElse);
         }
     }
 }
