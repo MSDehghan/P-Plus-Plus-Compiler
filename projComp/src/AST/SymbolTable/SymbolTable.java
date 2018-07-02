@@ -4,7 +4,7 @@ import AST.SymbolTable.dscp.DSCP;
 import AST.SymbolTable.dscp.DSCP_DYNAMIC;
 import AST.declaration.function.ExternalFunctionDcl;
 import AST.declaration.function.FuncDcl;
-import AST.declaration.function.StaticVarsExtern;
+import AST.declaration.variable.StructDeclaration;
 import jdk.internal.org.objectweb.asm.Label;
 import jdk.internal.org.objectweb.asm.Type;
 
@@ -23,15 +23,16 @@ public class SymbolTable {
     private static SymbolTable instance = new SymbolTable();
     private ArrayList<HashMapOurs<String, DSCP>> stackScopes = new ArrayList<HashMapOurs<String, DSCP>>();
     private HashMap<String, ArrayList<FuncDcl>> funcDcls = new HashMap<String, ArrayList<FuncDcl>>();
+    private HashMap<String, StructDeclaration> recordDcls = new HashMap<>();
+    ;
+
 
     private SymbolTable() {
         HashMapOurs<String, DSCP> mainFrame = new HashMapOurs<>();
         mainFrame.setIndex(1); //There is Always a (String... args) in main Function.
         stackScopes.add(mainFrame);
     }
-    public Set<String> getKeySet(){
-        return funcDcls.keySet();
-    }
+
     public static FuncDcl getLastSeenFunction() {
         return LastSeenFunction;
     }
@@ -71,7 +72,7 @@ public class SymbolTable {
                 type = Type.SHORT_TYPE;
                 break;
             default:
-                type = Type.getType(varType);
+                type = Type.getType("L" + varType + ";");
 //                throw new InvalidDeclaration("Type is not Valid");
 
         }
@@ -80,6 +81,10 @@ public class SymbolTable {
 
     public static SymbolTable getInstance() {
         return instance;
+    }
+
+    public Set<String> getKeySet() {
+        return funcDcls.keySet();
     }
 
     public void popScope() {
@@ -160,11 +165,12 @@ public class SymbolTable {
 
     /**
      * only call this method during compile
+     *
      * @param name
      * @return
      */
-    public boolean externOrNot(String name){
-        if(!funcDcls.containsKey(name)){
+    public boolean externOrNot(String name) {
+        if (!funcDcls.containsKey(name)) {
             throw new RuntimeException("no such funciton");
         }
         return funcDcls.get(name).get(0) instanceof ExternalFunctionDcl;
@@ -202,7 +208,7 @@ public class SymbolTable {
         frame.setLabelStart();
         frame.setLabelLast();
         frame.setTypeOfScope(typeOfScope);
-        if(typeOfScope!=FUNCTION)
+        if (typeOfScope != FUNCTION)
             frame.setIndex(getLastFrame().getIndex());
         stackScopes.add(frame);
     }
@@ -214,6 +220,23 @@ public class SymbolTable {
     /**
      * @return the first empty slot on the last local variable scope
      */
+
+    public void addRecord(StructDeclaration record) {
+        if (recordDcls.containsKey(record.getName()))
+            throw new Redeclaration();
+
+        recordDcls.put(record.getName(), record);
+    }
+
+    /**
+     * @throws RuntimeException Record Not Found
+     */
+    public StructDeclaration getRecord(String name) {
+        if (recordDcls.containsKey(name))
+            throw new RuntimeException("Record Not Found");
+
+        return recordDcls.get(name);
+    }
 
 
     public int returnNewIndex() {

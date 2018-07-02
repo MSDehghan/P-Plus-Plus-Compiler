@@ -1,10 +1,8 @@
 package AST;
 
 import AST.SymbolTable.SymbolTable;
-import AST.declaration.function.ExternalFunctionDcl;
-import AST.declaration.function.StaticVarsExtern;
-import AST.declaration.variable.DCLS;
 import AST.declaration.function.FuncDcl;
+import AST.declaration.variable.DCLS;
 import AST.declaration.variable.StructDeclaration;
 import jdk.internal.org.objectweb.asm.ClassWriter;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
@@ -14,9 +12,11 @@ import jdk.internal.org.objectweb.asm.util.TraceClassVisitor;
 import preDefinedValues.DefinedValues;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -38,12 +38,11 @@ public class Program {
     public void compile(String whereToSave) throws FileNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
 
-
         ClassWriter cw;
         TraceClassVisitor cv;
         MethodVisitor mv;
         cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-        cv = new TraceClassVisitor(cw, new PrintWriter(Paths.get("./CodeOut.txt").toFile()));
+        cv = new TraceClassVisitor(cw, new PrintWriter(Paths.get(DefinedValues.compilePath, DefinedValues.nameClass + ".txt").toFile()));
 
         cv.visit(V1_8, ACC_PUBLIC + ACC_SUPER, DefinedValues.nameClass, null, Type.getInternalName(Object.class), null);
         mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
@@ -55,20 +54,19 @@ public class Program {
         mv.visitEnd();
 
 
-
-        for (Node c : nodes){
-            if(c instanceof StructDeclaration){
+        for (Node c : nodes) {
+            if (c instanceof StructDeclaration) {
                 c.compile(mv, cv);
             }
         }
-        for(Node c : nodes){
-            if(c instanceof DCLS){
-                c.compile(mv,cv);
+        for (Node c : nodes) {
+            if (c instanceof DCLS) {
+                c.compile(mv, cv);
             }
         }
 
-        for (Node c : nodes){
-            if(c instanceof FuncDcl){
+        for (Node c : nodes) {
+            if (c instanceof FuncDcl) {
                 FuncDcl funcDcl = (FuncDcl) c;
 
                 c.compile(mv, cv);
@@ -76,21 +74,18 @@ public class Program {
         }
 
 
-
         mv = cv.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
         mv.visitCode();
 
 
-
-
         //this part is for reading the main function
         try {
-            FuncDcl f =SymbolTable.getInstance().getFunction("start",new Type [0]);
-            if(!f.getType().equals(Type.VOID_TYPE)){
+            FuncDcl f = SymbolTable.getInstance().getFunction("start", new Type[0]);
+            if (!f.getType().equals(Type.VOID_TYPE)) {
                 throw new RuntimeException("your start should return void");
             }
             mv.visitMethodInsn(Opcodes.INVOKESTATIC, DefinedValues.nameClass, f.getName(), f.getSignature(), false);
-        }catch (RuntimeException r){
+        } catch (RuntimeException r) {
             throw new RuntimeException("there was no start in the program");
         }
         //
@@ -100,6 +95,12 @@ public class Program {
         mv.visitEnd();
         cv.visitEnd();
         byte[] bytes = cw.toByteArray();
+
+        try {
+            Files.write(Paths.get(DefinedValues.compilePath, DefinedValues.nameClass+".class"), bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         tests.MainClassLoader loader = new tests.MainClassLoader();
         Class<?> clazz = loader.defineClass(DefinedValues.nameClass, bytes);

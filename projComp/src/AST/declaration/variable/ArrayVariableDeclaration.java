@@ -67,7 +67,8 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
     @Override
     public void compile(MethodVisitor mv, ClassVisitor cv) {
-        declare(Static, SymbolTable.getTypeFromName(type1), Constant);
+        calculateType(mv,cv);
+        declare(Static, type, Constant);
         if (getDSCP() instanceof DSCP_DYNAMIC) {
             for (Exp dimension : dimensions) {
                 dimension.compile(mv, cv);
@@ -85,9 +86,20 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
             mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
         } else {
-            int access = ACC_STATIC + ACC_PUBLIC;
-            access += isConstant() ? Opcodes.ACC_FINAL : 0;
-            cv.visitField(access, getName(), getType().getDescriptor(), null, null);
+            addFieldToClass(cv);
         }
+    }
+
+    @Override
+    public void addFieldToClass(ClassVisitor cv) {
+        int access = ACC_STATIC + ACC_PUBLIC;
+        access += isConstant() ? Opcodes.ACC_FINAL : 0;
+        cv.visitField(access, getName(), getType().getDescriptor(), null, null).visitEnd();
+    }
+
+    @Override
+    void calculateType(MethodVisitor mv, ClassVisitor cv) {
+        // TODO: 02/07/2018 Check is Defined For Records
+        type = SymbolTable.getTypeFromName(type1);
     }
 }

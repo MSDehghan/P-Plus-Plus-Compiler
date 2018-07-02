@@ -33,8 +33,8 @@ public class SimpleVariable extends Variable {
     }
 
     /*
-    * Store Value From Stack;
-    */
+     * Store Value From Stack;
+     */
     public void compileStoreValue(MethodVisitor mv, ClassVisitor cv) {
         DSCP dscp = getDSCP();
         if (dscp instanceof DSCP_DYNAMIC) {

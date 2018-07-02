@@ -386,7 +386,7 @@ expr		::=		expr:e1  binary_op:e2  expr:e3			{: if( DEBUGS ){ System.out.println(
 
 /* tweenth */
 variable		::=		ID:e1 exp23:e2	{: if( DEBUGS ){ System.out.println("variable found"); }  if(((ArrayList <Exp>)e2).size()==0){RESULT = new SimpleVariable((String)e1);}else{RESULT = new ArrayVariable((String)e1,HelperFunctions.reverse((ArrayList <Exp>)e2));}:}
-			    |       variable:e1 DOT variable:e2 {:if( DEBUGS ){ System.out.println("variable found"); } RESULT = new RecordVariableUse((Variable)e1, (Variable)e2);  :}
+			    |       variable:e1 DOT ID:e2 {:if( DEBUGS ){ System.out.println("variable found"); } RESULT = new RecordVariableUse((Variable)e1, (String)e2);  :}
 				;
 
 exp23			::=		OPENBRAK expr:e2 CLOSEDBRAK exp23 : e1	{: if( DEBUGS ){ System.out.println("exp32 found"); } ArrayList <Exp> a=(ArrayList <Exp>)e1;a.add((Exp)e2); RESULT = a; :}
