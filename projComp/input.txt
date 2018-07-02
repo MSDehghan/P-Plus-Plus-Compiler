@@ -4,9 +4,16 @@ double d = 4.0 ;
 return a*d;
 end
 
+record Pooria begin
+    int a[5];
+    double b = 5.0;
+    long c;
+    String d;
+end record ;
+
 record Sadegh begin
-    int a;
- end record ;
+    Pooria a;
+end record ;
 
 function void start()
 begin

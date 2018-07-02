@@ -3,6 +3,7 @@ package AST.declaration.variable;
 import AST.Node;
 import AST.SymbolTable.SymbolTable;
 import AST.declaration.DuplicateNameInRecord;
+import AST.declaration.InvalidVariableType;
 import jdk.internal.org.objectweb.asm.ClassVisitor;
 import jdk.internal.org.objectweb.asm.ClassWriter;
 import jdk.internal.org.objectweb.asm.MethodVisitor;
@@ -71,10 +72,10 @@ public class StructDeclaration extends Node {
         cv.visit(V1_8, ACC_PUBLIC + ACC_SUPER, getName(), null, Type.getInternalName(Object.class), null);
         for (VariableDeclaration var : variables.values()) {
             var.calculateType(null, null);
-            if (HelperFunctions.isRecord(var.getType()) && SymbolTable.getInstance().getRecord(var.getType().getClassName()) != null) {
-                var.addFieldToClass(cv);
-            }else
-                var.addFieldToClass(cv);
+            if (HelperFunctions.isRecord(var.getType()) && !SymbolTable.getInstance().isRecordDefined(var.getType().getClassName()))
+                throw new InvalidVariableType("Record Type Is Not Defined");
+
+            var.addFieldToClass(cv, false);
         }
 
 

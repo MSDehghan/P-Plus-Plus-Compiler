@@ -20,7 +20,6 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
     int dims;
     boolean Static;
-    boolean Constant;
     String type1;
     public ArrayVariableDeclaration(String varName, String type, int dims, boolean Static, boolean Constant) {
         name = varName;
@@ -35,6 +34,7 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     public ArrayVariableDeclaration(String varName, String type, List<Exp> dimensions, boolean Static, boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
+        this.dims = dimensions.size();
         this.Static = Static;
         this.Constant = Constant;
         type1 = type;
@@ -86,15 +86,20 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
 
             mv.visitVarInsn(ASTORE, ((DSCP_DYNAMIC) getDSCP()).getIndex());
         } else {
-            addFieldToClass(cv);
+            addFieldToClass(cv, true);
         }
     }
 
     @Override
-    public void addFieldToClass(ClassVisitor cv) {
-        int access = ACC_STATIC + ACC_PUBLIC;
+    public void addFieldToClass(ClassVisitor cv, boolean isStatic) {
+        int access = ACC_PUBLIC;
         access += isConstant() ? Opcodes.ACC_FINAL : 0;
-        cv.visitField(access, getName(), getType().getDescriptor(), null, null).visitEnd();
+        access += isStatic ? Opcodes.ACC_STATIC : 0;
+
+        String repeatedArray = new String(new char[dimensions.size()]).replace("\0", "[");
+        Type arrayType = Type.getType(repeatedArray + type.getDescriptor());
+
+        cv.visitField(access, getName(), arrayType.getDescriptor(), null, null).visitEnd();
     }
 
     @Override

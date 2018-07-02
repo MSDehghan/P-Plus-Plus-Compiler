@@ -12,6 +12,7 @@ public abstract class VariableDeclaration extends OperationCode {
     protected String name;
     protected Exp exp = null;
     protected Type type = null;
+    protected boolean Constant;
 
     public Exp getExp() {
         return exp;
@@ -29,13 +30,13 @@ public abstract class VariableDeclaration extends OperationCode {
     }
 
 
-    abstract public void addFieldToClass(ClassVisitor cv);
+    abstract public void addFieldToClass(ClassVisitor cv, boolean isStatic);
 
     public DSCP getDSCP() {
         return SymbolTable.getInstance().getDescriptor(name);
     }
     public boolean isConstant(){
-        return getDSCP().isConstant();
+        return Constant;
     }
     abstract void calculateType(MethodVisitor mv, ClassVisitor cv);
 }

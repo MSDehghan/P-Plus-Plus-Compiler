@@ -233,9 +233,18 @@ public class SymbolTable {
      */
     public StructDeclaration getRecord(String name) {
         if (recordDcls.containsKey(name))
-            throw new RuntimeException("Record Not Found");
+            throw new NotFound("Record Not Found");
 
         return recordDcls.get(name);
+    }
+
+    public boolean isRecordDefined(String name){
+        try{
+            getRecord(name);
+            return true;
+        }catch (NotFound e){
+            return false;
+        }
     }
 
 
