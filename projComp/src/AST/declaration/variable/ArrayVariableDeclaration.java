@@ -18,12 +18,10 @@ import static jdk.internal.org.objectweb.asm.Opcodes.*;
 
 public class ArrayVariableDeclaration extends VariableDeclaration {
     private List<Exp> dimensions;
-    int dims;
     boolean Static;
     String type1;
     public ArrayVariableDeclaration(String varName, String type, int dims, boolean Static, boolean Constant) {
         name = varName;
-        this.dims = dims;
         this.Static = Static;
         this.Constant = Constant;
         type1 = type;
@@ -34,16 +32,15 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     public ArrayVariableDeclaration(String varName, String type, List<Exp> dimensions, boolean Static, boolean Constant) {
         name = varName;
         this.dimensions = dimensions;
-        this.dims = dimensions.size();
         this.Static = Static;
         this.Constant = Constant;
         type1 = type;
         //TODO do something with constant
     }
 
-    private void declare(boolean staticDec, Type type, boolean Constant) {
+    private void declare(boolean staticDec, Type varType, boolean Constant) {
         // TODO: 01/07/2018 SymbolTable Should Change
-        if (name == null || type == null)
+        if (name == null || varType == null)
             throw new IllegalArgumentException();
 
 
@@ -52,14 +49,13 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
                 throw new RuntimeException("Bad Index Type"); // TODO: 01/07/2018 Write Good Exception
         });
 
-        String repeatedArray = new String(new char[dimensions.size()]).replace("\0", "[");
-        Type arrayType = Type.getType(repeatedArray + type.getDescriptor()); // TODO: 01/07/2018 PLease Testtttttt!
+        calculateType(null,null);
         DSCP dscp;
 
         if (staticDec) {
-            dscp = new DSCP_ARR_STATIC(name, arrayType, dimensions.size(), Constant);
+            dscp = new DSCP_ARR_STATIC(name, type, dimensions.size(), Constant);
         } else {
-            dscp = new DSCP_ARR_DYNAMIC(name, arrayType, SymbolTable.getInstance().returnNewIndex(), dimensions.size(), Constant);
+            dscp = new DSCP_ARR_DYNAMIC(name, type, SymbolTable.getInstance().returnNewIndex(), dimensions.size(), Constant);
         }
 
         SymbolTable.getInstance().addVariable(dscp, name);
@@ -105,6 +101,8 @@ public class ArrayVariableDeclaration extends VariableDeclaration {
     @Override
     void calculateType(MethodVisitor mv, ClassVisitor cv) {
         // TODO: 02/07/2018 Check is Defined For Records
-        type = SymbolTable.getTypeFromName(type1);
+        Type varType = SymbolTable.getTypeFromName(type1);
+        String repeatedArray = new String(new char[dimensions.size()]).replace("\0", "[");
+        type = Type.getType(repeatedArray + varType.getDescriptor());
     }
 }

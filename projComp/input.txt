@@ -17,6 +17,8 @@ end record ;
 
 function void start()
 begin
+int a[5];
+a[1];
 println(pooria(3.0));
 end
 
